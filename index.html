@@ -3,195 +3,451 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arnav Mana - Personal Website</title>
+    <meta name="description" content="Arnav Mana - student researcher focused on cardiac critical care, computational biology, and health innovation.">
+    <title>Arnav Mana | Personal Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #0a1118;
+            --bg-soft: #0f1924;
+            --surface: #121f2d;
+            --surface-2: #16283a;
+            --text: #e5edf5;
+            --text-muted: #9cb0c4;
+            --line: #263d54;
+            --accent: #40c3ff;
+            --accent-2: #63f4cf;
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            --radius: 18px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 15%, rgba(64, 195, 255, 0.22), transparent 30%),
+                radial-gradient(circle at 85% 0%, rgba(99, 244, 207, 0.16), transparent 28%),
+                linear-gradient(170deg, var(--bg) 0%, #050a10 100%);
             min-height: 100vh;
+            line-height: 1.65;
+            overflow-x: hidden;
         }
+
+        .backdrop {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 36px 36px;
+            mask-image: radial-gradient(circle at center, black 35%, transparent 95%);
+            opacity: 0.18;
+            z-index: -1;
+        }
+
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            width: min(1100px, 92vw);
+            margin: 28px auto 40px;
+            display: grid;
+            gap: 18px;
         }
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
+
+        .panel {
+            background: linear-gradient(140deg, rgba(18, 31, 45, 0.88), rgba(10, 17, 24, 0.92));
+            border: 1px solid rgba(156, 176, 196, 0.17);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            transform: translateY(16px);
+            animation: rise 0.8s ease forwards;
         }
-        header h1 {
-            font-size: 2.5em;
+
+        .panel:nth-child(2) { animation-delay: 0.08s; }
+        .panel:nth-child(3) { animation-delay: 0.16s; }
+        .panel:nth-child(4) { animation-delay: 0.24s; }
+        .panel:nth-child(5) { animation-delay: 0.32s; }
+
+        .hero {
+            padding: 32px;
+            display: grid;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            top: -110px;
+            right: -70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(64, 195, 255, 0.38), transparent 72%);
+        }
+
+        .headline {
+            position: relative;
+            z-index: 1;
+        }
+
+        .name {
+            font-family: "Sora", "Segoe UI", sans-serif;
+            letter-spacing: 0.02em;
+            font-size: clamp(2rem, 3.8vw, 3rem);
+            line-height: 1.1;
             margin-bottom: 10px;
         }
-        .contact-info {
-            font-size: 0.95em;
-            margin: 10px 0;
+
+        .tagline {
+            color: var(--text-muted);
+            max-width: 64ch;
         }
-        .contact-info a {
-            color: #fff;
+
+        .contact-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pill {
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 8px 14px;
+            color: var(--text);
             text-decoration: none;
-            margin: 0 15px;
+            font-size: 0.95rem;
+            background: rgba(15, 25, 36, 0.65);
+            transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
         }
-        .section {
+
+        .pill:hover {
+            transform: translateY(-1px);
+            border-color: var(--accent);
+            background: rgba(21, 44, 64, 0.75);
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat {
+            background: linear-gradient(140deg, rgba(22, 40, 58, 0.72), rgba(11, 21, 32, 0.8));
+            border: 1px solid rgba(156, 176, 196, 0.16);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .stat-value {
+            font-family: "Sora", "Segoe UI", sans-serif;
+            color: var(--accent-2);
+            font-size: 1.35rem;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .content {
             padding: 30px;
-            border-bottom: 1px solid #eee;
         }
-        .section h2 {
-            color: #667eea;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
+
+        h2 {
+            font-family: "Sora", "Segoe UI", sans-serif;
+            font-size: 1.45rem;
+            margin-bottom: 18px;
+            letter-spacing: 0.02em;
         }
-        .entry {
-            margin-bottom: 25px;
+
+        .subtle {
+            color: var(--text-muted);
         }
+
+        .education-card {
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: rgba(11, 20, 30, 0.58);
+            padding: 18px;
+        }
+
         .entry-title {
-            font-weight: bold;
-            font-size: 1.1em;
-            color: #333;
+            font-weight: 600;
+            font-size: 1.05rem;
         }
-        .entry-subtitle {
-            color: #666;
-            font-style: italic;
-            margin: 5px 0;
+
+        .entry-meta {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 8px;
         }
-        .entry-date {
-            color: #999;
-            font-size: 0.9em;
-            margin: 5px 0 10px 0;
+
+        .detail-list {
+            list-style: none;
+            display: grid;
+            gap: 8px;
         }
-        .entry-desc {
-            color: #555;
-            margin-left: 15px;
+
+        .detail-list li {
+            color: #d7e5f2;
         }
+
+        .detail-list strong {
+            color: #ffffff;
+        }
+
+        .timeline {
+            list-style: none;
+            display: grid;
+            gap: 16px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: 6px;
+            bottom: 6px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), rgba(64, 195, 255, 0.08));
+        }
+
+        .timeline li {
+            position: relative;
+            margin-left: 30px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: rgba(10, 19, 28, 0.62);
+            padding: 14px 16px;
+            transition: border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .timeline li::before {
+            content: "";
+            position: absolute;
+            left: -27px;
+            top: 18px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background: var(--bg-soft);
+        }
+
+        .timeline li:hover {
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .timeline .date {
+            color: var(--accent-2);
+            font-size: 0.88rem;
+            margin-bottom: 4px;
+        }
+
+        .timeline .project {
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-size: 0.96rem;
+        }
+
+        .leadership-list {
+            list-style-position: inside;
+            display: grid;
+            gap: 6px;
+            color: #d9e6f3;
+            margin-top: 8px;
+        }
+
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
         }
-        .skill-category h3 {
-            color: #667eea;
-            margin-bottom: 10px;
+
+        .skill-card {
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: rgba(12, 23, 34, 0.65);
+            padding: 16px;
         }
-        .skill-category p {
-            color: #555;
+
+        .skill-card h3 {
+            color: var(--accent-2);
+            margin-bottom: 8px;
+            font-size: 1rem;
         }
+
         footer {
-            background: #333;
-            color: white;
             text-align: center;
-            padding: 20px;
-            font-size: 0.9em;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 6px 10px 0;
+        }
+
+        @keyframes rise {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 860px) {
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero,
+            .content {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: min(720px, 94vw);
+                margin-top: 14px;
+            }
+
+            .pill {
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Arnav Mana</h1>
-            <div class="contact-info">
-                <a href="mailto:2arnavmana@gmail.com">2arnavmana@gmail.com</a> • 
-                <span>408-656-1171</span>
-            </div>
-        </header>
+    <div class="backdrop" aria-hidden="true"></div>
 
-        <div class="section">
+    <main class="container">
+        <section class="panel hero">
+            <div class="headline">
+                <h1 class="name">Arnav Mana</h1>
+                <p class="tagline">Student researcher focused on cardiac critical care, computational methods, and healthcare innovation. Building high-impact work across medicine, data science, and leadership.</p>
+            </div>
+
+            <div class="contact-row" aria-label="Contact information">
+                <a class="pill" href="mailto:2arnavmana@gmail.com">2arnavmana@gmail.com</a>
+                <a class="pill" href="tel:+14086561171">+1 (408) 656-1171</a>
+            </div>
+
+            <div class="quick-stats" aria-label="Highlights">
+                <div class="stat">
+                    <p class="stat-value">4.67 / 5.0</p>
+                    <p class="stat-label">Weighted GPA</p>
+                </div>
+                <div class="stat">
+                    <p class="stat-value">1570</p>
+                    <p class="stat-label">SAT (770R / 800M)</p>
+                </div>
+                <div class="stat">
+                    <p class="stat-value">$100K+</p>
+                    <p class="stat-label">Hackathon Funding Secured</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel content">
             <h2>Education</h2>
-            <div class="entry">
-                <div class="entry-title">Los Gatos High School</div>
-                <div class="entry-subtitle">Class of 2028</div>
-                <div class="entry-desc">
-                    <p><strong>GPA:</strong> 4.0/4.0 UW; 4.67/5.0 W</p>
-                    <p><strong>SAT:</strong> 1570 (770R/800M)</p>
-                    <p><strong>Relevant Coursework:</strong> AP Calculus BC, AP European History, English 10 Honors, Spanish 4 Honors</p>
-                    <p><strong>Self-Studied:</strong> AP Biology, AP Chemistry, AP Statistics, MIT OCW: Introduction to Computer Science and Programming in Python, MIT OCW: Introduction to Computational Thinking and Data Science</p>
-                </div>
-            </div>
-        </div>
+            <article class="education-card">
+                <p class="entry-title">Los Gatos High School</p>
+                <p class="entry-meta">Class of 2028</p>
+                <ul class="detail-list">
+                    <li><strong>GPA:</strong> 4.0 / 4.0 UW; 4.67 / 5.0 W</li>
+                    <li><strong>SAT:</strong> 1570 (770R / 800M)</li>
+                    <li><strong>Relevant Coursework:</strong> AP Calculus BC, AP European History, English 10 Honors, Spanish 4 Honors</li>
+                    <li><strong>Self-Studied:</strong> AP Biology, AP Chemistry, AP Statistics, MIT OCW: Introduction to Computer Science and Programming in Python, MIT OCW: Introduction to Computational Thinking and Data Science</li>
+                </ul>
+            </article>
+        </section>
 
-        <div class="section">
+        <section class="panel content">
             <h2>Research Experience</h2>
-            <div class="entry">
-                <div class="entry-title">UCSF Cardiac Critical Care - Research Intern</div>
-                <div class="entry-date">August 2025 – Present</div>
-                <div class="entry-desc">
-                    <p>Integrating SHARC Phenotypes and Hemodynamic Modifiers to Redefine the Predictive Architecture of Lactate</p>
-                </div>
-            </div>
-            <div class="entry">
-                <div class="entry-title">CU Anschutz School of Medicine - Research Intern</div>
-                <div class="entry-date">May 2024 – Present</div>
-                <div class="entry-desc">
-                    <p>Investigating the Role of the Glycosphingolipid-Cytokine Signaling Axis in the Development and Progression of Hypoplastic Left Heart Syndrome</p>
-                </div>
-            </div>
-            <div class="entry">
-                <div class="entry-title">PhysioGraph: Latent Spatiotemporal Topologies - Independent Researcher</div>
-                <div class="entry-date">August 2025 – Present</div>
-                <div class="entry-desc">
-                    <p>Optimizing the SCAI staging system using decision tree algorithms on hemodynamic data</p>
-                </div>
-            </div>
-            <div class="entry">
-                <div class="entry-title">Chronic Intermittent Hypoxia Study - Independent Researcher</div>
-                <div class="entry-date">March 2024 – November 2025</div>
-                <div class="entry-desc">
-                    <p>Analyzed 2,653 IHCA patients using IPTW and linear mixed-effects models to identify metabolic protection in OSA patients</p>
-                </div>
-            </div>
-        </div>
+            <ul class="timeline">
+                <li>
+                    <p class="entry-title">UCSF Cardiac Critical Care - Research Intern</p>
+                    <p class="date">August 2025 - Present</p>
+                    <p class="project">Integrating SHARC Phenotypes and Hemodynamic Modifiers to Redefine the Predictive Architecture of Lactate.</p>
+                </li>
+                <li>
+                    <p class="entry-title">CU Anschutz School of Medicine - Research Intern</p>
+                    <p class="date">May 2024 - Present</p>
+                    <p class="project">Investigating the role of the glycosphingolipid-cytokine signaling axis in the development and progression of hypoplastic left heart syndrome.</p>
+                </li>
+                <li>
+                    <p class="entry-title">PhysioGraph: Latent Spatiotemporal Topologies - Independent Researcher</p>
+                    <p class="date">August 2025 - Present</p>
+                    <p class="project">Optimizing the SCAI staging system using decision tree algorithms on hemodynamic data.</p>
+                </li>
+                <li>
+                    <p class="entry-title">Chronic Intermittent Hypoxia Study - Independent Researcher</p>
+                    <p class="date">March 2024 - November 2025</p>
+                    <p class="project">Analyzed 2,653 IHCA patients using IPTW and linear mixed-effects models to identify metabolic protection in OSA patients.</p>
+                </li>
+            </ul>
+        </section>
 
-        <div class="section">
-            <h2>Leadership & Activities</h2>
-            <div class="entry">
-                <div class="entry-title">Hack4Health - Cofounder and Co-President</div>
-                <div class="entry-date">August 2025 – Present</div>
-                <div class="entry-desc">
-                    <ul style="list-style-position: inside; color: #555;">
-                        <li>Led AI4Alzheimers hackathon with 1,470 global participants</li>
-                        <li>Secured 20+ organizational partnerships and $100K+ in funding</li>
-                        <li>Recruited 20 research mentors with 100+ publications and 500+ citations</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <section class="panel content">
+            <h2>Leadership and Activities</h2>
+            <article class="education-card">
+                <p class="entry-title">Hack4Health - Cofounder and Co-President</p>
+                <p class="date">August 2025 - Present</p>
+                <ul class="leadership-list">
+                    <li>Led AI4Alzheimers hackathon with 1,470 global participants.</li>
+                    <li>Secured 20+ organizational partnerships and $100K+ in funding.</li>
+                    <li>Recruited 20 research mentors with 100+ publications and 500+ citations.</li>
+                </ul>
+            </article>
+        </section>
 
-        <div class="section">
-            <h2>Skills & Interests</h2>
+        <section class="panel content">
+            <h2>Skills and Interests</h2>
             <div class="skills-grid">
-                <div class="skill-category">
+                <article class="skill-card">
                     <h3>Technical</h3>
-                    <p>Python, R, MATLAB, Javascript, HTML, CSS, SQL, Swift</p>
-                </div>
-                <div class="skill-category">
+                    <p class="subtle">Python, R, MATLAB, JavaScript, HTML, CSS, SQL, Swift</p>
+                </article>
+                <article class="skill-card">
                     <h3>Languages</h3>
-                    <p>English (Fluent), Spanish (Nearly Fluent), Hindi (Somewhat Fluent)</p>
-                </div>
-                <div class="skill-category">
+                    <p class="subtle">English (Fluent), Spanish (Nearly Fluent), Hindi (Somewhat Fluent)</p>
+                </article>
+                <article class="skill-card">
                     <h3>Laboratory</h3>
-                    <p>Gel Electrophoresis, PAGE, ELISA, PCR, qPCR, RT-qPCR</p>
-                </div>
-                <div class="skill-category">
+                    <p class="subtle">Gel Electrophoresis, PAGE, ELISA, PCR, qPCR, RT-qPCR</p>
+                </article>
+                <article class="skill-card">
                     <h3>Interests</h3>
-                    <p>Eagle Scout, Cross Country, Track, Fencing</p>
-                </div>
+                    <p class="subtle">Eagle Scout, Cross Country, Track, Fencing</p>
+                </article>
             </div>
-        </div>
+        </section>
 
         <footer>
-            <p>&copy; 2025 Arnav Mana. All rights reserved.</p>
+            <p>Copyright 2026 Arnav Mana. All rights reserved.</p>
         </footer>
-    </div>
+    </main>
 </body>
 </html>
