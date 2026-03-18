@@ -3,161 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arnav Mana | Computational Research</title>
+    <title>Arnav Mana | Clinical AI & Research</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #030712;
-            --surface: rgba(17, 24, 39, 0.7);
-            --surface-hover: rgba(31, 41, 55, 0.8);
-            --border: rgba(0, 243, 255, 0.15);
-            --border-hover: rgba(0, 243, 255, 0.5);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --neon-blue: #00f3ff;
-            --neon-glow: 0 0 20px rgba(0, 243, 255, 0.3);
+            --bg-color: #050505;
+            --card-color: rgba(255, 255, 255, 0.02);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #ededed;
+            --text-muted: #8a8f98;
+            --electric-blue: #00e5ff;
+            --electric-blue-dim: rgba(0, 229, 255, 0.15);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* Hide default cursor for custom follower */
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08), transparent 40%),
-                radial-gradient(circle at 85% 10%, rgba(0, 102, 255, 0.08), transparent 40%);
-            background-attachment: fixed;
-        }
-
-        /* Custom Mouse Follower */
-        .cursor-follower {
-            position: fixed;
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--neon-blue);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
-            z-index: 9999;
-            box-shadow: var(--neon-glow);
-        }
-
-        .cursor-dot {
-            position: fixed;
-            width: 6px;
-            height: 6px;
-            background-color: var(--neon-blue);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 10000;
-        }
-
-        .layout {
-            max-width: 1200px;
-            margin: 0 auto;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            justify-content: center;
             padding: 80px 24px;
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 60px;
-            position: relative;
+        }
+
+        /* Animated Background Glow */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(50px);
+            animation: pulse 8s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: translateX(-50%) scale(0.9); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
             z-index: 1;
         }
 
-        /* Sidebar */
-        .sidebar {
-            position: sticky;
-            top: 80px;
-            height: max-content;
+        /* Hero Section */
+        header {
+            margin-bottom: 64px;
+            animation: fadeUp 0.8s ease forwards;
         }
 
         h1 {
             font-family: 'Outfit', sans-serif;
             font-size: 3.5rem;
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 12px;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+            background: linear-gradient(180deg, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .glitch-text {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tagline {
-            color: var(--neon-blue);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 30px;
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
-        }
-
-        .contact-links {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 40px;
-        }
-
-        .contact-links a {
+        .subtitle {
+            font-size: 1.1rem;
             color: var(--text-muted);
-            font-family: 'Space Mono', monospace;
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-            position: relative;
-            width: fit-content;
-        }
-
-        .contact-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -2px;
-            left: 0;
-            background-color: var(--neon-blue);
-            transition: width 0.3s ease;
-            box-shadow: var(--neon-glow);
-        }
-
-        .contact-links a:hover {
-            color: var(--neon-blue);
-        }
-
-        .contact-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Glassmorphism Cards */
-        .card {
-            background: var(--surface);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
+            max-width: 600px;
             margin-bottom: 24px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .subtitle span {
+            color: var(--electric-blue);
+            font-weight: 500;
+        }
+
+        .contact-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            background: var(--card-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-btn:hover {
+            border-color: var(--electric-blue);
+            background: var(--electric-blue-dim);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.1);
+        }
+
+        /* Dynamic Grid System */
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.2s;
             opacity: 0;
-            transform: translateY(30px);
+        }
+
+        .section-title::after {
+            content: '';
+            height: 1px;
+            flex-grow: 1;
+            background: linear-gradient(90deg, var(--border-color), transparent);
+        }
+
+        /* Magic Spotlight Cards */
+        .cards-grid {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 64px;
+        }
+
+        .card {
+            background-color: var(--card-color);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            position: relative;
+            cursor: default;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: border-color 0.3s, transform 0.3s;
         }
 
         .card.visible {
@@ -166,29 +166,35 @@
         }
 
         .card:hover {
-            background: var(--surface-hover);
-            border-color: var(--border-hover);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.05);
-            transform: translateY(-5px) scale(1.01);
+            border-color: rgba(0, 229, 255, 0.4);
         }
 
-        h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 500;
-            color: #fff;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        h2::after {
+        /* The JS-powered hover glow */
+        .card::before {
             content: "";
-            height: 1px;
-            flex-grow: 1;
-            background: linear-gradient(90deg, var(--neon-blue), transparent);
-            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                800px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(0, 229, 255, 0.08), 
+                transparent 40%
+            );
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1; /* Keeps text above the glow */
         }
 
         .card-header {
@@ -197,30 +203,29 @@
             align-items: flex-start;
             margin-bottom: 12px;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 8px;
         }
 
         .card-title {
             font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
+            font-weight: 700;
             color: #fff;
         }
 
         .card-meta {
-            background: rgba(0, 243, 255, 0.1);
-            color: var(--neon-blue);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            border: 1px solid rgba(0, 243, 255, 0.2);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .card-role {
-            color: var(--neon-blue);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
+            color: var(--electric-blue);
+            font-size: 0.9rem;
+            font-weight: 500;
             margin-bottom: 16px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -232,13 +237,36 @@
         }
 
         .card-desc strong {
-            color: var(--text-main);
+            color: #fff;
             font-weight: 600;
             display: block;
             margin-bottom: 8px;
         }
 
-        /* Tags and Lists */
+        /* Lists & Tags */
+        ul.bullet-list {
+            list-style: none;
+            margin-top: 16px;
+            display: grid;
+            gap: 12px;
+        }
+
+        ul.bullet-list li {
+            position: relative;
+            padding-left: 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        ul.bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--electric-blue);
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
         .tags {
             display: flex;
             flex-wrap: wrap;
@@ -247,154 +275,101 @@
         }
 
         .tag {
-            background: transparent;
-            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
             padding: 6px 12px;
-            border-radius: 4px;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover .tag {
-            border-color: rgba(0, 243, 255, 0.3);
+            border-radius: 6px;
+            font-size: 0.8rem;
             color: var(--text-main);
         }
 
-        ul.metrics-list {
-            list-style: none;
-            margin-top: 16px;
-            display: grid;
-            gap: 12px;
-        }
-
-        ul.metrics-list li {
-            position: relative;
-            padding-left: 20px;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        ul.metrics-list li::before {
-            content: ">";
-            position: absolute;
-            left: 0;
-            color: var(--neon-blue);
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-        }
-
-        /* Data Grid for Education */
-        .data-grid {
+        .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
-        .data-box {
+        .metric-box {
             background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 16px;
-            border-radius: 8px;
-            border-left: 3px solid var(--neon-blue);
+            border-left: 2px solid var(--electric-blue);
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
         }
 
-        .data-label {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            text-transform: uppercase;
+        .metric-label {
+            font-size: 0.75rem;
             color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             margin-bottom: 4px;
         }
 
-        .data-value {
+        .metric-value {
             font-weight: 600;
             color: #fff;
         }
 
-        @media (max-width: 900px) {
-            .layout {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                padding: 40px 20px;
-            }
-            .sidebar {
-                position: relative;
-                top: 0;
-            }
-            * { cursor: auto; } /* Disable custom cursor on mobile */
-            .cursor-follower, .cursor-dot { display: none; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .card { padding: 24px; }
+            .card-header { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <div class="cursor-follower"></div>
-    <div class="cursor-dot"></div>
+    <div class="bg-glow"></div>
 
-    <div class="layout">
-        <aside class="sidebar">
-            <h1 class="glitch-text">Arnav<br>Mana</h1>
-            <p class="tagline">SYS.ARCHITECT // RESEARCH</p>
-            
-            <div class="contact-links">
-                <a href="mailto:2arnavmana@gmail.com">MSG: 2arnavmana@gmail.com</a>
-                <a href="tel:+14086561171">COM: +1 (408) 656-1171</a>
+    <div class="container">
+        
+        <header>
+            <h1>Arnav Mana</h1>
+            <p class="subtitle">Computational researcher focused on <span>cardiac critical care</span> and <span>health innovation</span>. Building predictive architectures to decode high-risk patient trajectories.</p>
+            <div class="contact-row">
+                <a href="mailto:2arnavmana@gmail.com" class="contact-btn">2arnavmana@gmail.com</a>
+                <a href="tel:+14086561171" class="contact-btn">+1 408-656-1171</a>
             </div>
+        </header>
 
-            <div class="card" style="padding: 24px; opacity: 1; transform: none;">
-                <div class="card-role" style="margin-bottom: 8px;">Tech Stack</div>
-                <div class="tags">
-                    <span class="tag">Python</span>
-                    <span class="tag">R</span>
-                    <span class="tag">MATLAB</span>
-                    <span class="tag">SQL</span>
-                    <span class="tag">Swift</span>
-                    <span class="tag">JavaScript</span>
-                </div>
-
-                <div class="card-role" style="margin-top: 24px; margin-bottom: 8px;">Wet Lab</div>
-                <div class="tags">
-                    <span class="tag">Gel Electrophoresis</span>
-                    <span class="tag">PAGE</span>
-                    <span class="tag">ELISA</span>
-                    <span class="tag">qPCR</span>
-                </div>
-            </div>
-        </aside>
-
-        <main class="content">
+        <h2 class="section-title">Experience & Research</h2>
+        <div class="cards-grid" id="research-cards">
             
-            <section>
-                <h2>Experience_&_Research</h2>
-
-                <div class="card scroll-reveal">
+            <div class="card scroll-reveal">
+                <div class="card-content">
                     <div class="card-header">
                         <span class="card-title">UCSF Cardiac Critical Care</span>
-                        <span class="card-meta">Aug 2025 – Present</span>
+                        <span class="card-meta">Remote • Aug 2025 – Present</span>
                     </div>
-                    <div class="card-role">Research Intern // Remote</div>
+                    <div class="card-role">Research Intern</div>
                     <div class="card-desc">
                         <strong>Integrating SHARC Phenotypes and Hemodynamic Modifiers to Redefine the Predictive Architecture of Lactate</strong>
                         Leveraging network analysis to decode how hemodynamic modifiers and SHARC phenotypes transform lactate from a late-stage marker into a precision tool for predicting the transition from STEMI to heart failure shock.
                     </div>
                 </div>
+            </div>
 
-                <div class="card scroll-reveal">
+            <div class="card scroll-reveal">
+                <div class="card-content">
                     <div class="card-header">
                         <span class="card-title">CU Anschutz School of Medicine</span>
-                        <span class="card-meta">May 2024 – Present</span>
+                        <span class="card-meta">Remote • May 2024 – Present</span>
                     </div>
-                    <div class="card-role">Research Intern // Remote</div>
+                    <div class="card-role">Research Intern</div>
                     <div class="card-desc">
                         <strong>Investigating the Role of the Glycosphingolipid-Cytokine Signaling Axis in the Development and Progression of Hypoplastic Left Heart Syndrome</strong>
                         Investigating how the interaction between glycosphingolipid signaling and cytokine pathways drives the development and severity of Hypoplastic Left Heart Syndrome (HLHS).
                     </div>
                 </div>
+            </div>
 
-                <div class="card scroll-reveal">
+            <div class="card scroll-reveal">
+                <div class="card-content">
                     <div class="card-header">
                         <span class="card-title">Latent Spatiotemporal Topologies</span>
                         <span class="card-meta">Aug 2025 – Present</span>
@@ -405,8 +380,10 @@
                         Optimizing the SCAI staging system for cardiogenic shock by using decision tree algorithms to interpret high-fidelity PhysioGraph hemodynamic data for earlier identification and intervention.
                     </div>
                 </div>
+            </div>
 
-                <div class="card scroll-reveal">
+            <div class="card scroll-reveal">
+                <div class="card-content">
                     <div class="card-header">
                         <span class="card-title">Post-Cardiac Arrest Outcomes</span>
                         <span class="card-meta">Aug 2025 – Present</span>
@@ -417,8 +394,10 @@
                         Analyzed 2,653 IHCA patients using IPTW and linear mixed-effects models to identify a “metabolic shield” in OSA patients that significantly reduced mortality without improving neurological recovery.
                     </div>
                 </div>
+            </div>
 
-                <div class="card scroll-reveal">
+            <div class="card scroll-reveal">
+                <div class="card-content">
                     <div class="card-header">
                         <span class="card-title">Vascular Inflammation in CAD</span>
                         <span class="card-meta">Mar 2024 – Nov 2025</span>
@@ -429,91 +408,124 @@
                         Investigating the cytokine-driven inflammatory landscape of coronary artery disease to map the pathophysiological mechanisms and identify novel therapeutic targets.
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <section>
-                <h2>Leadership</h2>
-                <div class="card scroll-reveal">
+        </div>
+
+        <h2 class="section-title">Leadership & Operations</h2>
+        <div class="cards-grid" id="leadership-cards">
+            
+            <div class="card scroll-reveal">
+                <div class="card-content">
                     <div class="card-header">
                         <span class="card-title">Hack4Health</span>
-                        <span class="card-meta">Aug 2025 – Present</span>
+                        <span class="card-meta">Remote • Aug 2025 – Present</span>
                     </div>
                     <div class="card-role">Solo Organizer</div>
-                    <ul class="metrics-list">
+                    
+                    <ul class="bullet-list">
                         <li>Led AI4Alzheimers, one of the world’s largest student-led hackathons, hosting 1,470 global participants.</li>
                         <li>Secured partnerships with 20+ organizations, raising $100K+ in sponsorship funding and prizes.</li>
                         <li>Negotiated recurring sponsorship agreement with Coder, securing $3,000 annually.</li>
                         <li>Recruited 20 research mentors, bringing 100+ publications and 500+ citations.</li>
                     </ul>
                 </div>
-            </section>
+            </div>
 
-            <section>
-                <h2>Academic_Profile</h2>
-                <div class="card scroll-reveal">
+        </div>
+
+        <h2 class="section-title">Education & Skills</h2>
+        <div class="cards-grid" id="edu-cards">
+            
+            <div class="card scroll-reveal">
+                <div class="card-content">
                     <div class="card-header">
                         <span class="card-title">Los Gatos High School</span>
                         <span class="card-meta">Class of 2028</span>
                     </div>
                     
-                    <div class="data-grid">
-                        <div class="data-box">
-                            <div class="data-label">GPA (UW/W)</div>
-                            <div class="data-value">4.0 / 4.67</div>
+                    <div class="metrics-grid">
+                        <div class="metric-box">
+                            <div class="metric-label">GPA (UW / W)</div>
+                            <div class="metric-value">4.0 / 4.67</div>
                         </div>
-                        <div class="data-box">
-                            <div class="data-label">SAT Score</div>
-                            <div class="data-value">1570 (770R/800M)</div>
+                        <div class="metric-box">
+                            <div class="metric-label">SAT Score</div>
+                            <div class="metric-value">1570 (770R/800M) <span style="font-size: 0.8em; font-weight: 400; color: var(--text-muted);">(First Attempt)</span></div>
                         </div>
                     </div>
 
-                    <ul class="metrics-list">
+                    <ul class="bullet-list">
                         <li><strong>Relevant Coursework:</strong> AP Calculus BC, AP European History, English 10 Honors, Spanish 4 Honors</li>
                         <li><strong>Self-Studied:</strong> AP Biology, AP Chemistry, AP Statistics</li>
-                        <li><strong>MIT OCW:</strong> Introduction to Computer Science and Programming in Python; Intro to Computational Thinking and Data Science</li>
+                        <li><strong>MIT OpenCourseWare:</strong> Introduction to Computer Science and Programming in Python; Introduction to Computational Thinking and Data Science</li>
                     </ul>
                 </div>
-            </section>
+            </div>
 
-        </main>
+            <div class="card scroll-reveal">
+                <div class="card-content">
+                    <div class="card-title" style="margin-bottom: 16px;">Technical Arsenal</div>
+                    
+                    <div class="metric-label">Languages & Tools</div>
+                    <div class="tags" style="margin-bottom: 20px;">
+                        <span class="tag">Python</span>
+                        <span class="tag">R</span>
+                        <span class="tag">MATLAB</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">HTML/CSS</span>
+                        <span class="tag">SQL</span>
+                        <span class="tag">Swift</span>
+                    </div>
+
+                    <div class="metric-label">Laboratory Skills</div>
+                    <div class="tags" style="margin-bottom: 20px;">
+                        <span class="tag">Gel Electrophoresis</span>
+                        <span class="tag">PAGE</span>
+                        <span class="tag">ELISA</span>
+                        <span class="tag">PCR</span>
+                        <span class="tag">qPCR</span>
+                        <span class="tag">RT-qPCR</span>
+                    </div>
+
+                    <div class="metric-label">Other</div>
+                    <div class="tags">
+                        <span class="tag">English</span>
+                        <span class="tag">Spanish</span>
+                        <span class="tag">Hindi</span>
+                        <span class="tag">Eagle Scout</span>
+                        <span class="tag">Cross Country</span>
+                        <span class="tag">Track</span>
+                        <span class="tag">Fencing</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 
     <script>
-        // Custom Cursor Logic
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorFollower = document.querySelector('.cursor-follower');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
-            
-            // Add a slight delay to the follower for a smooth trailing effect
-            setTimeout(() => {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            }, 50);
-        });
+        // Magic Spotlight Hover Effect
+        const handleOnMouseMove = e => {
+            const { currentTarget: target } = e;
+            const rect = target.getBoundingClientRect(),
+                  x = e.clientX - rect.left,
+                  y = e.clientY - rect.top;
 
-        // Hover effect for interactive elements
-        const hoverElements = document.querySelectorAll('a, .card');
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorFollower.style.width = '60px';
-                cursorFollower.style.height = '60px';
-                cursorFollower.style.backgroundColor = 'rgba(0, 243, 255, 0.1)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursorFollower.style.width = '40px';
-                cursorFollower.style.height = '40px';
-                cursorFollower.style.backgroundColor = 'transparent';
-            });
-        });
+            target.style.setProperty("--mouse-x", `${x}px`);
+            target.style.setProperty("--mouse-y", `${y}px`);
+        };
 
-        // Scroll Reveal Animations
+        for(const card of document.querySelectorAll(".card")) {
+            card.onmousemove = e => handleOnMouseMove(e);
+        }
+
+        // Scroll Reveal Animation Setup
         const observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.15
+            threshold: 0.1
         };
 
         const observer = new IntersectionObserver((entries, observer) => {
@@ -525,8 +537,10 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.scroll-reveal').forEach(card => {
-            observer.observe(card);
+        document.querySelectorAll('.scroll-reveal').forEach((el, index) => {
+            // Staggered delay based on index for smoother loading
+            el.style.transitionDelay = `${index * 0.05}s`;
+            observer.observe(el);
         });
     </script>
 </body>
