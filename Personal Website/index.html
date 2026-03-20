@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,600 +7,394 @@
     <!-- Premium Serif Fonts: Playfair Display & Lora -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0c0b0a;
-            --bg-lighter: #161514;
+            --bg-dark: #070707;
             --text-main: #fcf8f2;
-            --text-muted: #b8b0a5;
-            --accent: #d4af37;
-            /* elegant gold */
+            --text-muted: #a69c8f;
+            --accent: #d4af37; /* elegant gold */
+            --accent-dim: rgba(212, 175, 55, 0.15);
             --border: rgba(252, 248, 242, 0.08);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Lora', serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg-dark);
             color: var(--text-main);
             overflow-x: hidden;
             line-height: 1.6;
-            cursor: none;
-            /* custom elegant cursor */
+            cursor: none; 
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Cinematic Grain */
+        /* ---------------- NEXT LEVEL BACKGROUND ---------------- */
+        /* Fluid Moving Background */
+        .ambient-mesh {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(30, 20, 10, 0.6), transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(10, 20, 30, 0.6), transparent 50%);
+            z-index: -2;
+            animation: meshShift 20s ease-in-out infinite alternate;
+        }
+        @keyframes meshShift {
+            0% { transform: scale(1) translateY(0); }
+            100% { transform: scale(1.1) translateY(-20px); }
+        }
+
         .grain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 50;
-            pointer-events: none;
-            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-            opacity: 0.035;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 50;
+            pointer-events: none; opacity: 0.04; mix-blend-mode: overlay;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
         }
 
-        /* Elegant Ambient Orbs */
-        .ambient-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            z-index: -1;
-            opacity: 0.5;
-            animation: float 25s infinite ease-in-out;
+        /* Ambient rotating aura behind hero */
+        .hero-aura {
+            position: absolute; top: 50%; left: 50%; width: 80vw; height: 80vw;
+            background: conic-gradient(from 0deg, transparent, rgba(212,175,55,0.05), transparent 40%);
+            border-radius: 50%; transform: translate(-50%, -50%);
+            animation: rotateAura 30s linear infinite; z-index: -1; filter: blur(60px);
+        }
+        @keyframes rotateAura {
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        .orb-1 {
-            width: 600px;
-            height: 600px;
-            background: rgba(80, 50, 20, 0.3);
-            top: -20%;
-            left: -10%;
-        }
+        h1, h2, h3, h4, .serif-text { font-family: 'Playfair Display', serif; }
 
-        .orb-2 {
-            width: 700px;
-            height: 700px;
-            background: rgba(30, 40, 60, 0.4);
-            bottom: -20%;
-            right: -10%;
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            50% {
-                transform: translate(60px, 40px) scale(1.1);
-            }
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        .serif-text {
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* Custom Elegant Cursor */
+        /* ---------------- ELEGANT CURSOR ---------------- */
         .cursor-dot {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 6px;
-            height: 6px;
-            background: var(--text-main);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 100;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background 0.3s;
+            position: fixed; top: 0; left: 0; width: 6px; height: 6px;
+            background: var(--text-main); border-radius: 50%;
+            pointer-events: none; z-index: 100; transform: translate(-50%, -50%);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
         .cursor-ring {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 45px;
-            height: 45px;
-            border: 1px solid rgba(252, 248, 242, 0.3);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99;
-            transform: translate(-50%, -50%);
-            transition: transform 0.15s ease-out, border-color 0.3s;
+            position: fixed; top: 0; left: 0; width: 45px; height: 45px;
+            border: 1px solid rgba(252, 248, 242, 0.4); border-radius: 50%;
+            pointer-events: none; z-index: 99; transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out, border-color 0.3s, background 0.3s;
+            backdrop-filter: blur(2px);
         }
 
         /* Navigation */
         nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 2.5rem 5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-            mix-blend-mode: difference;
+            position: fixed; top: 0; width: 100%; padding: 2.5rem 5vw;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 10; mix-blend-mode: difference;
         }
+        .logo { font-size: 1.2rem; font-weight: 600; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
 
-        .logo {
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: #fff;
-        }
-
-        .nav-link {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1rem;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-
-        .nav-link:hover {
-            opacity: 1;
-        }
-
-        /* Hero Section */
+        /* ---------------- HERO SECTION ---------------- */
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 5rem;
-            position: relative;
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; padding: 0 5vw; position: relative;
         }
-
         .hero-label {
-            font-size: 1.2rem;
-            font-style: italic;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
+            font-size: 1.2rem; font-style: italic; color: var(--accent);
+            margin-bottom: 0.5rem; letter-spacing: 2px;
         }
-
         .hero-title {
-            font-size: clamp(5rem, 12vw, 11rem);
-            font-weight: 400;
-            line-height: 0.9;
-            letter-spacing: -2px;
-            margin-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-            margin-left: -0.5rem;
+            font-size: clamp(5rem, 14vw, 13rem);
+            font-weight: 400; line-height: 0.85;
+            letter-spacing: -3px; margin-bottom: 2rem;
+            margin-left: -0.5rem; position: relative;
         }
-
         .name-wrapper {
-            background: linear-gradient(135deg, #ffffff, #d4af37 60%, #a8a096);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, #ffffff, #d4af37 50%, #8a7c6b);
+            -webkit-background-clip: text; background-clip: text;
+            color: transparent; text-shadow: 0px 10px 40px rgba(0,0,0,0.8);
+            position: relative; z-index: 2;
         }
-
         .hero-bio {
-            max-width: 650px;
-            font-size: 1.3rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-top: 1.5rem;
-            border-left: 2px solid var(--accent);
-            padding-left: 2rem;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 1.5rem 2rem;
-            border-radius: 4px;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--accent);
+            max-width: 700px; font-size: 1.3rem; color: var(--text-muted);
+            line-height: 1.8; margin-top: 1.5rem; border-left: 2px solid var(--accent);
+            padding-left: 2rem; background: rgba(10,10,10,0.4);
+            padding: 2rem; border-radius: 4px; backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.03); border-left: 3px solid var(--accent);
         }
 
-        /* Common Section Layout */
-        .section {
-            padding: 8rem 5rem;
-            position: relative;
-        }
-
+        /* ---------------- COMMON SECTIONS ---------------- */
+        .section { padding: 10rem 5vw; position: relative; }
         .section-title {
-            font-size: 3.5rem;
-            font-weight: 400;
-            margin-bottom: 4rem;
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            color: #fff;
+            font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 400; margin-bottom: 5rem;
+            display: flex; align-items: center; gap: 2rem; color: #fff;
         }
+        .section-title::before { content: '✧'; color: var(--accent); font-size: 2rem; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
 
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
+        /* ---------------- MOUSE-TRACKING GLOW CARDS ---------------- */
+        .glow-card {
+            background: rgba(20, 18, 16, 0.4); border: 1px solid var(--border);
+            border-radius: 12px; position: relative; overflow: hidden;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
-
-        /* Elegant Bento Grid */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2rem;
-            grid-auto-rows: minmax(220px, auto);
+        .glow-card::before {
+            content: ""; position: absolute; inset: 0; z-index: 0;
+            background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(212, 175, 55, 0.08), transparent 40%);
+            opacity: 0; transition: opacity 0.5s; pointer-events: none;
         }
+        .glow-card:hover::before { opacity: 1; }
+        .glow-card:hover { transform: translateY(-8px); border-color: rgba(212, 175, 55, 0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .glow-content { position: relative; z-index: 1; padding: 3.5rem; height: 100%; display: flex; flex-direction: column; }
+        
+        .bento-meta { font-family: 'Lora', serif; font-style: italic; color: var(--accent); margin-bottom: 1.5rem; font-size: 1.05rem; }
+        .glow-card h3 { font-size: clamp(1.8rem, 2.5vw, 2.4rem); margin-bottom: 1rem; color: #fff; line-height: 1.2; }
+        .glow-card p { color: var(--text-muted); font-size: 1.15rem; margin-top: auto; }
 
-        .bento-item {
-            background: var(--bg-lighter);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 3rem;
-            transition: background 0.5s, transform 0.5s, border-color 0.5s;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .bento-item:hover {
-            background: rgba(40, 35, 30, 0.4);
-            transform: translateY(-8px);
-            border-color: rgba(212, 175, 55, 0.3);
-        }
-
-        .bento-item h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #fff;
-            line-height: 1.2;
-        }
-
-        .bento-meta {
-            font-family: 'Lora', serif;
-            font-style: italic;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-        }
-
-        .span-12 {
-            grid-column: span 12;
-        }
-
-        .span-8 {
-            grid-column: span 8;
-        }
-
-        .span-6 {
-            grid-column: span 6;
-        }
-
-        .span-4 {
-            grid-column: span 4;
-        }
-
-        /* Horizontal Drag Slider */
+        /* ---------------- DRAGGABLE HORIZONTAL SLIDER ---------------- */
+        .slider-wrapper { width: 100vw; margin-left: -5vw; }
         .slider-container {
-            width: 100vw;
-            margin-left: -5rem;
-            padding-left: 5rem;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding-bottom: 4rem;
-            cursor: grab;
+            width: 100%; padding-left: 5vw; padding-right: 5vw;
+            overflow-x: auto; scroll-behavior: smooth;
+            padding-bottom: 4rem; cursor: grab;
+            /* Scroll snap for elegance */
+            scroll-snap-type: x mandatory;
+        }
+        .slider-container:active { cursor: grabbing; }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .slider-track { display: flex; gap: 3rem; width: max-content; padding-right: 5vw; }
+        .slider-item {
+            width: 600px; flex-shrink: 0;
+            scroll-snap-align: center;
         }
 
-        .slider-container:active {
-            cursor: grabbing;
+        /* ---------------- INTEGRATED DUAL MARQUEE ---------------- */
+        .marquee-section {
+            position: relative; width: 100vw; margin-left: -5vw;
+            padding: 6rem 0; display: flex; flex-direction: column; gap: 1.5rem;
+            /* Masked edges for seamless integration */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            background: linear-gradient(180deg, transparent, rgba(20,18,16,0.5), transparent);
         }
-
-        .slider-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .slider-track {
-            display: flex;
-            gap: 2.5rem;
-            width: max-content;
-            padding-right: 5rem;
-        }
-
-        .slider-card {
-            width: 500px;
-            background: var(--bg-lighter);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 3.5rem;
-            flex-shrink: 0;
-            transition: transform 0.5s, background 0.5s;
-        }
-
-        .slider-card:hover {
-            transform: translateY(-12px);
-            background: rgba(40, 35, 30, 0.3);
-            border-color: rgba(212, 175, 55, 0.2);
-        }
-
-        .slider-card h3 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            color: #fff;
-            line-height: 1.2;
-        }
-
-        /* Endless Marquee */
-        .marquee-wrapper {
-            position: relative;
-            width: 100vw;
-            margin-left: -5rem;
-            overflow: hidden;
-            padding: 4rem 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            white-space: nowrap;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .marquee-track {
-            display: inline-flex;
-            animation: marquee 35s linear infinite;
-        }
-
+        .marquee-track { display: flex; white-space: nowrap; width: max-content; }
+        .marquee-track.left { animation: marqueeLeft 40s linear infinite; }
+        .marquee-track.right { animation: marqueeRight 40s linear infinite; }
+        
         .marquee-item {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            font-weight: 400;
-            padding: 0 4rem;
-            color: transparent;
-            text-transform: uppercase;
+            font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 400; padding: 0 4rem;
+            color: transparent; text-transform: uppercase;
             -webkit-text-stroke: 1px rgba(252, 248, 242, 0.15);
-            transition: color 0.5s, -webkit-text-stroke 0.5s;
+            transition: color 0.5s, -webkit-text-stroke 0.5s, transform 0.5s;
         }
+        .marquee-item.italic { font-style: italic; -webkit-text-stroke: 1px var(--accent); }
+        .marquee-item:hover { color: var(--accent); -webkit-text-stroke: 0; transform: scale(1.05); }
+        
+        @keyframes marqueeLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes marqueeRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
-        .marquee-item:hover {
-            color: var(--accent);
-            -webkit-text-stroke: 0;
+        /* ---------------- BENTO GRID ---------------- */
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(12, 1fr);
+            gap: 2rem; grid-auto-rows: minmax(280px, auto);
         }
+        .span-12 { grid-column: span 12; }
+        .span-8 { grid-column: span 8; }
+        .span-6 { grid-column: span 6; }
+        .span-4 { grid-column: span 4; }
 
-        @keyframes marquee {
-            0% {
-                transform: translateX(0);
-            }
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(60px) scale(0.98); transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
 
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        /* Animation Classes */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        ul.styled-list {
-            list-style: none;
-            margin-top: 1.5rem;
-        }
-
-        ul.styled-list li {
-            position: relative;
-            padding-left: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        ul.styled-list li::before {
-            content: "✧";
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-size: 1.2rem;
-            top: -2px;
-        }
+        ul.styled-list { list-style: none; margin-top: 2rem;}
+        ul.styled-list li { position: relative; padding-left: 2rem; margin-bottom: 1.2rem; color: var(--text-muted); font-size: 1.15rem; }
+        ul.styled-list li::before { content: "✧"; position: absolute; left: 0; color: var(--accent); font-size: 1.2rem; top: -1px; }
 
         @media (max-width: 1024px) {
-            .hero-title {
-                font-size: 5rem;
-            }
-
-            .section {
-                padding: 6rem 2rem;
-            }
-
-            .bento-grid>div {
-                grid-column: span 12;
-            }
-
-            nav,
-            .hero {
-                padding: 2rem;
-            }
-
-            .slider-container,
-            .marquee-wrapper {
-                margin-left: -2rem;
-                padding-left: 2rem;
-            }
-
-            .slider-card {
-                width: 85vw;
-            }
+            .hero-title { font-size: clamp(4rem, 15vw, 8rem); margin-left: 0; }
+            .bento-grid > div { grid-column: span 12; }
+            .slider-item { width: 85vw; scroll-snap-align: start; }
+            .marquee-item { font-size: 3.5rem; padding: 0 2rem; }
         }
     </style>
 </head>
-
 <body>
 
+    <div class="ambient-mesh"></div>
     <div class="grain"></div>
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
 
     <div class="cursor-dot"></div>
     <div class="cursor-ring"></div>
 
     <nav>
         <div class="logo">A. Mana</div>
-        <a href="mailto:2arnavmana@gmail.com" class="nav-link serif-text">Contact</a>
+        <a href="mailto:2arnavmana@gmail.com" class="serif-text" style="color: #fff; text-decoration: none; font-size: 1.2rem; font-style: italic;">Contact</a>
     </nav>
 
     <main>
         <section class="hero">
+            <div class="hero-aura"></div>
             <div class="hero-label reveal">Computational Biology & Clinical AI</div>
             <h1 class="hero-title reveal" style="transition-delay: 0.1s;">
                 <span class="name-wrapper">Arnav Mana</span>
             </h1>
             <div class="hero-bio reveal" style="transition-delay: 0.2s;">
-                Decoding critical cardiac pathways through predictive architectures and molecular biology. Translating
-                high-dimensional physiological datasets into precision interventions to identify high-risk trajectories
-                prior to clinical manifestation.
+                Decoding critical cardiac pathways through predictive architectures and molecular biology. Translating high-dimensional physiological datasets into precision interventions to identify high-risk trajectories prior to clinical manifestation.
             </div>
         </section>
 
-        <!-- Interactive Slider Section -->
+        <!-- 5 PROJECTS HORIZONTAL SLIDER -->
         <section class="section">
-            <h2 class="section-title reveal">Institutional Research</h2>
-            <div class="slider-container reveal">
-                <div class="slider-track">
-                    <div class="slider-card">
-                        <div class="bento-meta">UCSF Cardiac Critical Care • Aug 2025 – Present</div>
-                        <h3>Predictive Architecture of Lactate</h3>
-                        <p style="color: var(--text-muted); margin-top:1.5rem; font-size: 1.1rem;">Engineering advanced
-                            network analyses to decode complex interactions between hemodynamic modifiers and SHARC
-                            phenotypes. Transforming lactate from a reactionary marker to a precision forecast for STEMI
-                            to heart failure shock.</p>
-                    </div>
-                    <div class="slider-card">
-                        <div class="bento-meta">CU Anschutz School of Medicine • May 2024 – Present</div>
-                        <h3>Glycosphingolipid-Cytokine Axis in HLHS</h3>
-                        <p style="color: var(--text-muted); margin-top:1.5rem; font-size: 1.1rem;">Conducting critical
-                            pathway analysis to unearth the molecular interplay between glycosphingolipid signaling and
-                            cytokine cascades to decode drivers behind the severity of Hypoplastic Left Heart Syndrome.
-                        </p>
-                    </div>
-                    <div class="slider-card">
-                        <div class="bento-meta">Computational Cardiology • Aug 2025 – Present</div>
-                        <h3>Latent Topologies of Cardiogenic Shock</h3>
-                        <p style="color: var(--text-muted); margin-top:1.5rem; font-size: 1.1rem;">Designing a custom
-                            Graph Attention Network (PhysioGraph) to optimize the SCAI staging system using
-                            high-fidelity hemodynamic timeseries to extract latent signatures for early clinical
-                            intervention in STEMI.</p>
+            <h2 class="section-title reveal">Scientific Investigation</h2>
+            <div class="slider-wrapper reveal" style="transition-delay: 0.1s;">
+                <div class="slider-container">
+                    <div class="slider-track">
+                        <!-- Card 1 -->
+                        <div class="slider-item glow-card">
+                            <div class="glow-content">
+                                <div>
+                                    <div class="bento-meta">UCSF Cardiac Critical Care</div>
+                                    <h3>Predictive Architecture of Lactate</h3>
+                                </div>
+                                <p>Engineering advanced network analyses to decode complex interactions between hemodynamic modifiers and SHARC phenotypes. Transforming lactate from a reactionary marker to a precision forecast for STEMI to heart failure shock.</p>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="slider-item glow-card">
+                            <div class="glow-content">
+                                <div>
+                                    <div class="bento-meta">CU Anschutz School of Medicine</div>
+                                    <h3>Glycosphingolipid-Cytokine Axis in HLHS</h3>
+                                </div>
+                                <p>Conducting critical pathway analysis to unearth the molecular interplay between glycosphingolipid signaling and cytokine cascades to decode drivers behind the severity of Hypoplastic Left Heart Syndrome.</p>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="slider-item glow-card">
+                            <div class="glow-content">
+                                <div>
+                                    <div class="bento-meta">Computational Cardiology</div>
+                                    <h3>Latent Topologies of Cardiogenic Shock</h3>
+                                </div>
+                                <p>Designing a custom Graph Attention Network (PhysioGraph) to optimize the SCAI staging system using high-fidelity hemodynamic timeseries to extract latent signatures for early clinical intervention in STEMI.</p>
+                            </div>
+                        </div>
+                        <!-- Card 4 -->
+                        <div class="slider-item glow-card">
+                            <div class="glow-content">
+                                <div>
+                                    <div class="bento-meta">Clinical Outcomes Analysis</div>
+                                    <h3>Chronic Intermittent Hypoxia & Ischemic Tolerance</h3>
+                                </div>
+                                <p>A massive population study executing Inverse Probability of Treatment Weighting (IPTW) on 2,653 in-hospital cardiac arrest patients. Discovered an endogenous "metabolic shield" induced by OSA that drastically reduced mortality rates.</p>
+                            </div>
+                        </div>
+                        <!-- Card 5 -->
+                        <div class="slider-item glow-card">
+                            <div class="glow-content">
+                                <div>
+                                    <div class="bento-meta">Pathophysiology Review</div>
+                                    <h3>Cytokine Networks in Coronary Artery Disease</h3>
+                                </div>
+                                <p>A vast systematic review mathematically mapping the cytokine-driven inflammatory landscape underlying coronary artery disease to pinpoint mechanistic failures and isolate novel candidates for targeted pharmacological therapy.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Rolling Marquee -->
-        <div class="marquee-wrapper reveal">
-            <div class="marquee-track">
-                <div class="marquee-item">Python</div>
-                <div class="marquee-item">R</div>
-                <div class="marquee-item">MATLAB</div>
-                <div class="marquee-item">Swift</div>
+        <!-- ENDLESS BLURRED MARQUEE -->
+        <div class="marquee-section reveal">
+            <!-- Row 1: Left -->
+            <div class="marquee-track left">
                 <div class="marquee-item">Machine Learning</div>
-                <div class="marquee-item">Clinical AI</div>
-                <div class="marquee-item">RT-qPCR</div>
-                <div class="marquee-item">Computational Biology</div>
-                <!-- Duplicate array for seamless infinite scroll -->
-                <div class="marquee-item">Python</div>
-                <div class="marquee-item">R</div>
-                <div class="marquee-item">MATLAB</div>
-                <div class="marquee-item">Swift</div>
+                <div class="marquee-item italic">Computational Bio</div>
+                <div class="marquee-item">Python & R</div>
+                <div class="marquee-item italic">Clinical AI</div>
+                <div class="marquee-item">Quantitative PCR</div>
+                <div class="marquee-item italic">Graph Networks</div>
+                <!-- Duplicate for Loop -->
                 <div class="marquee-item">Machine Learning</div>
-                <div class="marquee-item">Clinical AI</div>
-                <div class="marquee-item">RT-qPCR</div>
-                <div class="marquee-item">Computational Biology</div>
+                <div class="marquee-item italic">Computational Bio</div>
+                <div class="marquee-item">Python & R</div>
+                <div class="marquee-item italic">Clinical AI</div>
+                <div class="marquee-item">Quantitative PCR</div>
+                <div class="marquee-item italic">Graph Networks</div>
+            </div>
+            <!-- Row 2: Right -->
+            <div class="marquee-track right">
+                <div class="marquee-item italic">Swift & MATLAB</div>
+                <div class="marquee-item">SQL</div>
+                <div class="marquee-item italic">Proteomics</div>
+                <div class="marquee-item">Biostatistics</div>
+                <div class="marquee-item italic">Hemodynamics</div>
+                <div class="marquee-item">ELISA Assays</div>
+                <!-- Duplicate for Loop -->
+                <div class="marquee-item italic">Swift & MATLAB</div>
+                <div class="marquee-item">SQL</div>
+                <div class="marquee-item italic">Proteomics</div>
+                <div class="marquee-item">Biostatistics</div>
+                <div class="marquee-item italic">Hemodynamics</div>
+                <div class="marquee-item">ELISA Assays</div>
             </div>
         </div>
 
-        <!-- Bento Grid Section -->
+        <!-- BENTO GRID -->
         <section class="section">
-            <h2 class="section-title reveal">Academic & Scientific Milestones</h2>
+            <h2 class="section-title reveal">Milestones & Leadership</h2>
             <div class="bento-grid">
-
-                <div class="bento-item span-8 reveal">
-                    <div class="bento-meta">Clinical Outcomes Analysis</div>
-                    <h3>Chronic Intermittent Hypoxia & Ischemic Tolerance</h3>
-                    <p style="color: var(--text-muted); margin-top:1rem; font-size: 1.1rem;">A massive population study
-                        executing Inverse Probability of Treatment Weighting (IPTW) on 2,653 in-hospital cardiac arrest
-                        patients. Discovered an endogenous "metabolic shield" induced by OSA that drastically reduced
-                        mortality rates.</p>
-                </div>
-
-                <div class="bento-item span-4 reveal" style="transition-delay: 0.1s;">
-                    <div class="bento-meta">Center for Excellence in Education • 2025</div>
-                    <h3>USABO Semifinalist</h3>
-                    <p style="color: var(--text-muted); margin-top:1rem; font-size: 1.1rem;">Advanced to the elite
-                        national stage, validating mastery over graduate-level cellular biology and physiology.</p>
-                </div>
-
-                <div class="bento-item span-6 reveal">
-                    <div class="bento-meta">Boy Scouts of America • Class of 2027</div>
-                    <h3>Historic Eagle Scout</h3>
-                    <ul class="styled-list">
-                        <li>Recognized as one of the 10 youngest Eagle Scouts in BSA's century-long history.</li>
-                        <li>The absolute youngest scout in Troop 539's 100+ year existence.</li>
-                    </ul>
-                </div>
-
-                <div class="bento-item span-6 reveal" style="transition-delay: 0.1s;">
-                    <div class="bento-meta">Global Leadership • Aug 2025 – Present</div>
-                    <h3>Hack4Health: Co-President</h3>
-                    <ul class="styled-list">
-                        <li>Architected AI4Alzheimers with 1,470 participants globally.</li>
-                        <li>Secured $100,000+ in operational sponsorships from 20+ partners.</li>
-                    </ul>
-                </div>
-
-                <div class="bento-item span-12 reveal">
-                    <div class="bento-meta">Los Gatos High School • Class of 2028</div>
-                    <div
-                        style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:2rem;">
-                        <div style="max-width: 500px;">
-                            <h3>Academic Perfection</h3>
-                            <p style="color: var(--text-muted); font-size: 1.1rem;">AP Calculus BC, AP Biology, AP
-                                Chemistry, AP Statistics, MIT OCW: Computation & AI</p>
+                
+                <div class="bento-item span-12 glow-card reveal">
+                    <div class="glow-content" style="flex-direction: row; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem;">
+                        <div style="max-width: 600px;">
+                            <div class="bento-meta">Los Gatos High School • Class of 2028</div>
+                            <h3 style="font-size: clamp(2rem, 4vw, 3rem);">Academic Perfection</h3>
+                            <p>AP Calculus BC, AP Biology, AP Chemistry, AP Statistics, MIT OCW: Computation & AI</p>
                         </div>
-                        <div style="display:flex; gap:4rem;">
+                        <div style="display:flex; gap: clamp(2rem, 5vw, 4rem);">
                             <div>
-                                <div
-                                    style="font-family:'Playfair Display', serif; font-size:4rem; color:var(--accent); line-height: 1;">
-                                    1570</div>
-                                <div
-                                    style="font-size:0.9rem; color:var(--text-muted); letter-spacing: 1px; margin-top: 0.5rem; text-transform:uppercase;">
-                                    SAT (1st Attempt)</div>
+                                <div style="font-family:'Playfair Display', serif; font-size:clamp(3.5rem, 6vw, 5rem); color:var(--accent); line-height: 1;">1570</div>
+                                <div style="font-size:1rem; color:var(--text-muted); letter-spacing: 2px; margin-top: 1rem; text-transform:uppercase;">SAT (1st Attempt)</div>
                             </div>
                             <div>
-                                <div
-                                    style="font-family:'Playfair Display', serif; font-size:4rem; color:var(--accent); line-height: 1;">
-                                    4.67</div>
-                                <div
-                                    style="font-size:0.9rem; color:var(--text-muted); letter-spacing: 1px; margin-top: 0.5rem; text-transform:uppercase;">
-                                    Weighted GPA</div>
+                                <div style="font-family:'Playfair Display', serif; font-size:clamp(3.5rem, 6vw, 5rem); color:var(--accent); line-height: 1;">4.67</div>
+                                <div style="font-size:1rem; color:var(--text-muted); letter-spacing: 2px; margin-top: 1rem; text-transform:uppercase;">Weighted GPA</div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="bento-item span-8 glow-card reveal">
+                    <div class="glow-content">
+                        <div>
+                            <div class="bento-meta">Global Leadership • Aug 2025 – Present</div>
+                            <h3>Hack4Health: Co-President</h3>
+                        </div>
+                        <ul class="styled-list">
+                            <li>Architected AI4Alzheimers with 1,470 participants globally.</li>
+                            <li>Secured $100,000+ in operational sponsorships from 20+ partners.</li>
+                            <li>Recruited an oversight board of 20 mentors carrying 100+ publications.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bento-item span-4 glow-card reveal" style="transition-delay: 0.1s;">
+                    <div class="glow-content">
+                        <div>
+                            <div class="bento-meta">Center for Excellence in Education • 2025</div>
+                            <h3>USABO Semifinalist</h3>
+                        </div>
+                        <p>Advanced to the elite national stage, validating mastery over graduate-level cellular biology, human physiology, and complex biosystems.</p>
+                    </div>
+                </div>
+
+                <div class="bento-item span-12 glow-card reveal">
+                    <div class="glow-content" style="flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;">
+                        <div style="max-width: 600px;">
+                            <div class="bento-meta">Boy Scouts of America • Class of 2027</div>
+                            <h3>Historic Eagle Scout</h3>
+                            <p>Demonstrated sustained executive leadership, multifaceted skill acquisition, and extensive community infrastructure development.</p>
+                        </div>
+                        <ul class="styled-list" style="margin-top: 0; max-width: 500px;">
+                            <li>Recognized as one of the 10 youngest Eagle Scouts in BSA's century-long history.</li>
+                            <li>The absolute youngest scout in Troop 539's 100+ year existence.</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -610,23 +403,21 @@
 
     </main>
 
-    <footer
-        style="padding: 6rem 4rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted);">
-        <p class="serif-text" style="font-size: 2.5rem; color:#fff; margin-bottom: 1rem;">Arnav Mana</p>
-        <p style="font-size: 1.2rem; font-style: italic;">Deciphering the heart through computation.</p>
-        <div style="margin-top: 3rem; display: flex; justify-content: center; gap: 3rem;">
-            <a href="mailto:2arnavmana@gmail.com"
-                style="color: var(--accent); text-decoration: none; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase;">Email</a>
-            <a href="tel:+14086561171"
-                style="color: var(--accent); text-decoration: none; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase;">Phone</a>
+    <footer style="padding: 8rem 5vw; text-align: center; border-top: 1px solid var(--border); position: relative; overflow: hidden;">
+        <div class="hero-aura" style="opacity: 0.3; top: 100%;"></div>
+        <p class="serif-text" style="font-size: clamp(3rem, 6vw, 4.5rem); color:#fff; margin-bottom: 1rem; position: relative;">Arnav Mana</p>
+        <p style="font-size: 1.4rem; font-style: italic; color: var(--text-muted); position: relative;">Deciphering the heart through computation.</p>
+        <div style="margin-top: 4rem; display: flex; justify-content: center; gap: 4rem; position: relative;">
+            <a href="mailto:2arnavmana@gmail.com" class="serif-text" style="color: var(--accent); text-decoration: none; font-size: 1.5rem; transition: color 0.3s;">Email</a>
+            <a href="tel:+14086561171" class="serif-text" style="color: var(--accent); text-decoration: none; font-size: 1.5rem; transition: color 0.3s;">Phone</a>
         </div>
     </footer>
 
     <script>
-        // Elegant Custom Cursor
+        // Custom Cursor Logic
         const dot = document.querySelector('.cursor-dot');
         const ring = document.querySelector('.cursor-ring');
-
+        
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
         let ringX = mouseX;
@@ -636,41 +427,54 @@
             mouseX = e.clientX;
             mouseY = e.clientY;
             dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+            
+            // Mouse tracking for ALL glow cards
+            document.querySelectorAll('.glow-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
         });
 
         const animateRing = () => {
-            ringX += (mouseX - ringX) * 0.15; // Smooth interpolation
+            ringX += (mouseX - ringX) * 0.15;
             ringY += (mouseY - ringY) * 0.15;
             ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
             requestAnimationFrame(animateRing);
         };
         animateRing();
 
-        // Hover effect for interactive elements
-        const interactables = document.querySelectorAll('a, .bento-item, .slider-card, .marquee-item');
+        // Hover Effect specific
+        const interactables = document.querySelectorAll('a, .glow-card, .marquee-item');
         interactables.forEach(el => {
             el.addEventListener('mouseenter', () => {
-                ring.style.width = '70px';
-                ring.style.height = '70px';
+                ring.style.width = '75px';
+                ring.style.height = '75px';
                 ring.style.background = 'rgba(212, 175, 55, 0.05)';
                 ring.style.borderColor = 'rgba(212, 175, 55, 0.4)';
-                dot.style.background = 'transparent';
+                dot.style.background = 'var(--accent)';
+                dot.style.width = '10px';
+                dot.style.height = '10px';
             });
             el.addEventListener('mouseleave', () => {
                 ring.style.width = '45px';
                 ring.style.height = '45px';
                 ring.style.background = 'transparent';
-                ring.style.borderColor = 'rgba(252, 248, 242, 0.3)';
+                ring.style.borderColor = 'rgba(252, 248, 242, 0.4)';
                 dot.style.background = 'var(--text-main)';
+                dot.style.width = '6px';
+                dot.style.height = '6px';
             });
         });
 
-        // Cinematic Scroll Reveals (IntersectionObserver)
+        // IntersectionObserver for Scroll Reveals
         const observerOptions = {
             threshold: 0.15,
             rootMargin: "0px 0px -50px 0px"
         };
-
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -682,7 +486,7 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Horizontal Slider Drag functionality
+        // Horizontal Slider Drag
         const slider = document.querySelector('.slider-container');
         let isDown = false;
         let startX;
@@ -690,24 +494,28 @@
 
         slider.addEventListener('mousedown', (e) => {
             isDown = true;
+            slider.style.cursor = 'grabbing';
             startX = e.pageX - slider.offsetLeft;
             scrollLeft = slider.scrollLeft;
             ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%) scale(0.8)`;
         });
         slider.addEventListener('mouseleave', () => {
             isDown = false;
+            slider.style.cursor = 'grab';
         });
         slider.addEventListener('mouseup', () => {
             isDown = false;
+            slider.style.cursor = 'grab';
+            
+            // Snap logic (Optional enhancement, already using CSS snap but this smooths release)
         });
         slider.addEventListener('mousemove', (e) => {
             if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 2; // Scroll speed multiplier
+            const walk = (x - startX) * 2; 
             slider.scrollLeft = scrollLeft - walk;
         });
     </script>
 </body>
-
 </html>
