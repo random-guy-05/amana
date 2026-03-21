@@ -3,519 +3,799 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arnav Mana | Clinical AI Researcher</title>
-    <!-- Premium Serif Fonts: Playfair Display & Lora -->
+    <title>Arnav Mana</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600;1,800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #070707;
-            --text-main: #fcf8f2;
-            --text-muted: #a69c8f;
-            --accent: #d4af37; /* elegant gold */
-            --accent-dim: rgba(212, 175, 55, 0.15);
-            --border: rgba(252, 248, 242, 0.08);
+            --bg: #060605;
+            --text: #f5f0e8;
+            --muted: #8a8278;
+            --gold: #c9a84c;
+            --gold-dim: rgba(201, 168, 76, 0.12);
+            --border: rgba(245, 240, 232, 0.07);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
+        html { scroll-behavior: smooth; }
+
         body {
             font-family: 'Lora', serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
+            background: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
-            line-height: 1.6;
-            cursor: none; 
+            line-height: 1.7;
+            cursor: none;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ---------------- NEXT LEVEL BACKGROUND ---------------- */
-        /* Fluid Moving Background */
-        .ambient-mesh {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(30, 20, 10, 0.6), transparent 50%),
-                radial-gradient(circle at 85% 30%, rgba(10, 20, 30, 0.6), transparent 50%);
-            z-index: -2;
-            animation: meshShift 20s ease-in-out infinite alternate;
-        }
-        @keyframes meshShift {
-            0% { transform: scale(1) translateY(0); }
-            100% { transform: scale(1.1) translateY(-20px); }
-        }
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
 
+        /* ─── BACKGROUND SYSTEM ─────────────────── */
+        .bg-canvas {
+            position: fixed; inset: 0; z-index: -2; overflow: hidden;
+        }
+        /* Lush breathing gradient blobs */
+        .bg-blob {
+            position: absolute; border-radius: 50%;
+            filter: blur(110px); opacity: 0.55;
+            animation: blobDrift var(--dur, 25s) ease-in-out infinite alternate;
+        }
+        .blob-1 {
+            width: 80vw; height: 80vw; top: -30%; left: -20%;
+            background: radial-gradient(circle, rgba(80,55,20,0.55), transparent 70%);
+            --dur: 22s;
+        }
+        .blob-2 {
+            width: 60vw; height: 60vw; bottom: -20%; right: -15%;
+            background: radial-gradient(circle, rgba(20,30,55,0.5), transparent 70%);
+            --dur: 28s; animation-direction: alternate-reverse;
+        }
+        .blob-3 {
+            width: 45vw; height: 45vw; top: 30%; left: 40%;
+            background: radial-gradient(circle, rgba(50,25,10,0.3), transparent 70%);
+            --dur: 18s;
+        }
+        @keyframes blobDrift {
+            0%   { transform: translate(0,0) scale(1); }
+            50%  { transform: translate(40px, -60px) scale(1.08); }
+            100% { transform: translate(-30px, 30px) scale(0.95); }
+        }
+        /* Diagonal faint grid */
+        .bg-grid {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(245,240,232,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245,240,232,0.018) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+        /* Film grain */
         .grain {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 50;
-            pointer-events: none; opacity: 0.04; mix-blend-mode: overlay;
-            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            position: fixed; inset: 0; z-index: 50; pointer-events: none;
+            opacity: 0.035; mix-blend-mode: overlay;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
         }
 
-        /* Ambient rotating aura behind hero */
-        .hero-aura {
-            position: absolute; top: 50%; left: 50%; width: 80vw; height: 80vw;
-            background: conic-gradient(from 0deg, transparent, rgba(212,175,55,0.05), transparent 40%);
-            border-radius: 50%; transform: translate(-50%, -50%);
-            animation: rotateAura 30s linear infinite; z-index: -1; filter: blur(60px);
+        /* ─── CUSTOM CURSOR ─────────────────────── */
+        .cur-dot {
+            position: fixed; z-index: 200; pointer-events: none;
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--text); top: 0; left: 0;
+            transform: translate(-50%,-50%);
+            transition: width .25s, height .25s, background .25s;
         }
-        @keyframes rotateAura {
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        h1, h2, h3, h4, .serif-text { font-family: 'Playfair Display', serif; }
-
-        /* ---------------- ELEGANT CURSOR ---------------- */
-        .cursor-dot {
-            position: fixed; top: 0; left: 0; width: 6px; height: 6px;
-            background: var(--text-main); border-radius: 50%;
-            pointer-events: none; z-index: 100; transform: translate(-50%, -50%);
-            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .cursor-ring {
-            position: fixed; top: 0; left: 0; width: 45px; height: 45px;
-            border: 1px solid rgba(252, 248, 242, 0.4); border-radius: 50%;
-            pointer-events: none; z-index: 99; transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out, border-color 0.3s, background 0.3s;
-            backdrop-filter: blur(2px);
+        .cur-ring {
+            position: fixed; z-index: 199; pointer-events: none;
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 1px solid rgba(245,240,232,0.35);
+            top: 0; left: 0; transform: translate(-50%,-50%);
+            transition: border-color .3s, width .3s, height .3s, background .3s;
         }
 
-        /* Navigation */
+        /* ─── NAV ───────────────────────────────── */
         nav {
-            position: fixed; top: 0; width: 100%; padding: 2.5rem 5vw;
+            position: fixed; top: 0; width: 100%; padding: 2.2rem 5vw;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 10; mix-blend-mode: difference;
+            z-index: 100; mix-blend-mode: difference;
         }
-        .logo { font-size: 1.2rem; font-weight: 600; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+        .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-style: italic; color: #fff; }
+        .nav-right { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-link {
+            color: #fff; text-decoration: none; font-size: 0.95rem;
+            font-style: italic; letter-spacing: 0.5px;
+            opacity: 0.8; transition: opacity .3s;
+        }
+        .nav-link:hover { opacity: 1; }
+        /* Available badge */
+        .avail-badge {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+        }
+        .avail-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--gold);
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.5); }
+            50%       { box-shadow: 0 0 0 6px rgba(201,168,76,0); }
+        }
 
-        /* ---------------- HERO SECTION ---------------- */
+        /* ─── HERO ──────────────────────────────── */
         .hero {
-            height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; padding: 0 5vw; position: relative;
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; padding: 0 6vw; position: relative;
         }
-        .hero-label {
-            font-size: 1.2rem; font-style: italic; color: var(--accent);
-            margin-bottom: 0.5rem; letter-spacing: 2px;
+        /* Breathing radial glow behind the name */
+        .hero-glow {
+            position: absolute; width: 80vw; height: 60vw;
+            border-radius: 50%; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse, rgba(130,90,25,0.18) 0%, transparent 65%);
+            animation: breathe 7s ease-in-out infinite; pointer-events: none; z-index: 0;
         }
-        .hero-title {
-            font-size: clamp(5rem, 14vw, 13rem);
-            font-weight: 400; line-height: 0.85;
-            letter-spacing: -3px; margin-bottom: 2rem;
-            margin-left: -0.5rem; position: relative;
+        @keyframes breathe {
+            0%, 100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); }
+            50%       { opacity: 1;   transform: translate(-50%,-50%) scale(1.12); }
         }
-        .name-wrapper {
-            background: linear-gradient(135deg, #ffffff, #d4af37 50%, #8a7c6b);
+        .hero-eyebrow {
+            font-size: 1.1rem; font-style: italic; color: var(--gold);
+            letter-spacing: 1.5px; margin-bottom: 1rem; position: relative; z-index: 1;
+        }
+        .hero-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(5.5rem, 13vw, 12.5rem);
+            font-weight: 400; line-height: 0.88;
+            letter-spacing: -3px; position: relative; z-index: 1;
+            /* Clip-mask sweep reveal */
+            background: linear-gradient(128deg, #ffffff 0%, var(--gold) 45%, #a09080 100%);
             -webkit-background-clip: text; background-clip: text;
-            color: transparent; text-shadow: 0px 10px 40px rgba(0,0,0,0.8);
-            position: relative; z-index: 2;
+            color: transparent;
+            clip-path: inset(0 100% 0 0);
+            animation: nameReveal 1.4s cubic-bezier(0.77, 0, 0.18, 1) 0.3s forwards;
+        }
+        @keyframes nameReveal {
+            to { clip-path: inset(0 0% 0 0); }
+        }
+        .hero-tagline {
+            font-family: 'Lora', serif; font-style: italic;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: var(--muted); margin-top: 2.5rem;
+            max-width: 600px; position: relative; z-index: 1;
+            opacity: 0; animation: fadeUp 1s ease 1.5s forwards;
         }
         .hero-bio {
-            max-width: 700px; font-size: 1.3rem; color: var(--text-muted);
-            line-height: 1.8; margin-top: 1.5rem; border-left: 2px solid var(--accent);
-            padding-left: 2rem; background: rgba(10,10,10,0.4);
-            padding: 2rem; border-radius: 4px; backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.03); border-left: 3px solid var(--accent);
+            max-width: 680px; font-size: 1.2rem; color: var(--muted);
+            line-height: 1.9; margin-top: 3rem; position: relative; z-index: 1;
+            border-left: 2px solid var(--gold); padding-left: 2rem;
+            opacity: 0; animation: fadeUp 1s ease 1.8s forwards;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ---------------- COMMON SECTIONS ---------------- */
-        .section { padding: 10rem 5vw; position: relative; }
+        /* ─── SECTION CHROME ────────────────────── */
+        .section { padding: 10rem 6vw; }
+        .section-head {
+            margin-bottom: 5rem;
+        }
+        .section-kicker {
+            font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 3px; color: var(--gold); margin-bottom: 1.2rem;
+            font-family: 'Lora', serif; font-style: italic;
+        }
         .section-title {
-            font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 400; margin-bottom: 5rem;
-            display: flex; align-items: center; gap: 2rem; color: #fff;
+            font-size: clamp(2.8rem, 5.5vw, 5rem);
+            font-weight: 400; color: var(--text); line-height: 1.05;
         }
-        .section-title::before { content: '✧'; color: var(--accent); font-size: 2rem; }
-        .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+        .section-title em { color: var(--gold); }
+        .section-rule {
+            width: 100%; height: 1px;
+            background: linear-gradient(90deg, var(--gold) 0%, transparent 80%);
+            margin-top: 3rem; opacity: 0.25;
+        }
 
-        /* ---------------- MOUSE-TRACKING GLOW CARDS ---------------- */
+        /* ─── REVEAL ────────────────────────────── */
+        .reveal {
+            opacity: 0; transform: translateY(55px) scale(0.985);
+            transition: opacity 1.3s cubic-bezier(0.2,0.8,0.2,1),
+                        transform 1.3s cubic-bezier(0.2,0.8,0.2,1);
+        }
+        .reveal.in { opacity: 1; transform: none; }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.35s; }
+
+        /* ─── MOUSE-TRACK GLOW CARD ─────────────── */
         .glow-card {
-            background: rgba(20, 18, 16, 0.4); border: 1px solid var(--border);
-            border-radius: 12px; position: relative; overflow: hidden;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
-            display: flex; flex-direction: column; justify-content: space-between;
+            background: rgba(18,16,13,0.5);
+            border: 1px solid var(--border);
+            border-radius: 10px; position: relative; overflow: hidden;
+            transition: border-color .5s, transform .6s cubic-bezier(0.2,0.8,0.2,1),
+                        box-shadow .5s;
+            backdrop-filter: blur(10px);
         }
         .glow-card::before {
             content: ""; position: absolute; inset: 0; z-index: 0;
-            background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(212, 175, 55, 0.08), transparent 40%);
-            opacity: 0; transition: opacity 0.5s; pointer-events: none;
+            background: radial-gradient(
+                750px circle at var(--mx, 50%) var(--my, 50%),
+                rgba(201,168,76,0.09), transparent 40%
+            );
+            opacity: 0; transition: opacity .5s; pointer-events: none;
         }
+        .glow-card:hover { transform: translateY(-8px); border-color: rgba(201,168,76,0.3); box-shadow: 0 24px 50px rgba(0,0,0,0.45); }
         .glow-card:hover::before { opacity: 1; }
-        .glow-card:hover { transform: translateY(-8px); border-color: rgba(212, 175, 55, 0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .glow-content { position: relative; z-index: 1; padding: 3.5rem; height: 100%; display: flex; flex-direction: column; }
-        
-        .bento-meta { font-family: 'Lora', serif; font-style: italic; color: var(--accent); margin-bottom: 1.5rem; font-size: 1.05rem; }
-        .glow-card h3 { font-size: clamp(1.8rem, 2.5vw, 2.4rem); margin-bottom: 1rem; color: #fff; line-height: 1.2; }
-        .glow-card p { color: var(--text-muted); font-size: 1.15rem; margin-top: auto; }
+        .card-inner { position: relative; z-index: 1; padding: 3.5rem; }
 
-        /* ---------------- DRAGGABLE HORIZONTAL SLIDER ---------------- */
-        .slider-wrapper { width: 100vw; margin-left: -5vw; }
-        .slider-container {
-            width: 100%; padding-left: 5vw; padding-right: 5vw;
-            overflow-x: auto; scroll-behavior: smooth;
-            padding-bottom: 4rem; cursor: grab;
-            /* Scroll snap for elegance */
-            scroll-snap-type: x mandatory;
+        /* ─── CODEX AWARDS ──────────────────────── */
+        .codex-list { display: flex; flex-direction: column; gap: 0; }
+        .codex-entry {
+            border-top: 1px solid var(--border);
+            display: grid; grid-template-columns: 90px 1fr;
+            gap: 0 3rem; padding: 3.5rem 0;
+            cursor: default;
+            transition: background .4s;
+            position: relative;
         }
-        .slider-container:active { cursor: grabbing; }
-        .slider-container::-webkit-scrollbar { display: none; }
-        .slider-track { display: flex; gap: 3rem; width: max-content; padding-right: 5vw; }
-        .slider-item {
-            width: 600px; flex-shrink: 0;
-            scroll-snap-align: center;
+        .codex-entry:last-child { border-bottom: 1px solid var(--border); }
+        .codex-entry:hover { background: rgba(201,168,76,0.03); }
+
+        .codex-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem; font-style: italic;
+            color: rgba(201,168,76,0.25);
+            line-height: 1; padding-top: 0.15rem;
+            transition: color .4s;
+            /* Tick-up animation handled via JS on first scroll-into-view */
+        }
+        .codex-entry:hover .codex-num { color: rgba(201,168,76,0.6); }
+
+        .codex-body {}
+        .codex-org {
+            font-size: 0.8rem; text-transform: uppercase;
+            letter-spacing: 3px; color: var(--gold); margin-bottom: 0.8rem;
+        }
+        .codex-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 3.2vw, 2.8rem);
+            font-weight: 400; color: var(--text); line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+        .codex-pull {
+            font-style: italic; font-size: 1.3rem;
+            color: rgba(201,168,76,0.8); margin-bottom: 1.5rem;
+        }
+        .codex-detail {
+            font-size: 1.1rem; color: var(--muted); line-height: 1.8;
+            max-height: 0; overflow: hidden;
+            transition: max-height .7s cubic-bezier(0.2,0.8,0.2,1), opacity .5s;
+            opacity: 0;
+        }
+        .codex-entry:hover .codex-detail { max-height: 200px; opacity: 1; }
+
+        /* Stats display (GPA/SAT) */
+        .codex-stats {
+            display: flex; align-items: center; gap: 3rem; margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .codex-stat-val {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem; font-weight: 400;
+            color: var(--gold); line-height: 1; letter-spacing: -1px;
+        }
+        .codex-stat-pipe {
+            width: 1px; height: 5rem;
+            background: var(--border);
+            flex-shrink: 0;
+        }
+        .codex-stat-label {
+            font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--muted); margin-top: 0.8rem;
         }
 
-        /* ---------------- INTEGRATED DUAL MARQUEE ---------------- */
-        .marquee-section {
-            position: relative; width: 100vw; margin-left: -5vw;
-            padding: 6rem 0; display: flex; flex-direction: column; gap: 1.5rem;
-            /* Masked edges for seamless integration */
-            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-            background: linear-gradient(180deg, transparent, rgba(20,18,16,0.5), transparent);
+        /* ─── PROJECT SLIDER ─────────────────────── */
+        .slider-intro {
+            font-style: italic; font-size: 1.3rem; color: var(--muted);
+            margin-bottom: 3rem;
         }
-        .marquee-track { display: flex; white-space: nowrap; width: max-content; }
-        .marquee-track.left { animation: marqueeLeft 40s linear infinite; }
-        .marquee-track.right { animation: marqueeRight 40s linear infinite; }
-        
-        .marquee-item {
-            font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 400; padding: 0 4rem;
+        .slider-outer { width: 100vw; margin-left: -6vw; }
+        .slider-scroll {
+            overflow-x: auto; padding: 0.5rem 6vw 5rem;
+            cursor: grab; scroll-snap-type: x mandatory;
+        }
+        .slider-scroll:active { cursor: grabbing; }
+        .slider-scroll::-webkit-scrollbar { display: none; }
+        .slider-track { display: flex; gap: 2.5rem; width: max-content; padding-right: 6vw; }
+        .proj-card {
+            width: min(580px, 88vw); flex-shrink: 0;
+            scroll-snap-align: start;
+            min-height: 420px;
+        }
+        .proj-card .card-inner { height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+        .proj-num {
+            font-family: 'Playfair Display', serif; font-style: italic;
+            font-size: 1rem; color: var(--muted); margin-bottom: 2rem; letter-spacing: 2px;
+        }
+        .proj-label {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px;
+            margin-bottom: 1.2rem;
+        }
+        .proj-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.9rem, 3vw, 2.4rem);
+            font-weight: 400; line-height: 1.2; margin-bottom: 2rem;
+        }
+        .proj-body { font-size: 1.1rem; color: var(--muted); line-height: 1.75; margin-top: auto; }
+
+        /* Card unique tints */
+        .tint-amber  { --tint: rgba(130,80,20,0.12); }
+        .tint-slate  { --tint: rgba(20,40,75,0.18); }
+        .tint-indigo { --tint: rgba(40,20,90,0.18); }
+        .tint-forest { --tint: rgba(15,50,30,0.18); }
+        .tint-rose   { --tint: rgba(80,25,35,0.18); }
+        .tint-amber, .tint-slate, .tint-indigo, .tint-forest, .tint-rose {
+            background: linear-gradient(160deg, var(--tint), rgba(18,16,13,0.5)) !important;
+        }
+
+        /* Progress ribbon */
+        .ribbon {
+            display: flex; gap: 8px; margin-top: 2.5rem;
+        }
+        .ribbon-seg {
+            height: 2px; flex: 1; background: var(--border);
+            border-radius: 2px; transition: background .3s;
+        }
+        .ribbon-seg.active { background: var(--gold); }
+
+        /* ─── MARQUEE (2 ROWS) ───────────────────── */
+        .marquee-container {
+            width: 100vw; margin-left: -6vw;
+            padding: 5rem 0;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 18%, black 82%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 18%, black 82%, transparent);
+            display: flex; flex-direction: column; gap: 2rem;
+            background: linear-gradient(180deg, transparent, rgba(15,13,10,0.6) 50%, transparent);
+            position: relative;
+        }
+        .marquee-row { display: flex; white-space: nowrap; width: max-content; }
+        .marquee-row.l { animation: mLeft 35s linear infinite; }
+        .marquee-row.r { animation: mRight 35s linear infinite; }
+        @keyframes mLeft  { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes mRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+        .marquee-row.l:hover, .marquee-row.r:hover { animation-play-state: paused; }
+
+        .mq {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem; font-weight: 400; padding: 0 3.5rem;
             color: transparent; text-transform: uppercase;
-            -webkit-text-stroke: 1px rgba(252, 248, 242, 0.15);
-            transition: color 0.5s, -webkit-text-stroke 0.5s, transform 0.5s;
+            -webkit-text-stroke: 1px rgba(245,240,232, 0.2);
+            transition: color .4s, -webkit-text-stroke .4s;
         }
-        .marquee-item.italic { font-style: italic; -webkit-text-stroke: 1px var(--accent); }
-        .marquee-item:hover { color: var(--accent); -webkit-text-stroke: 0; transform: scale(1.05); }
-        
-        @keyframes marqueeLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        @keyframes marqueeRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+        .mq.it { font-style: italic; -webkit-text-stroke-color: rgba(201,168,76,0.3); }
+        .mq:hover { color: var(--text); -webkit-text-stroke: 1px transparent; }
+        .mq.it:hover { color: var(--gold); }
+        .mq-sep { font-family: 'Playfair Display', serif; font-size: 4.5rem; padding: 0 1rem; color: rgba(201,168,76,0.25); }
 
-        /* ---------------- BENTO GRID ---------------- */
-        .bento-grid {
-            display: grid; grid-template-columns: repeat(12, 1fr);
-            gap: 2rem; grid-auto-rows: minmax(280px, auto);
+        /* ─── LEADERSHIP STAT BLOCK ──────────────── */
+        .stat-block {
+            background: rgba(18,16,13,0.6); border: 1px solid var(--border);
+            border-radius: 10px; overflow: hidden;
+            backdrop-filter: blur(12px);
         }
-        .span-12 { grid-column: span 12; }
-        .span-8 { grid-column: span 8; }
-        .span-6 { grid-column: span 6; }
-        .span-4 { grid-column: span 4; }
+        .stat-hero {
+            padding: 5rem 5vw 4rem; border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+        .stat-main {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(5rem, 11vw, 9rem); font-weight: 400;
+            color: var(--gold); letter-spacing: -3px; line-height: 1;
+        }
+        .stat-main-label {
+            font-size: 1.2rem; color: var(--muted); margin-top: 1rem; font-style: italic;
+        }
+        .stat-rows { padding: 0 5vw; }
+        .stat-row {
+            display: flex; justify-content: space-between; align-items: baseline;
+            border-bottom: 1px solid var(--border); padding: 2.2rem 0;
+        }
+        .stat-row:last-child { border-bottom: none; }
+        .stat-row-label { font-size: 1.1rem; font-style: italic; color: var(--muted); }
+        .stat-row-val {
+            font-family: 'Playfair Display', serif; font-size: 3rem;
+            font-weight: 400; color: var(--text);
+        }
 
-        /* Animations */
-        .reveal { opacity: 0; transform: translateY(60px) scale(0.98); transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
+        /* ─── FOOTER ─────────────────────────────── */
+        footer {
+            padding: 8rem 6vw; text-align: center;
+            border-top: 1px solid var(--border); position: relative; overflow: hidden;
+        }
+        .footer-glow {
+            position: absolute; width: 70vw; height: 50vw; left: 50%; bottom: -30%;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse, rgba(100,70,20,0.15), transparent 70%);
+            filter: blur(60px); pointer-events: none;
+            animation: breathe 8s ease-in-out infinite;
+        }
+        .footer-name {
+            font-family: 'Playfair Display', serif; font-style: italic;
+            font-size: clamp(3rem, 7vw, 6rem); color: var(--text); margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .footer-tagline { font-style: italic; font-size: 1.4rem; color: var(--muted); position: relative; }
+        .footer-links { margin-top: 4rem; display: flex; justify-content: center; gap: 4rem; position: relative; }
+        .footer-link {
+            font-family: 'Playfair Display', serif; font-style: italic;
+            color: var(--gold); text-decoration: none; font-size: 1.6rem;
+            transition: color .3s, letter-spacing .3s;
+        }
+        .footer-link:hover { color: var(--text); letter-spacing: 1px; }
 
-        ul.styled-list { list-style: none; margin-top: 2rem;}
-        ul.styled-list li { position: relative; padding-left: 2rem; margin-bottom: 1.2rem; color: var(--text-muted); font-size: 1.15rem; }
-        ul.styled-list li::before { content: "✧"; position: absolute; left: 0; color: var(--accent); font-size: 1.2rem; top: -1px; }
-
-        @media (max-width: 1024px) {
-            .hero-title { font-size: clamp(4rem, 15vw, 8rem); margin-left: 0; }
-            .bento-grid > div { grid-column: span 12; }
-            .slider-item { width: 85vw; scroll-snap-align: start; }
-            .marquee-item { font-size: 3.5rem; padding: 0 2rem; }
+        /* ─── RESPONSIVE ─────────────────────────── */
+        @media (max-width: 900px) {
+            nav { padding: 1.5rem 5vw; }
+            .avail-badge, .nav-link:not(:last-child) { display: none; }
+            .codex-entry { grid-template-columns: 55px 1fr; gap: 0 1.5rem; }
+            .codex-num { font-size: 2.5rem; }
+            .section { padding: 6rem 5vw; }
+            .mq { font-size: 3rem; }
+            .stat-main { font-size: 5rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-mesh"></div>
-    <div class="grain"></div>
+<!-- Background System -->
+<div class="bg-canvas">
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+</div>
+<div class="bg-grid"></div>
+<div class="grain"></div>
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
+<!-- Custom Cursor -->
+<div class="cur-dot"></div>
+<div class="cur-ring"></div>
 
-    <nav>
-        <div class="logo">A. Mana</div>
-        <a href="mailto:2arnavmana@gmail.com" class="serif-text" style="color: #fff; text-decoration: none; font-size: 1.2rem; font-style: italic;">Contact</a>
-    </nav>
+<!-- Nav -->
+<nav>
+    <div class="nav-logo">Arnav Mana</div>
+    <div class="nav-right">
+        <div class="avail-badge">
+            <div class="avail-dot"></div>
+            <span>Open to research</span>
+        </div>
+        <a href="mailto:2arnavmana@gmail.com" class="nav-link">Email me</a>
+    </div>
+</nav>
 
-    <main>
-        <section class="hero">
-            <div class="hero-aura"></div>
-            <div class="hero-label reveal">Computational Biology & Clinical AI</div>
-            <h1 class="hero-title reveal" style="transition-delay: 0.1s;">
-                <span class="name-wrapper">Arnav Mana</span>
-            </h1>
-            <div class="hero-bio reveal" style="transition-delay: 0.2s;">
-                Decoding critical cardiac pathways through predictive architectures and molecular biology. Translating high-dimensional physiological datasets into precision interventions to identify high-risk trajectories prior to clinical manifestation.
-            </div>
-        </section>
+<!-- ─── HERO ────────────────────────────────────── -->
+<section class="hero">
+    <div class="hero-glow"></div>
+    <p class="hero-eyebrow">Computational Biology &amp; Clinical AI</p>
+    <h1 class="hero-name">Arnav<br>Mana</h1>
+    <p class="hero-tagline">"The heart speaks in data. I translate."</p>
+    <p class="hero-bio">
+        Decoding critical cardiac pathways through predictive architectures and molecular biology. Translating high-dimensional physiological datasets into precision interventions — identifying high-risk patient trajectories before they become irreversible.
+    </p>
+</section>
 
-        <!-- 5 PROJECTS HORIZONTAL SLIDER -->
-        <section class="section">
-            <h2 class="section-title reveal">Scientific Investigation</h2>
-            <div class="slider-wrapper reveal" style="transition-delay: 0.1s;">
-                <div class="slider-container">
-                    <div class="slider-track">
-                        <!-- Card 1 -->
-                        <div class="slider-item glow-card">
-                            <div class="glow-content">
-                                <div>
-                                    <div class="bento-meta">UCSF Cardiac Critical Care</div>
-                                    <h3>Predictive Architecture of Lactate</h3>
-                                </div>
-                                <p>Engineering advanced network analyses to decode complex interactions between hemodynamic modifiers and SHARC phenotypes. Transforming lactate from a reactionary marker to a precision forecast for STEMI to heart failure shock.</p>
-                            </div>
-                        </div>
-                        <!-- Card 2 -->
-                        <div class="slider-item glow-card">
-                            <div class="glow-content">
-                                <div>
-                                    <div class="bento-meta">CU Anschutz School of Medicine</div>
-                                    <h3>Glycosphingolipid-Cytokine Axis in HLHS</h3>
-                                </div>
-                                <p>Conducting critical pathway analysis to unearth the molecular interplay between glycosphingolipid signaling and cytokine cascades to decode drivers behind the severity of Hypoplastic Left Heart Syndrome.</p>
-                            </div>
-                        </div>
-                        <!-- Card 3 -->
-                        <div class="slider-item glow-card">
-                            <div class="glow-content">
-                                <div>
-                                    <div class="bento-meta">Computational Cardiology</div>
-                                    <h3>Latent Topologies of Cardiogenic Shock</h3>
-                                </div>
-                                <p>Designing a custom Graph Attention Network (PhysioGraph) to optimize the SCAI staging system using high-fidelity hemodynamic timeseries to extract latent signatures for early clinical intervention in STEMI.</p>
-                            </div>
-                        </div>
-                        <!-- Card 4 -->
-                        <div class="slider-item glow-card">
-                            <div class="glow-content">
-                                <div>
-                                    <div class="bento-meta">Clinical Outcomes Analysis</div>
-                                    <h3>Chronic Intermittent Hypoxia & Ischemic Tolerance</h3>
-                                </div>
-                                <p>A massive population study executing Inverse Probability of Treatment Weighting (IPTW) on 2,653 in-hospital cardiac arrest patients. Discovered an endogenous "metabolic shield" induced by OSA that drastically reduced mortality rates.</p>
-                            </div>
-                        </div>
-                        <!-- Card 5 -->
-                        <div class="slider-item glow-card">
-                            <div class="glow-content">
-                                <div>
-                                    <div class="bento-meta">Pathophysiology Review</div>
-                                    <h3>Cytokine Networks in Coronary Artery Disease</h3>
-                                </div>
-                                <p>A vast systematic review mathematically mapping the cytokine-driven inflammatory landscape underlying coronary artery disease to pinpoint mechanistic failures and isolate novel candidates for targeted pharmacological therapy.</p>
-                            </div>
-                        </div>
-                    </div>
+
+<!-- ─── THINGS I'VE EARNED ──────────────────────── -->
+<section class="section">
+    <div class="section-head reveal">
+        <p class="section-kicker">Recognition</p>
+        <h2 class="section-title">Things I've earned</h2>
+        <div class="section-rule"></div>
+    </div>
+
+    <div class="codex-list">
+
+        <!-- Eagle Scout -->
+        <div class="codex-entry reveal">
+            <div class="codex-num" data-count="01">01</div>
+            <div class="codex-body">
+                <p class="codex-org">Boy Scouts of America &nbsp;·&nbsp; Class of 2027</p>
+                <h3 class="codex-title">Eagle Scout</h3>
+                <p class="codex-pull">"One of ten in a century."</p>
+                <div class="codex-detail">
+                    Recognized as one of the 10 youngest Eagle Scouts in the century-long history of the Boy Scouts of America, and the absolute youngest in Troop 539's 100+ year existence. Demonstrated sustained executive leadership, multifaceted skill acquisition, and extensive community infrastructure development.
                 </div>
-            </div>
-        </section>
-
-        <!-- ENDLESS BLURRED MARQUEE -->
-        <div class="marquee-section reveal">
-            <!-- Row 1: Left -->
-            <div class="marquee-track left">
-                <div class="marquee-item">Machine Learning</div>
-                <div class="marquee-item italic">Computational Bio</div>
-                <div class="marquee-item">Python & R</div>
-                <div class="marquee-item italic">Clinical AI</div>
-                <div class="marquee-item">Quantitative PCR</div>
-                <div class="marquee-item italic">Graph Networks</div>
-                <!-- Duplicate for Loop -->
-                <div class="marquee-item">Machine Learning</div>
-                <div class="marquee-item italic">Computational Bio</div>
-                <div class="marquee-item">Python & R</div>
-                <div class="marquee-item italic">Clinical AI</div>
-                <div class="marquee-item">Quantitative PCR</div>
-                <div class="marquee-item italic">Graph Networks</div>
-            </div>
-            <!-- Row 2: Right -->
-            <div class="marquee-track right">
-                <div class="marquee-item italic">Swift & MATLAB</div>
-                <div class="marquee-item">SQL</div>
-                <div class="marquee-item italic">Proteomics</div>
-                <div class="marquee-item">Biostatistics</div>
-                <div class="marquee-item italic">Hemodynamics</div>
-                <div class="marquee-item">ELISA Assays</div>
-                <!-- Duplicate for Loop -->
-                <div class="marquee-item italic">Swift & MATLAB</div>
-                <div class="marquee-item">SQL</div>
-                <div class="marquee-item italic">Proteomics</div>
-                <div class="marquee-item">Biostatistics</div>
-                <div class="marquee-item italic">Hemodynamics</div>
-                <div class="marquee-item">ELISA Assays</div>
             </div>
         </div>
 
-        <!-- BENTO GRID -->
-        <section class="section">
-            <h2 class="section-title reveal">Milestones & Leadership</h2>
-            <div class="bento-grid">
-                
-                <div class="bento-item span-12 glow-card reveal">
-                    <div class="glow-content" style="flex-direction: row; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem;">
-                        <div style="max-width: 600px;">
-                            <div class="bento-meta">Los Gatos High School • Class of 2028</div>
-                            <h3 style="font-size: clamp(2rem, 4vw, 3rem);">Academic Perfection</h3>
-                            <p>AP Calculus BC, AP Biology, AP Chemistry, AP Statistics, MIT OCW: Computation & AI</p>
-                        </div>
-                        <div style="display:flex; gap: clamp(2rem, 5vw, 4rem);">
-                            <div>
-                                <div style="font-family:'Playfair Display', serif; font-size:clamp(3.5rem, 6vw, 5rem); color:var(--accent); line-height: 1;">1570</div>
-                                <div style="font-size:1rem; color:var(--text-muted); letter-spacing: 2px; margin-top: 1rem; text-transform:uppercase;">SAT (1st Attempt)</div>
-                            </div>
-                            <div>
-                                <div style="font-family:'Playfair Display', serif; font-size:clamp(3.5rem, 6vw, 5rem); color:var(--accent); line-height: 1;">4.67</div>
-                                <div style="font-size:1rem; color:var(--text-muted); letter-spacing: 2px; margin-top: 1rem; text-transform:uppercase;">Weighted GPA</div>
-                            </div>
-                        </div>
+        <!-- USABO -->
+        <div class="codex-entry reveal delay-1">
+            <div class="codex-num">02</div>
+            <div class="codex-body">
+                <p class="codex-org">Center for Excellence in Education &nbsp;·&nbsp; 2025</p>
+                <h3 class="codex-title">USA Biology Olympiad Semifinalist</h3>
+                <p class="codex-pull">"The top few percent, nationally."</p>
+                <div class="codex-detail">
+                    Advanced to the elite national qualifying stage, validating mastery over graduate-level cellular biology, human physiology, genetics, and complex biosystems. One of a small cohort selected from tens of thousands of participants.
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic -->
+        <div class="codex-entry reveal delay-2">
+            <div class="codex-num">03</div>
+            <div class="codex-body">
+                <p class="codex-org">Los Gatos High School &nbsp;·&nbsp; Class of 2028</p>
+                <h3 class="codex-title">Straight across the board</h3>
+                <div class="codex-stats">
+                    <div>
+                        <div class="codex-stat-val">1570</div>
+                        <div class="codex-stat-label">SAT (First Attempt)</div>
+                    </div>
+                    <div class="codex-stat-pipe"></div>
+                    <div>
+                        <div class="codex-stat-val">4.67</div>
+                        <div class="codex-stat-label">Weighted GPA</div>
                     </div>
                 </div>
+                <div class="codex-detail" style="margin-top:1.5rem;">
+                    AP Calculus BC · AP Biology · AP Chemistry · AP Statistics · MIT OCW: Computation &amp; AI
+                </div>
+            </div>
+        </div>
 
-                <div class="bento-item span-8 glow-card reveal">
-                    <div class="glow-content">
+    </div>
+</section>
+
+
+<!-- ─── WHERE I'VE DONE THE WORK (5 PROJECT SLIDER) -->
+<section class="section" style="padding-bottom: 4rem;">
+    <div class="section-head reveal">
+        <p class="section-kicker">Investigations</p>
+        <h2 class="section-title">Where I've done<br><em>the work</em></h2>
+        <div class="section-rule"></div>
+    </div>
+    <p class="slider-intro reveal delay-1">Dragging through 5 active investigations —</p>
+
+    <div class="slider-outer reveal delay-2">
+        <div class="slider-scroll" id="projSlider">
+            <div class="slider-track">
+
+                <div class="proj-card glow-card tint-amber">
+                    <div class="card-inner">
                         <div>
-                            <div class="bento-meta">Global Leadership • Aug 2025 – Present</div>
-                            <h3>Hack4Health: Co-President</h3>
+                            <p class="proj-num">No. I</p>
+                            <p class="proj-label" style="color: #c9a84c;">UCSF Cardiac Critical Care &nbsp;· Aug 2025 – Present</p>
+                            <h3 class="proj-title">Redefining the Predictive Architecture of Lactate</h3>
                         </div>
-                        <ul class="styled-list">
-                            <li>Architected AI4Alzheimers with 1,470 participants globally.</li>
-                            <li>Secured $100,000+ in operational sponsorships from 20+ partners.</li>
-                            <li>Recruited an oversight board of 20 mentors carrying 100+ publications.</li>
-                        </ul>
+                        <p class="proj-body">Engineering advanced network analyses to decode interactions between hemodynamic modifiers and SHARC phenotypes — transforming lactate from a reactionary marker into a precision forecast for the STEMI-to-heart-failure-shock transition.</p>
                     </div>
                 </div>
 
-                <div class="bento-item span-4 glow-card reveal" style="transition-delay: 0.1s;">
-                    <div class="glow-content">
+                <div class="proj-card glow-card tint-slate">
+                    <div class="card-inner">
                         <div>
-                            <div class="bento-meta">Center for Excellence in Education • 2025</div>
-                            <h3>USABO Semifinalist</h3>
+                            <p class="proj-num">No. II</p>
+                            <p class="proj-label" style="color: #7090c0;">CU Anschutz School of Medicine &nbsp;· May 2024 – Present</p>
+                            <h3 class="proj-title">Glycosphingolipid-Cytokine Axis in Hypoplastic Left Heart Syndrome</h3>
                         </div>
-                        <p>Advanced to the elite national stage, validating mastery over graduate-level cellular biology, human physiology, and complex biosystems.</p>
+                        <p class="proj-body">Critical pathway analysis unearthing the molecular interplay between glycosphingolipid signaling and cytokine cascades — decoding the primary drivers behind HLHS severity and structural progression.</p>
                     </div>
                 </div>
 
-                <div class="bento-item span-12 glow-card reveal">
-                    <div class="glow-content" style="flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;">
-                        <div style="max-width: 600px;">
-                            <div class="bento-meta">Boy Scouts of America • Class of 2027</div>
-                            <h3>Historic Eagle Scout</h3>
-                            <p>Demonstrated sustained executive leadership, multifaceted skill acquisition, and extensive community infrastructure development.</p>
+                <div class="proj-card glow-card tint-indigo">
+                    <div class="card-inner">
+                        <div>
+                            <p class="proj-num">No. III</p>
+                            <p class="proj-label" style="color: #9585cc;">Computational Cardiology &nbsp;· Aug 2025 – Present</p>
+                            <h3 class="proj-title">Latent Spatiotemporal Topologies of Cardiogenic Shock via GATv2</h3>
                         </div>
-                        <ul class="styled-list" style="margin-top: 0; max-width: 500px;">
-                            <li>Recognized as one of the 10 youngest Eagle Scouts in BSA's century-long history.</li>
-                            <li>The absolute youngest scout in Troop 539's 100+ year existence.</li>
-                        </ul>
+                        <p class="proj-body">A custom Graph Attention Network (PhysioGraph) optimizing the SCAI staging system. It processes high-fidelity hemodynamic timeseries to isolate latent signatures for the earliest possible clinical intervention in STEMI shock.</p>
+                    </div>
+                </div>
+
+                <div class="proj-card glow-card tint-forest">
+                    <div class="card-inner">
+                        <div>
+                            <p class="proj-num">No. IV</p>
+                            <p class="proj-label" style="color: #70a890;">Clinical Outcomes Analysis &nbsp;· Aug 2025 – Present</p>
+                            <h3 class="proj-title">Chronic Intermittent Hypoxia & the Metabolic Shield</h3>
+                        </div>
+                        <p class="proj-body">A massive population study on 2,653 cardiac arrest patients using IPTW and linear mixed-effects models. Discovered that OSA induces an endogenous ischemic shield that meaningfully reduces post-arrest mortality.</p>
+                    </div>
+                </div>
+
+                <div class="proj-card glow-card tint-rose">
+                    <div class="card-inner">
+                        <div>
+                            <p class="proj-num">No. V</p>
+                            <p class="proj-label" style="color: #c07085;">Pathophysiology &amp; Literature &nbsp;· Mar 2024 – Nov 2025</p>
+                            <h3 class="proj-title">Cytokine Networks in Coronary Artery Disease</h3>
+                        </div>
+                        <p class="proj-body">A systematic review mathematically mapping the cytokine-driven inflammatory landscape in CAD — pinpointing mechanistic failures and isolating novel candidates for targeted pharmacological therapy.</p>
                     </div>
                 </div>
 
             </div>
-        </section>
-
-    </main>
-
-    <footer style="padding: 8rem 5vw; text-align: center; border-top: 1px solid var(--border); position: relative; overflow: hidden;">
-        <div class="hero-aura" style="opacity: 0.3; top: 100%;"></div>
-        <p class="serif-text" style="font-size: clamp(3rem, 6vw, 4.5rem); color:#fff; margin-bottom: 1rem; position: relative;">Arnav Mana</p>
-        <p style="font-size: 1.4rem; font-style: italic; color: var(--text-muted); position: relative;">Deciphering the heart through computation.</p>
-        <div style="margin-top: 4rem; display: flex; justify-content: center; gap: 4rem; position: relative;">
-            <a href="mailto:2arnavmana@gmail.com" class="serif-text" style="color: var(--accent); text-decoration: none; font-size: 1.5rem; transition: color 0.3s;">Email</a>
-            <a href="tel:+14086561171" class="serif-text" style="color: var(--accent); text-decoration: none; font-size: 1.5rem; transition: color 0.3s;">Phone</a>
         </div>
-    </footer>
+        <!-- Progress Ribbon -->
+        <div class="ribbon" id="ribbon" style="padding: 0 6vw;">
+            <div class="ribbon-seg active"></div>
+            <div class="ribbon-seg"></div>
+            <div class="ribbon-seg"></div>
+            <div class="ribbon-seg"></div>
+            <div class="ribbon-seg"></div>
+        </div>
+    </div>
+</section>
 
-    <script>
-        // Custom Cursor Logic
-        const dot = document.querySelector('.cursor-dot');
-        const ring = document.querySelector('.cursor-ring');
-        
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let ringX = mouseX;
-        let ringY = mouseY;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-            
-            // Mouse tracking for ALL glow cards
-            document.querySelectorAll('.glow-card').forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            });
+<!-- ─── SKILLS MARQUEE (2-ROW PARALLAX) ──────────── -->
+<div class="marquee-container reveal">
+    <!-- Row 1: Programming → left, faster -->
+    <div class="marquee-row l" style="animation-duration: 30s;">
+        <span class="mq">Python</span><span class="mq-sep">·</span>
+        <span class="mq it">R</span><span class="mq-sep">·</span>
+        <span class="mq">MATLAB</span><span class="mq-sep">·</span>
+        <span class="mq it">Swift</span><span class="mq-sep">·</span>
+        <span class="mq">SQL</span><span class="mq-sep">·</span>
+        <span class="mq it">JavaScript</span><span class="mq-sep">·</span>
+        <span class="mq">HTML &amp; CSS</span><span class="mq-sep">·</span>
+        <!-- duplicate -->
+        <span class="mq">Python</span><span class="mq-sep">·</span>
+        <span class="mq it">R</span><span class="mq-sep">·</span>
+        <span class="mq">MATLAB</span><span class="mq-sep">·</span>
+        <span class="mq it">Swift</span><span class="mq-sep">·</span>
+        <span class="mq">SQL</span><span class="mq-sep">·</span>
+        <span class="mq it">JavaScript</span><span class="mq-sep">·</span>
+        <span class="mq">HTML &amp; CSS</span><span class="mq-sep">·</span>
+    </div>
+    <!-- Row 2: Lab Protocol → right, slower -->
+    <div class="marquee-row r" style="animation-duration: 42s;">
+        <span class="mq it">RT-qPCR</span><span class="mq-sep">·</span>
+        <span class="mq">Gel Electrophoresis</span><span class="mq-sep">·</span>
+        <span class="mq it">ELISA Assays</span><span class="mq-sep">·</span>
+        <span class="mq">PAGE</span><span class="mq-sep">·</span>
+        <span class="mq it">Quantitative PCR</span><span class="mq-sep">·</span>
+        <span class="mq">Polymerase Chain Reaction</span><span class="mq-sep">·</span>
+        <!-- duplicate -->
+        <span class="mq it">RT-qPCR</span><span class="mq-sep">·</span>
+        <span class="mq">Gel Electrophoresis</span><span class="mq-sep">·</span>
+        <span class="mq it">ELISA Assays</span><span class="mq-sep">·</span>
+        <span class="mq">PAGE</span><span class="mq-sep">·</span>
+        <span class="mq it">Quantitative PCR</span><span class="mq-sep">·</span>
+        <span class="mq">Polymerase Chain Reaction</span><span class="mq-sep">·</span>
+    </div>
+</div>
+
+
+<!-- ─── WHAT I BUILT ─────────────────────────────── -->
+<section class="section">
+    <div class="section-head reveal">
+        <p class="section-kicker">Leadership</p>
+        <h2 class="section-title">What I built<br><em>from nothing</em></h2>
+        <div class="section-rule"></div>
+    </div>
+
+    <div class="stat-block glow-card reveal delay-1">
+        <div class="stat-hero">
+            <div class="stat-main">$100,000+</div>
+            <p class="stat-main-label">in operational sponsorships &amp; prize distributions raised for Hack4Health</p>
+        </div>
+        <div class="stat-rows card-inner" style="padding-left:5vw; padding-right:5vw;">
+            <div class="stat-row">
+                <span class="stat-row-label">Hack4Health · Co-Founder &amp; Co-President, Aug 2025 – Present</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-row-label">AI4Alzheimers — participants across all chapters</span>
+                <span class="stat-row-val">1,470</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-row-label">Corporate partners secured</span>
+                <span class="stat-row-val">20+</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-row-label">Research mentors recruited (aggregate 100+ publications)</span>
+                <span class="stat-row-val">20</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-row-label">Annual Coder.com fiscal agreement</span>
+                <span class="stat-row-val">$3K/yr</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ─── FOOTER ────────────────────────────────────── -->
+<footer>
+    <div class="footer-glow"></div>
+    <p class="footer-name">Arnav Mana</p>
+    <p class="footer-tagline">"The heart speaks in data. I translate."</p>
+    <div class="footer-links">
+        <a href="mailto:2arnavmana@gmail.com" class="footer-link">Email</a>
+        <a href="tel:+14086561171" class="footer-link">Phone</a>
+    </div>
+</footer>
+
+
+<script>
+    // ─── Cursor ──────────────────────────────────────
+    const dot  = document.querySelector('.cur-dot');
+    const ring = document.querySelector('.cur-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+
+        // Mouse-tracking glow for all cards
+        document.querySelectorAll('.glow-card').forEach(c => {
+            const r = c.getBoundingClientRect();
+            c.style.setProperty('--mx', `${mx - r.left}px`);
+            c.style.setProperty('--my', `${my - r.top}px`);
         });
+    });
 
-        const animateRing = () => {
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-            requestAnimationFrame(animateRing);
-        };
-        animateRing();
+    (function loopRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+        requestAnimationFrame(loopRing);
+    })();
 
-        // Hover Effect specific
-        const interactables = document.querySelectorAll('a, .glow-card, .marquee-item');
-        interactables.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                ring.style.width = '75px';
-                ring.style.height = '75px';
-                ring.style.background = 'rgba(212, 175, 55, 0.05)';
-                ring.style.borderColor = 'rgba(212, 175, 55, 0.4)';
-                dot.style.background = 'var(--accent)';
-                dot.style.width = '10px';
-                dot.style.height = '10px';
-            });
-            el.addEventListener('mouseleave', () => {
-                ring.style.width = '45px';
-                ring.style.height = '45px';
-                ring.style.background = 'transparent';
-                ring.style.borderColor = 'rgba(252, 248, 242, 0.4)';
-                dot.style.background = 'var(--text-main)';
-                dot.style.width = '6px';
-                dot.style.height = '6px';
-            });
+    document.querySelectorAll('a, .glow-card, .mq, .codex-entry').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            ring.style.width  = '65px'; ring.style.height = '65px';
+            ring.style.borderColor = 'rgba(201,168,76,0.5)';
+            ring.style.background  = 'rgba(201,168,76,0.04)';
+            dot.style.background   = 'var(--gold)';
+            dot.style.width = dot.style.height = '9px';
         });
-
-        // IntersectionObserver for Scroll Reveals
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: "0px 0px -50px 0px"
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Horizontal Slider Drag
-        const slider = document.querySelector('.slider-container');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        slider.addEventListener('mousedown', (e) => {
-            isDown = true;
-            slider.style.cursor = 'grabbing';
-            startX = e.pageX - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
-            ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%) scale(0.8)`;
+        el.addEventListener('mouseleave', () => {
+            ring.style.width  = '44px'; ring.style.height = '44px';
+            ring.style.borderColor = 'rgba(245,240,232,0.35)';
+            ring.style.background  = 'transparent';
+            dot.style.background   = 'var(--text)';
+            dot.style.width = dot.style.height = '7px';
         });
-        slider.addEventListener('mouseleave', () => {
-            isDown = false;
-            slider.style.cursor = 'grab';
-        });
-        slider.addEventListener('mouseup', () => {
-            isDown = false;
-            slider.style.cursor = 'grab';
-            
-            // Snap logic (Optional enhancement, already using CSS snap but this smooths release)
-        });
-        slider.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 2; 
-            slider.scrollLeft = scrollLeft - walk;
-        });
-    </script>
+    });
+
+    // ─── Scroll Reveals ──────────────────────────────
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ─── Slider Drag ─────────────────────────────────
+    const slider = document.getElementById('projSlider');
+    const segs   = document.querySelectorAll('.ribbon-seg');
+    let isDragging = false, startX, startLeft;
+
+    slider.addEventListener('mousedown', e => {
+        isDragging = true; startX = e.pageX; startLeft = slider.scrollLeft;
+        slider.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mouseup', () => { isDragging = false; slider.style.cursor = 'grab'; });
+    slider.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        e.preventDefault();
+        slider.scrollLeft = startLeft - (e.pageX - startX) * 1.8;
+    });
+
+    // Update ribbon on scroll
+    slider.addEventListener('scroll', () => {
+        const total = slider.scrollWidth - slider.clientWidth;
+        const idx   = Math.round((slider.scrollLeft / total) * 4);
+        segs.forEach((s, i) => s.classList.toggle('active', i === idx));
+    });
+
+    // Touch drag
+    let touchStartX = 0, touchStartLeft = 0;
+    slider.addEventListener('touchstart', e => { touchStartX = e.touches[0].pageX; touchStartLeft = slider.scrollLeft; });
+    slider.addEventListener('touchmove',  e => { slider.scrollLeft = touchStartLeft - (e.touches[0].pageX - touchStartX) * 1.4; });
+</script>
 </body>
 </html>
