@@ -2,7 +2,5 @@
     "gitlens.currentLine.enabled": true,
     "gitlens.hovers.currentLine.over": "line",
     "gitlens.currentLine.scrollable": true,
-    "github.copilot.chat.agentDefinitions": {
-        "useWorkspaceAgentsOnly": true
-    }
+    "github.copilot.chat.agentDefinitions.useWorkspaceAgentsOnly": true
 }
