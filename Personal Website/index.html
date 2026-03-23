@@ -408,6 +408,33 @@ a.mag-link:focus-visible {
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+  display: inline-block;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.hero-name .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px) rotateX(-40deg);
+  animation: charEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-name .char:nth-child(1) { animation-delay: 0.1s; }
+.hero-name .char:nth-child(2) { animation-delay: 0.15s; }
+.hero-name .char:nth-child(3) { animation-delay: 0.2s; }
+.hero-name .char:nth-child(4) { animation-delay: 0.25s; }
+.hero-name .char:nth-child(5) { animation-delay: 0.3s; }
+.hero-name .char:nth-child(7) { animation-delay: 0.4s; }
+.hero-name .char:nth-child(8) { animation-delay: 0.45s; }
+.hero-name .char:nth-child(9) { animation-delay: 0.5s; }
+.hero-name .char:nth-child(10) { animation-delay: 0.55s; }
+
+@keyframes charEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
 }
 
 .hero-name .space {
@@ -944,6 +971,7 @@ a.mag-link:focus-visible {
   display:flex;
   white-space:nowrap;
   width:max-content;
+  will-change: transform;
 }
 
 .mq-row.l {
@@ -988,7 +1016,8 @@ a.mag-link:focus-visible {
   color:transparent;
   text-transform:uppercase;
   -webkit-text-stroke:1px rgba(253,251,247,.25);
-  transition:color .4s,-webkit-text-stroke .4s;
+  transition:color .4s,-webkit-text-stroke .4s, transform .4s, opacity .4s;
+  display: inline-block;
 }
 
 .mq.it {
@@ -996,12 +1025,18 @@ a.mag-link:focus-visible {
   -webkit-text-stroke-color:rgba(212,181,91,.4);
 }
 
-.mq:hover {
-  color:var(--text);
-  -webkit-text-stroke:1px transparent;
+.mq-row:hover .mq {
+  opacity: 0.3;
 }
 
-.mq.it:hover {
+.mq-row:hover .mq:hover {
+  color:var(--text);
+  -webkit-text-stroke:1px transparent;
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.mq-row:hover .mq.it:hover {
   color:var(--gold);
 }
 
@@ -1010,6 +1045,11 @@ a.mag-link:focus-visible {
   font-size:4.5rem;
   color:rgba(212,181,91,.3);
   padding:0 .5rem;
+  transition: opacity .4s;
+}
+
+.mq-row:hover .mq-sep {
+  opacity: 0.3;
 }
 
 /* LEADERSHIP STATS */
@@ -1097,6 +1137,14 @@ footer {
   margin-bottom:1.5rem;
   position:relative;
   z-index:1;
+  transition: letter-spacing 0.5s cubic-bezier(0.16, 1, 0.3, 1), -webkit-text-stroke 0.5s, color 0.5s;
+  cursor: default;
+}
+
+.footer-name:hover {
+  letter-spacing: 5px;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--gold);
 }
 
 .footer-tagline {
@@ -1236,7 +1284,9 @@ a.footer-link:focus-visible {
   <section class="snap-section" id="sec-hero" data-sec="">
     <div class="hero-glow"></div>
     <p class="hero-eyebrow reveal">Computational Biology &amp; Clinical AI</p>
-    <h1 class="hero-name reveal" id="heroName" aria-label="Arnav Mana">Arnav Mana</h1>
+    <h1 class="hero-name reveal" id="heroName" aria-label="Arnav Mana">
+      <span class="char">A</span><span class="char">r</span><span class="char">n</span><span class="char">a</span><span class="char">v</span><span class="space"></span><span class="char">M</span><span class="char">a</span><span class="char">n</span><span class="char">a</span>
+    </h1>
     <p class="hero-tagline reveal d1">"The heart speaks in data. I translate."</p>
     <p class="hero-bio reveal d2" id="heroBio">Decoding critical cardiac pathways through predictive architectures and molecular biology. I translate high-dimensional physiological datasets into precision interventions, identifying high-risk patient trajectories before they become irreversible.</p>
     <div class="hero-facts reveal d3">
@@ -1375,15 +1425,15 @@ a.footer-link:focus-visible {
     <div class="section-rule"></div></div>
     <div class="stat-block glow-card reveal d1">
       <div class="stat-hero">
-        <div class="stat-main">$100,000+</div>
+        <div class="stat-main">$<span class="counter" data-target="100000">0</span>+</div>
         <p class="stat-main-label">raised in operational sponsorships &amp; prize distributions for Hack4Health</p>
       </div>
       <div class="card-inner" style="padding-top:0;padding-bottom:0">
         <div class="stat-row"><span class="stat-row-label">Hack4Health — Co-Founder &amp; Co-President, Aug 2025 – Present</span></div>
-        <div class="stat-row"><span class="stat-row-label">Participants across AI4Alzheimers</span><span class="stat-row-val">1,470</span></div>
-        <div class="stat-row"><span class="stat-row-label">Corporate partners secured</span><span class="stat-row-val">20+</span></div>
-        <div class="stat-row"><span class="stat-row-label">Research mentors recruited (100+ publications)</span><span class="stat-row-val">20</span></div>
-        <div class="stat-row"><span class="stat-row-label">Annual Coder.com fiscal agreement</span><span class="stat-row-val">$3K/yr</span></div>
+        <div class="stat-row"><span class="stat-row-label">Participants across AI4Alzheimers</span><span class="stat-row-val"><span class="counter" data-target="1470">0</span></span></div>
+        <div class="stat-row"><span class="stat-row-label">Corporate partners secured</span><span class="stat-row-val"><span class="counter" data-target="20">0</span>+</span></div>
+        <div class="stat-row"><span class="stat-row-label">Research mentors recruited (100+ publications)</span><span class="stat-row-val"><span class="counter" data-target="20">0</span></span></div>
+        <div class="stat-row"><span class="stat-row-label">Annual Coder.com fiscal agreement</span><span class="stat-row-val">$<span class="counter" data-target="3">0</span>K/yr</span></div>
       </div>
     </div>
   </section>
@@ -1481,7 +1531,10 @@ const navEl=document.getElementById('nav');
 const heroBio=document.getElementById('heroBio');
 const pb=document.getElementById('pb');
 const b1El=document.getElementById('b1'),b2El=document.getElementById('b2');
+const mqL = document.querySelector('.mq-row.l');
+const mqR = document.querySelector('.mq-row.r');
 let lastScroll=0,scrollDirty=false;
+let scrollVelocity = 0;
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 window.addEventListener('scroll',()=>{ scrollDirty=true; },{ passive:true });
@@ -1490,6 +1543,7 @@ window.addEventListener('scroll',()=>{ scrollDirty=true; },{ passive:true });
   if(scrollDirty){
     scrollDirty=false;
     const y=window.scrollY;
+    scrollVelocity = y - lastScroll;
     // Safe fallback for doc height
     const docH=Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
     const maxY=docH-window.innerHeight;
@@ -1500,10 +1554,26 @@ window.addEventListener('scroll',()=>{ scrollDirty=true; },{ passive:true });
     lastScroll=y;
     // Parallax
     if (!prefersReducedMotion) {
-      heroEl.style.transform=`translateY(${-y*.28}px)`;
+      heroEl.style.transform=`translateY(${-y*.28}px) rotateX(${y * 0.02}deg) rotateY(${mx * 0.005}deg)`;
       if(heroBio)heroBio.style.transform=`translateY(${-y*.09}px)`;
       b1El.style.transform=`translateY(${y*.09}px)`;
       b2El.style.transform=`translateY(${-y*.06}px)`;
+      
+      // Marquee velocity
+      if (mqL && mqR) {
+        const speedL = 30 - Math.min(Math.abs(scrollVelocity) * 0.5, 25);
+        const speedR = 42 - Math.min(Math.abs(scrollVelocity) * 0.5, 35);
+        mqL.style.animationDuration = `${Math.max(speedL, 5)}s`;
+        mqR.style.animationDuration = `${Math.max(speedR, 5)}s`;
+      }
+    }
+  } else {
+    // Decay velocity
+    scrollVelocity *= 0.9;
+    if (Math.abs(scrollVelocity) < 0.1) scrollVelocity = 0;
+    if (!prefersReducedMotion && mqL && mqR && Math.abs(scrollVelocity) < 1) {
+        mqL.style.animationDuration = '30s';
+        mqR.style.animationDuration = '42s';
     }
   }
   requestAnimationFrame(scrollRaf);
@@ -1520,6 +1590,33 @@ const io=new IntersectionObserver(entries=>{
     e.target.querySelectorAll('.reveal').forEach(r=>{
       if(e.isIntersecting)r.classList.add('in');
     });
+    
+    // Trigger counters
+    if (e.isIntersecting && e.target.id === 'sec-leadership') {
+      const counters = e.target.querySelectorAll('.counter');
+      counters.forEach(counter => {
+        if (counter.dataset.animated) return;
+        counter.dataset.animated = true;
+        const target = +counter.dataset.target;
+        const duration = 2000; // ms
+        const start = performance.now();
+        
+        function updateCounter(time) {
+          const elapsed = time - start;
+          const progress = Math.min(elapsed / duration, 1);
+          // easeOutExpo
+          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          const current = Math.floor(target * ease);
+          counter.textContent = current.toLocaleString();
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.textContent = target.toLocaleString();
+          }
+        }
+        requestAnimationFrame(updateCounter);
+      });
+    }
   });
 },{threshold:.15});
 sections.forEach(s=>io.observe(s));
