@@ -10,16 +10,16 @@ interface SkillsMarqueeSectionProps {
 export function SkillsMarqueeSection({ rows }: SkillsMarqueeSectionProps) {
   return (
     <section
-      id="arsenal"
+      id="capabilities"
       className="page-section section-panel"
       data-section-label="Capabilities"
-      aria-labelledby="arsenal-title"
+      aria-labelledby="capabilities-title"
     >
       <div className="section-count section-count--small" aria-hidden="true">
         03
       </div>
       <SectionHeading
-        id="arsenal-title"
+        id="capabilities-title"
         kicker="Capabilities"
         title="How I contribute"
       />

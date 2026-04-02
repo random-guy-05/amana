@@ -20,7 +20,7 @@ const sectionIds = [
   "hero",
   "recognition",
   "investigations",
-  "arsenal",
+  "capabilities",
   "leadership",
   "contact",
 ] as const;
@@ -65,6 +65,7 @@ export default function App() {
       />
       <main className="page-shell">
         <HeroSection content={siteContent} typedText={typedText} />
+        <div id="ecg-interactive-placeholder" aria-hidden="true" />
         <RecognitionSection items={siteContent.recognition} />
         <InvestigationsSection
           projects={siteContent.projects}

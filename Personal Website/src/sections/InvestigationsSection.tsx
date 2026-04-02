@@ -47,7 +47,7 @@ export function InvestigationsSection({
       </div>
       <SectionHeading
         id="investigations-title"
-        kicker="Investigations"
+        kicker="Research"
         title="Selected investigations"
       />
       <Reveal as="p" className="section-intro" delay="short">

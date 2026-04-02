@@ -1,0 +1,39 @@
+/* ECG preview + cinematic entry styles */
+.ecg-preview {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 0.75rem;
+  display: block;
+}
+
+.hero-panel__ecg {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.button--ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  color: var(--muted-strong);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecg-preview svg path {
+    display: none;
+  }
+  .page-shell {
+    transition: none !important;
+  }
+}
+
+/* Cinematic entrance */
+.page-shell { opacity: 0; transform: translateY(6px); transition: opacity 520ms ease, transform 520ms cubic-bezier(.2,.8,.2,1); }
+.page-shell.in-view { opacity: 1; transform: translateY(0); }
+
+.hero-glow { transition: transform 800ms ease, opacity 800ms ease; transform: scale(0.98); }
+.page-shell.in-view .hero-glow { transform: scale(1); opacity: 1; }

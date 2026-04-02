@@ -1,4 +1,5 @@
 import { Reveal } from "../components/Reveal";
+import { ECGPreview } from "../components/ECGPreview";
 import type { SiteContent } from "../data/siteContent";
 
 interface HeroSectionProps {
@@ -49,12 +50,26 @@ export function HeroSection({ content, typedText }: HeroSectionProps) {
             <p className="hero-panel__label">Research thesis</p>
             <p className="hero-panel__body">{content.thesis}</p>
           </Reveal>
-          <Reveal className="hero-panel hero-panel--live" delay="medium">
+          <Reveal className="hero-panel hero-panel--live hero-panel--ecg" delay="medium">
             <p className="hero-panel__label">Current thread</p>
             <p className="hero-panel__body hero-panel__body--live">
               {typedText}
               <span className="type-caret" aria-hidden="true" />
             </p>
+            <div className="hero-panel__ecg">
+              <ECGPreview width={280} height={84} />
+              <button
+                className="button button--ghost"
+                type="button"
+                onClick={() => {
+                  // placeholder for expanding into interactive demo
+                  const el = document.getElementById("ecg-interactive-placeholder");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Open demo
+              </button>
+            </div>
           </Reveal>
           <Reveal className="hero-facts" delay="long">
             {content.heroFacts.map((fact) => (
