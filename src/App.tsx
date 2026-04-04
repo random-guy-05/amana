@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BackgroundBlobs } from "./components/BackgroundBlobs";
+import { Particles } from "./components/Particles";
 import { ProgressBar } from "./components/ProgressBar";
 import { Toast } from "./components/Toast";
 import { TopNav } from "./components/TopNav";
@@ -56,6 +57,7 @@ export default function App() {
     <div className="app-shell" data-reduced-motion={prefersReducedMotion}>
       <ProgressBar progress={progress} />
       <BackgroundBlobs tone={activeTone} />
+      <Particles />
       <Toast message={copied} />
       <TopNav
         name={siteContent.name}

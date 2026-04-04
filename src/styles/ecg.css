@@ -26,25 +26,33 @@
   .ecg-preview svg path {
     display: none;
   }
-  .page-shell {
+  .js .page-shell {
+    opacity: 1;
+    transform: none;
     transition: none !important;
+  }
+  .js .page-shell.in-view {
+    opacity: 1;
+    transform: none;
   }
 }
 
 /* Cinematic entrance */
-.page-shell { opacity: 1; transform: translateY(0); }
-.page-shell.in-view { animation: page-shell-enter 520ms cubic-bezier(.2,.8,.2,1); }
+.page-shell {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js .page-shell {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 520ms ease, transform 520ms cubic-bezier(.2,.8,.2,1);
+}
+
+.js .page-shell.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 .hero-glow { transition: transform 800ms ease, opacity 800ms ease; transform: scale(0.98); }
 .page-shell.in-view .hero-glow { transform: scale(1); opacity: 1; }
-
-@keyframes page-shell-enter {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}

@@ -35,7 +35,7 @@ export function RecognitionSection({ items }: RecognitionSectionProps) {
             delay={index === 0 ? "none" : index === 1 ? "short" : "medium"}
             key={item.id}
           >
-            <GlowCard className="recognition-card">
+            <GlowCard className="recognition-card" interactive={true}>
               <div className="recognition-card__number-wrap">
                 <span className="recognition-card__number">{item.number}</span>
               </div>
