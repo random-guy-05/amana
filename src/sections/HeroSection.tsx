@@ -36,7 +36,7 @@ export function HeroSection({ content, typedText }: HeroSectionProps) {
           <Reveal as="p" className="hero-collaborator-note" delay="medium">
             {content.collaboratorNote}
           </Reveal>
-            <Reveal className="hero-actions" delay="long">
+          <Reveal className="hero-actions" delay="long">
             <a className="button button--primary" href="#investigations">
               Explore selected investigations
             </a>
