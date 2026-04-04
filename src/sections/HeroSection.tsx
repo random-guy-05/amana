@@ -71,25 +71,8 @@ export function HeroSection({ content, typedText }: HeroSectionProps) {
               </button>
             </div>
           </Reveal>
-          <Reveal className="hero-facts" delay="long">
-            {content.heroFacts.map((fact) => (
-              <article className="hero-fact" key={fact.label}>
-                <p className="hero-fact__label">{fact.label}</p>
-                <p className="hero-fact__value">{fact.value}</p>
-                <p className="hero-fact__note">{fact.note}</p>
-              </article>
-            ))}
-          </Reveal>
         </div>
       </div>
-      <Reveal className="hero-highlight-strip" delay="long">
-        {content.heroHighlights.map((highlight) => (
-          <div className="hero-highlight" key={highlight.label}>
-            <span className="hero-highlight__label">{highlight.label}</span>
-            <strong className="hero-highlight__value">{highlight.value}</strong>
-          </div>
-        ))}
-      </Reveal>
     </section>
   );
 }
