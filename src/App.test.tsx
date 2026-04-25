@@ -32,10 +32,10 @@ describe("App", () => {
       screen.getByRole("heading", { name: /signals of rigor/i, level: 2 }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /research projects/i, level: 2 }),
+      screen.getByRole("heading", { name: /research casebook/i, level: 2 }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /leadership with results/i, level: 2 }),
+      screen.getByRole("heading", { name: /leadership with outcomes/i, level: 2 }),
     ).toBeInTheDocument();
   });
 
@@ -51,7 +51,7 @@ describe("App", () => {
     });
 
     render(<App />);
-    await user.click(screen.getByRole("button", { name: "Copy email" }));
+    await user.click(screen.getByRole("button", { name: /copy email/i }));
 
     expect(clipboard.writeText).toHaveBeenCalledWith("arnavmana.me@gmail.com");
     expect(screen.getByText(/email copied/i)).toBeInTheDocument();
@@ -62,25 +62,29 @@ describe("App", () => {
 
     expect(
       screen.getByText(
-        /my work sits at the intersection of computational biology, translational cardiology, and clinical ai/i,
+        /i work at the intersection of computational biology, translational cardiology, and clinical ai/i,
       ),
     ).toBeInTheDocument();
   });
 
-  it("updates the active research project when a new tab is selected", async () => {
+  it("shows selected project details in the casebook showcase", async () => {
     const user = userEvent.setup();
 
     render(<App />);
 
+    expect(
+      screen.getByText(
+        /can lactate serve as an earlier and more interpretable warning signal for shock progression/i,
+      ),
+    ).toBeInTheDocument();
+
     await user.click(
-      screen.getByRole("tab", {
-        name: /glycosphingolipid-cytokine axis in hlhs/i,
-      }),
+      screen.getByRole("tab", { name: /latent shock topologies with gatv2/i }),
     );
 
     expect(
       screen.getByText(
-        /which signaling relationships may help explain severity and progression in hypoplastic left heart syndrome/i,
+        /can graph attention models surface earlier latent shock structure than conventional staging/i,
       ),
     ).toBeInTheDocument();
   });
