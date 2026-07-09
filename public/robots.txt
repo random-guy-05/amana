@@ -1,4 +1,2 @@
 User-agent: *
-Allow: /
-Sitemap: https://arnavmana.me/sitemap.xml
-Host: arnavmana.me
+Disallow: /
