@@ -19,6 +19,31 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion || typeof IntersectionObserver === "undefined") {
+      elements.forEach((element) => element.classList.add("is-revealed"));
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.16 },
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (!copied) return undefined;
     const timeout = window.setTimeout(clear, 2400);
     return () => window.clearTimeout(timeout);
@@ -89,13 +114,13 @@ export default function App() {
         </section>
 
         <section className="section section--research" id="research" aria-labelledby="research-title">
-          <div className="section-heading">
+          <div className="section-heading" data-reveal>
             <p className="eyebrow">Selected research</p>
             <h2 id="research-title">Focused questions. Measurable clinical relevance.</h2>
           </div>
           <div className="research-list">
             {siteContent.projects.map((project, index) => (
-              <article className="research-item" key={project.id}>
+              <article className="research-item" data-reveal key={project.id}>
                 <div className="research-item__meta">
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <p>{project.organization}<br />{project.timeframe}</p>
@@ -120,13 +145,13 @@ export default function App() {
         </section>
 
         <section className="section section--method" id="method" aria-labelledby="method-title">
-          <div className="section-heading">
+          <div className="section-heading" data-reveal>
             <p className="eyebrow">Working method</p>
             <h2 id="method-title">Rigorous from question to consequence.</h2>
           </div>
           <div className="method-columns">
             {siteContent.methods.map((method, index) => (
-              <article key={method.title}>
+              <article data-reveal key={method.title}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <h3>{method.title}</h3>
                 <p>{method.body}</p>
@@ -137,19 +162,19 @@ export default function App() {
         </section>
 
         <section className="section section--impact" id="impact" aria-labelledby="impact-title">
-          <div className="impact-copy">
+          <div className="impact-copy" data-reveal>
             <p className="eyebrow">Leadership</p>
             <h2 id="impact-title">{siteContent.impact.value}</h2>
             <p className="impact-copy__label">{siteContent.impact.label}</p>
             <p>{siteContent.impact.body}</p>
           </div>
-          <dl className="impact-metrics">
+          <dl className="impact-metrics" data-reveal>
             {siteContent.impact.metrics.map(([value, label]) => <div key={label}><dt>{value}</dt><dd>{label}</dd></div>)}
           </dl>
         </section>
       </main>
 
-      <footer className="footer" id="contact">
+      <footer className="footer" data-reveal id="contact">
         <div>
           <p className="eyebrow">Contact</p>
           <h2>Open to high-rigor research collaboration.</h2>
