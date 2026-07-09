@@ -11,11 +11,13 @@ React + Vite portfolio for `arnavmana.me`.
 
 ## Password protection
 
-The client does not contain a password or a password hash. The site includes a
-Cloudflare Pages middleware at `functions/_middleware.ts` that enforces HTTP
-Basic authentication before any portfolio asset is sent to a visitor.
+The client does not contain a password or password hash. Since the production
+domain is hosted on Vercel, enable password protection in the Vercel project:
+Project Settings > Deployment Protection > Password Protection, then select
+All Deployments so `arnavmana.me` is included.
 
-Deploy this site to Cloudflare Pages, set `PORTFOLIO_PASSWORD` as an encrypted
-production environment variable, and optionally set `PORTFOLIO_USERNAME`
-(defaults to `arnav`). Do not deploy the protected portfolio to GitHub Pages:
-static hosting cannot enforce a secret password.
+Vercel applies the password challenge before any HTML, JavaScript, or research
+content is sent to the visitor. This requires Vercel Password Protection, which
+is available on Enterprise or through Vercel's Advanced Deployment Protection
+add-on for Pro plans. A static client-side password screen is not secure and is
+intentionally not included.
