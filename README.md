@@ -9,15 +9,24 @@ React + Vite portfolio for `arnavmana.me`.
 - `npm run build`
 - `npm run test`
 
-## Password protection
+## Password protection and Cloudflare Pages
 
-The client does not contain a password or password hash. Since the production
-domain is hosted on Vercel, enable password protection in the Vercel project:
-Project Settings > Deployment Protection > Password Protection, then select
-All Deployments so `arnavmana.me` is included.
+`functions/_middleware.js` protects every request with HTTP Basic
+Authentication before the portfolio's HTML, JavaScript, images, or research
+content are served. The password exists only in Cloudflare's `SITE_PASSWORD`
+secret; it is never bundled into the client or committed to Git.
 
-Vercel applies the password challenge before any HTML, JavaScript, or research
-content is sent to the visitor. This requires Vercel Password Protection, which
-is available on Enterprise or through Vercel's Advanced Deployment Protection
-add-on for Pro plans. A static client-side password screen is not secure and is
-intentionally not included.
+To publish it securely with Cloudflare Pages:
+
+1. Create a Pages project connected to `random-guy-05/amana`, with `main` as
+   the production branch, build command `npm run build`, and output directory
+   `dist`.
+2. In **Settings > Variables and Secrets**, add `SITE_PASSWORD` as an
+   encrypted production secret. Use a long, unique password and set the same
+   secret for preview deployments if they should also be protected.
+3. Add `arnavmana.me` as the Pages project's custom domain and complete the
+   DNS change Cloudflare provides. Remove the Vercel domain assignment only
+   after the Cloudflare deployment is ready.
+
+For local Pages testing, copy `.dev.vars.example` to `.dev.vars`, set a local
+password, run `npm run build`, then run `npx wrangler pages dev dist`.

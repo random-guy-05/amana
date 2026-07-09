@@ -1,0 +1,2 @@
+# Do not commit a real password. Copy this file to .dev.vars for local Pages development.
+SITE_PASSWORD=replace-with-a-long-random-password
