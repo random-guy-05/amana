@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Toast } from "./components/Toast";
 import { CountUp } from "./components/CountUp";
-import { ScrollFill } from "./components/ScrollFill";
-import { VelocityMarquee } from "./components/VelocityMarquee";
 import { siteContent } from "./data/siteContent";
 import { useCopyToClipboard } from "./hooks/useCopyToClipboard";
 import { useMagnetic } from "./hooks/useMagnetic";
@@ -14,16 +12,6 @@ const navigation = [
   ["Impact", "impact"],
   ["Contact", "contact"],
 ] as const;
-
-const disciplines = [
-  "Cardiogenic shock",
-  "Graph attention",
-  "Continuous physiology",
-  "Translational biology",
-  "Outcomes analysis",
-  "Time-series modeling",
-  "Interpretability",
-];
 
 const stagger = (index: number): CSSProperties => ({ ["--rd" as string]: `${index * 90}ms` } as CSSProperties);
 
@@ -106,7 +94,6 @@ export default function App() {
         <span className="ambient__glow ambient__glow--a" />
         <span className="ambient__glow ambient__glow--b" />
       </div>
-      <div className="grain" aria-hidden="true" />
       <div className="cursor-glow" ref={cursorRef} aria-hidden="true" />
       <div className="progress" aria-hidden="true"><span className="progress__bar" ref={progressRef} /></div>
 
@@ -198,20 +185,9 @@ export default function App() {
                   <p>Reading change <b>before crisis.</b></p>
                   <span className="tag" aria-hidden="true">Pattern shift</span>
                 </div>
-                <dl className="monitor__stats">
-                  <div><dt>04</dt><dd>Research projects</dd></div>
-                  <div><dt>02</dt><dd>Institutions</dd></div>
-                  <div><dt>01</dt><dd>Shared focus</dd></div>
-                </dl>
               </div>
             </aside>
           </div>
-        </section>
-
-        <section className="manifesto wrap" aria-labelledby="manifesto-title">
-          <p className="manifesto__eyebrow reveal"><span className="dot" aria-hidden="true" />The approach</p>
-          <h2 id="manifesto-title" className="sr-only">The approach</h2>
-          <ScrollFill text="I turn continuous physiology, molecular biology, and outcomes data into models that read change **early** — evidence a care team can **act on** before the crisis is obvious." />
         </section>
 
         <section className="section work wrap" id="research" aria-labelledby="research-title">
@@ -262,8 +238,6 @@ export default function App() {
             ))}
           </div>
         </section>
-
-        <VelocityMarquee items={disciplines} />
 
         <section className="section impact wrap" id="impact" aria-labelledby="impact-title">
           <div className="impact__grid">
