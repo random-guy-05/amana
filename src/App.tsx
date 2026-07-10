@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Toast } from "./components/Toast";
+import { CountUp } from "./components/CountUp";
+import { ScrollFill } from "./components/ScrollFill";
+import { VelocityMarquee } from "./components/VelocityMarquee";
 import { siteContent } from "./data/siteContent";
 import { useCopyToClipboard } from "./hooks/useCopyToClipboard";
+import { useMagnetic } from "./hooks/useMagnetic";
+import { useSiteEffects } from "./hooks/useSiteEffects";
 
 const navigation = [
   ["Research", "research"],
@@ -10,37 +15,74 @@ const navigation = [
   ["Contact", "contact"],
 ] as const;
 
+const disciplines = [
+  "Cardiogenic shock",
+  "Graph attention",
+  "Continuous physiology",
+  "Translational biology",
+  "Outcomes analysis",
+  "Time-series modeling",
+  "Interpretability",
+];
+
+const stagger = (index: number): CSSProperties => ({ ["--rd" as string]: `${index * 90}ms` } as CSSProperties);
+
+function Letters({ text, start }: { text: string; start: number }) {
+  return (
+    <>
+      {Array.from(text).map((char, index) => (
+        <span className="char" key={index} style={{ ["--i" as string]: start + index } as CSSProperties}>
+          <span>{char}</span>
+        </span>
+      ))}
+    </>
+  );
+}
+
+function ecgPath(width = 320, height = 150) {
+  const mid = height * 0.6;
+  const cycles = 3;
+  const cw = width / cycles;
+  let d = `M0 ${mid.toFixed(1)}`;
+  for (let i = 0; i < cycles; i += 1) {
+    const x = i * cw;
+    const px = (f: number) => (x + cw * f).toFixed(1);
+    d += ` L${px(0.12)} ${mid.toFixed(1)}`;
+    d += ` Q${px(0.16)} ${(mid - height * 0.1).toFixed(1)} ${px(0.2)} ${mid.toFixed(1)}`;
+    d += ` L${px(0.32)} ${mid.toFixed(1)}`;
+    d += ` L${px(0.35)} ${(mid + height * 0.07).toFixed(1)}`;
+    d += ` L${px(0.4)} ${(mid - height * 0.42).toFixed(1)}`;
+    d += ` L${px(0.45)} ${(mid + height * 0.22).toFixed(1)}`;
+    d += ` L${px(0.5)} ${mid.toFixed(1)}`;
+    d += ` L${px(0.62)} ${mid.toFixed(1)}`;
+    d += ` Q${px(0.7)} ${(mid - height * 0.17).toFixed(1)} ${px(0.78)} ${mid.toFixed(1)}`;
+    d += ` L${px(1)} ${mid.toFixed(1)}`;
+  }
+  return d;
+}
+
+const TRACE = ecgPath();
+
 export default function App() {
   const { copied, copy, clear } = useCopyToClipboard();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const heroCta = useMagnetic<HTMLAnchorElement>();
+  const footCta = useMagnetic<HTMLAnchorElement>();
+
+  const active = useSiteEffects({ cursor: cursorRef, progress: progressRef, nav: navRef });
 
   useEffect(() => {
-    document.title = `${siteContent.name} | ${siteContent.title}`;
+    document.title = `${siteContent.name} — ${siteContent.title}`;
   }, []);
 
   useEffect(() => {
-    const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-    if (reduceMotion || typeof IntersectionObserver === "undefined") {
-      elements.forEach((element) => element.classList.add("is-revealed"));
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-revealed");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.14 },
-    );
-
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    const frame = requestAnimationFrame(() => setLoaded(true));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
@@ -58,181 +100,206 @@ export default function App() {
   }
 
   return (
-    <div className="site-shell">
+    <div className={`shell${loaded ? " is-loaded" : ""}`}>
+      <div className="ambient" aria-hidden="true">
+        <span className="ambient__grid" />
+        <span className="ambient__glow ambient__glow--a" />
+        <span className="ambient__glow ambient__glow--b" />
+      </div>
+      <div className="grain" aria-hidden="true" />
+      <div className="cursor-glow" ref={cursorRef} aria-hidden="true" />
+      <div className="progress" aria-hidden="true"><span className="progress__bar" ref={progressRef} /></div>
+
       <Toast message={copied} />
 
-      <header className="site-header">
-        <div className="site-header__inner">
-          <a className="brand" href="#top" aria-label={`${siteContent.name} home`}>
+      <header className="nav" ref={navRef}>
+        <div className="nav__inner">
+          <a className="brand" href="#top" aria-label={`${siteContent.name} — home`}>
             <span className="brand__mark" aria-hidden="true">AM</span>
-            <span className="brand__name">{siteContent.name}</span>
+            <span className="brand__name"><b>Arnav Mana</b> <span>/ Clinical AI</span></span>
           </a>
 
-          <nav className="desktop-nav" aria-label="Primary navigation">
-            {navigation.map(([label, id]) => <a href={`#${id}`} key={id}>{label}</a>)}
+          <nav className="nav__links" aria-label="Primary">
+            {navigation.map(([label, id]) => (
+              <a href={`#${id}`} key={id} className={active === id ? "is-active" : ""}>{label}</a>
+            ))}
           </nav>
 
-          <div className="header-actions">
-            <span className="availability"><span className="availability__dot" />Open to research roles</span>
-            <a className="header-contact" href={`mailto:${siteContent.email}`} aria-label="Email Arnav">Get in touch <span aria-hidden="true">&#8594;</span></a>
+          <div className="nav__end">
+            <span className="pill"><span className="dot" aria-hidden="true" />Open to research roles</span>
+            <a className="nav__contact" href={`mailto:${siteContent.email}`}>Get in touch <span aria-hidden="true">&#8594;</span></a>
+            <button
+              className={`burger${menuOpen ? " is-open" : ""}`}
+              type="button"
+              aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              <span /><span /><span />
+            </button>
           </div>
-
-          <button
-            className="menu-button"
-            type="button"
-            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
-            title="Menu"
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            <span /><span /><span />
-          </button>
         </div>
         {menuOpen && (
           <nav className="mobile-nav" id="mobile-navigation" aria-label="Mobile navigation">
-            {navigation.map(([label, id]) => <a href={`#${id}`} key={id} onClick={closeMenu}>{label}</a>)}
-            <a href={`mailto:${siteContent.email}`} onClick={closeMenu}>Get in touch</a>
+            {navigation.map(([label, id], index) => (
+              <a href={`#${id}`} key={id} onClick={closeMenu}>{label}<span>0{index + 1}</span></a>
+            ))}
+            <a href={`mailto:${siteContent.email}`} onClick={closeMenu}>Get in touch<span>&#8594;</span></a>
           </nav>
         )}
       </header>
 
       <main>
-        <section className="hero" id="top" aria-labelledby="hero-title">
-          <div className="hero__veil" aria-hidden="true" />
-          <div className="hero__inner">
-            <div className="hero__copy" data-reveal>
-              <p className="eyebrow"><span className="eyebrow__line" />Clinical AI / Cardiac critical care</p>
-              <h1 id="hero-title">Arnav <em>Mana</em></h1>
-              <p className="hero__title">Making clinical signals easier to act on.</p>
-              <p className="hero__body">{siteContent.introduction}</p>
-              <div className="hero__actions">
-                <a className="button button--primary" href="#research">Explore the work <span aria-hidden="true">&#8594;</span></a>
-                <button className="button button--quiet" type="button" onClick={copyEmail}>Copy email</button>
+        <section className="hero wrap" id="top" aria-labelledby="hero-title">
+          <div className="hero__grid">
+            <div className="hero__lead">
+              <p className="eyebrow rise rise-1"><span className="dot" aria-hidden="true" />Clinical AI · Cardiac critical care</p>
+              <h1 id="hero-title" className="hero__name" aria-label="Arnav Mana">
+                <span className="hero__word"><Letters text="Arnav" start={0} /></span>
+                <span className="hero__word hero__word--accent"><Letters text="Mana" start={6} /></span>
+              </h1>
+              <p className="hero__tag rise rise-3">Making clinical signals <em>easier to act on.</em></p>
+              <p className="hero__body rise rise-4">{siteContent.introduction}</p>
+              <div className="hero__actions rise rise-5">
+                <a className="btn btn--primary" href="#research" ref={heroCta}>Explore the work <span className="arrow" aria-hidden="true">&#8594;</span></a>
+                <button className="btn btn--ghost" type="button" onClick={copyEmail}>Copy email</button>
               </div>
-              <div className="hero__meta">
-                <span>UCSF / CU Anschutz</span>
+              <div className="hero__meta rise rise-6">
+                <span>UCSF × CU Anschutz</span>
                 <span>Clinical AI / Translational biology</span>
               </div>
             </div>
 
-            <aside className="hero__signal" aria-label="Current research signal">
-              <div className="signal-card__top">
-                <span>Current signal</span>
-                <span className="signal-card__live"><span className="availability__dot" />Live thread</span>
+            <aside className="monitor rise rise-4" aria-label="Live research signal">
+              <div className="monitor__inner">
+                <div className="monitor__bar">
+                  <span>Signal — physiology stream</span>
+                  <span className="monitor__live"><span className="dot" aria-hidden="true" />Live</span>
+                </div>
+                <div className="monitor__screen">
+                  <svg className="ecg" viewBox="0 0 320 150" role="img" aria-label="Animated physiologic waveform">
+                    <defs>
+                      <linearGradient id="ecgGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="#b98a3c" />
+                        <stop offset="55%" stopColor="#e6c168" />
+                        <stop offset="100%" stopColor="#f2dba1" />
+                      </linearGradient>
+                    </defs>
+                    <path id="ecgTrace" className="ecg__trace" d={TRACE} pathLength={1} />
+                    <circle className="ecg__pulse" r={3.4}>
+                      <animateMotion dur="5s" begin="1.4s" repeatCount="indefinite" rotate="auto">
+                        <mpath href="#ecgTrace" />
+                      </animateMotion>
+                    </circle>
+                  </svg>
+                </div>
+                <div className="monitor__readout">
+                  <p>Reading change <b>before crisis.</b></p>
+                  <span className="tag" aria-hidden="true">Pattern shift</span>
+                </div>
+                <dl className="monitor__stats">
+                  <div><dt>04</dt><dd>Research projects</dd></div>
+                  <div><dt>02</dt><dd>Institutions</dd></div>
+                  <div><dt>01</dt><dd>Shared focus</dd></div>
+                </dl>
               </div>
-              <div className="signal-graph" aria-hidden="true">
-                <span /><span /><span /><span /><span /><span /><span /><span /><span /><span /><span /><span />
-              </div>
-              <p className="signal-card__title">Reading change before crisis.</p>
-              <p className="signal-card__body">Connecting continuous physiology to mechanisms and decisions clinicians can act on.</p>
-              <dl className="signal-stats">
-                <div><dt>04</dt><dd>research projects</dd></div>
-                <div><dt>02</dt><dd>institutions</dd></div>
-                <div><dt>01</dt><dd>shared focus</dd></div>
-              </dl>
             </aside>
           </div>
-          <div className="hero__bottom" data-reveal>
-            <span>Scroll to explore</span>
-            <span className="hero__scroll-line" aria-hidden="true" />
-            <span>01 / 04</span>
-          </div>
         </section>
 
-        <section className="statement" aria-labelledby="statement-title" data-reveal>
-          <div className="statement__number">01</div>
-          <div>
-            <p className="eyebrow">The starting point</p>
-            <h2 id="statement-title">Good models start with a clinical question.</h2>
-          </div>
-          <p className="statement__body">I move between physiology, biology, and outcomes data to find signals that can be checked, explained, and used.</p>
+        <section className="manifesto wrap" aria-labelledby="manifesto-title">
+          <p className="manifesto__eyebrow reveal"><span className="dot" aria-hidden="true" />The approach</p>
+          <h2 id="manifesto-title" className="sr-only">The approach</h2>
+          <ScrollFill text="I turn continuous physiology, molecular biology, and outcomes data into models that read change **early** — evidence a care team can **act on** before the crisis is obvious." />
         </section>
 
-        <section className="section section--research" id="research" aria-labelledby="research-title">
-          <div className="section-heading" data-reveal>
-            <div>
-              <p className="eyebrow">02 / Research</p>
-              <h2 id="research-title">Questions I am working on.</h2>
-            </div>
-            <p className="section-heading__aside">Projects across cardiogenic shock, congenital heart disease, graph learning, and outcomes analysis.</p>
+        <section className="section work wrap" id="research" aria-labelledby="research-title">
+          <div className="section__head">
+            <h2 id="research-title" className="reveal">Questions I am <em>working on.</em></h2>
+            <p className="section__aside reveal" style={stagger(1)}>Projects spanning cardiogenic shock, congenital heart disease, graph learning, and clinical outcomes.</p>
           </div>
-          <div className="research-list">
+          <div className="work__list">
             {siteContent.projects.map((project, index) => (
-              <article className={`research-item research-item--${index + 1}`} data-reveal key={project.id}>
-                <div className="research-item__meta">
-                  <span className="research-item__number">{String(index + 1).padStart(2, "0")}</span>
-                  <p>{project.organization}<br />{project.timeframe}</p>
-                </div>
-                <div className="research-item__main">
-                  <div className="research-item__heading">
-                    <h3>{project.title}</h3>
-                    <span className={`status status--${project.status.toLowerCase()}`}>{project.status}</span>
+              <article className="work__item reveal" style={stagger(index)} key={project.id}>
+                <span className="work__num">{String(index + 1).padStart(2, "0")}</span>
+                <div className="work__main">
+                  <div className="work__top">
+                    <span className="work__org"><b>{project.organization}</b> · {project.timeframe}</span>
+                    <span className={`status status--${project.status.toLowerCase()}`}><i aria-hidden="true" />{project.status}</span>
                   </div>
-                  <p className="research-item__question">{project.question}</p>
-                  <dl className="research-item__details">
+                  <h3>{project.title}</h3>
+                  <p className="work__q">{project.question}</p>
+                  <dl className="work__grid">
                     <div><dt>How I am testing it</dt><dd>{project.approach}</dd></div>
                     <div><dt>Why it matters</dt><dd>{project.significance}</dd></div>
                   </dl>
-                  <ul className="method-tags" aria-label="Methods used">
+                  <ul className="chips" aria-label="Methods used">
                     {project.methods.map((method) => <li key={method}>{method}</li>)}
                   </ul>
                 </div>
-                <span className="research-item__arrow" aria-hidden="true">&#8594;</span>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section section--method" id="method" aria-labelledby="method-title">
-          <div className="section-heading" data-reveal>
-            <div>
-              <p className="eyebrow">03 / Method</p>
-              <h2 id="method-title">How I work.</h2>
-            </div>
-            <p className="section-heading__aside">Start with a decision, then build the analysis around the evidence that decision needs.</p>
+        <section className="section approach wrap" id="method" aria-labelledby="method-title">
+          <div className="section__head">
+            <h2 id="method-title" className="reveal">How I work.</h2>
+            <p className="section__aside reveal" style={stagger(1)}>Start with a decision, then build the analysis around the evidence that decision needs.</p>
           </div>
-          <div className="method-columns">
+          <div className="cards">
             {siteContent.methods.map((method, index) => (
-              <article data-reveal key={method.title}>
-                <div className="method-columns__top"><span>{String(index + 1).padStart(2, "0")}</span><span className="method-columns__mark" aria-hidden="true">+</span></div>
+              <article className="card reveal" style={stagger(index)} key={method.title}>
+                <div className="card__top">
+                  <span className="card__num">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="card__mark" aria-hidden="true">+</span>
+                </div>
                 <h3>{method.title}</h3>
                 <p>{method.body}</p>
-                <p className="method-columns__skills">{method.skills}</p>
+                <p className="card__skills">{method.skills}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section section--impact" id="impact" aria-labelledby="impact-title">
-          <div className="impact-copy" data-reveal>
-            <p className="eyebrow">04 / Community work</p>
-            <h2 id="impact-title">Building useful spaces for health AI.</h2>
-            <p className="impact-copy__label">{siteContent.impact.label}</p>
-            <p>{siteContent.impact.body}</p>
-            <a className="text-link" href={`mailto:${siteContent.email}`}>Talk about a project <span aria-hidden="true">&#8594;</span></a>
+        <VelocityMarquee items={disciplines} />
+
+        <section className="section impact wrap" id="impact" aria-labelledby="impact-title">
+          <div className="impact__grid">
+            <div className="impact__copy reveal">
+              <p className="eyebrow eyebrow--plain">04 · Community work</p>
+              <h2 id="impact-title">Building useful spaces for <em>health AI.</em></h2>
+              <p className="impact__label">{siteContent.impact.label}</p>
+              <p className="impact__body">{siteContent.impact.body}</p>
+              <a className="textlink" href={`mailto:${siteContent.email}`}>Talk about a project <span aria-hidden="true">&#8594;</span></a>
+            </div>
+            <dl className="metrics reveal" style={stagger(1)}>
+              <div><dt><CountUp value={siteContent.impact.value} /></dt><dd>mobilized through Hack4Health</dd></div>
+              {siteContent.impact.metrics.map(([value, label]) => (
+                <div key={label}><dt><CountUp value={value} /></dt><dd>{label}</dd></div>
+              ))}
+            </dl>
           </div>
-          <dl className="impact-metrics" data-reveal>
-            <div><dt>{siteContent.impact.value}</dt><dd>mobilized through Hack4Health</dd></div>
-            {siteContent.impact.metrics.map(([value, label]) => <div key={label}><dt>{value}</dt><dd>{label}</dd></div>)}
-          </dl>
         </section>
       </main>
 
-      <footer className="footer" data-reveal id="contact">
-        <div className="footer__heading">
-          <p className="eyebrow">Contact</p>
-          <h2>Have a clinical question?</h2>
-        </div>
-        <div className="footer__actions">
-          <p>I am open to thoughtful collaborations in cardiac critical care, clinical AI, and translational biology.</p>
-          <div className="footer__buttons">
-            <a className="button button--primary" href={`mailto:${siteContent.email}`}>Email Arnav <span aria-hidden="true">&#8594;</span></a>
-            <button className="button button--quiet" type="button" onClick={copyEmail}>Copy address</button>
+      <footer className="foot" id="contact">
+        <div className="wrap">
+          <div className="foot__cta reveal">
+            <p className="eyebrow">Contact</p>
+            <h2>Have a clinical question? <em>Let's talk.</em></h2>
+            <div className="foot__actions">
+              <a className="btn btn--primary" href={`mailto:${siteContent.email}`} ref={footCta}>Email Arnav <span className="arrow" aria-hidden="true">&#8594;</span></a>
+              <button className="btn btn--ghost" type="button" onClick={copyEmail}>Copy address</button>
+            </div>
+            <p className="foot__email">{siteContent.email}</p>
           </div>
-          <p className="footer__email">{siteContent.email}</p>
+          <div className="foot__bar">
+            <span>© {new Date().getFullYear()} Arnav Mana — Clinical AI Researcher</span>
+            <span>Cardiac critical care · Clinical AI · Translational biology</span>
+          </div>
         </div>
-        <div className="footer__bottom"><span>Arnav Mana / Clinical AI Researcher</span><span>Clinical AI / Cardiac critical care</span></div>
       </footer>
     </div>
   );
