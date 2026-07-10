@@ -74,48 +74,50 @@ function loginPage(message = "", status = 401) {
     <meta name="theme-color" content="#090c11">
     <title>Private portfolio | Arnav Mana</title>
     <style>
-      :root { color-scheme: dark; --ink: #f1efe8; --muted: #9aa6b3; --line: #2b3744; --canvas: #090c11; --mint: #88e0c2; --coral: #ff9d78; }
+      :root { color-scheme: dark; --ink: #f1efe8; --muted: #9aa6b3; --line: #2b3744; --canvas: #090c11; --mint: #88e0c2; --mint-bright: #b2f0d9; --coral: #ff9d78; }
       * { box-sizing: border-box; }
-      body { min-width: 320px; min-height: 100vh; margin: 0; display: grid; place-items: center; overflow: hidden; background: var(--canvas); color: var(--ink); font-family: Arial, sans-serif; }
+      body { min-width: 320px; min-height: 100vh; margin: 0; padding: 24px; display: grid; place-items: center; overflow-x: hidden; background: var(--canvas); color: var(--ink); font-family: "DM Sans", "Segoe UI", Arial, sans-serif; }
       body::before, body::after { position: fixed; content: ""; pointer-events: none; }
-      body::before { inset: 9vh 7vw; border: 1px solid rgba(136, 224, 194, .12); transform: rotate(-4deg); }
-      body::after { width: 46vw; height: 1px; top: 24vh; left: -8vw; background: var(--coral); opacity: .65; transform: rotate(-20deg); box-shadow: 0 180px 0 rgba(136, 224, 194, .5), 0 360px 0 rgba(158, 186, 255, .35); }
-      .login-shell { position: relative; width: min(100% - 40px, 520px); padding: 44px; border: 1px solid rgba(154, 166, 179, .28); background: rgba(15, 20, 27, .94); box-shadow: 22px 22px 0 rgba(5, 8, 11, .52); }
-      .login-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 76px; color: var(--muted); font-size: 10px; letter-spacing: .13em; text-transform: uppercase; }
-      .login-mark { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--mint); border-radius: 50%; color: var(--mint); font-size: 10px; font-weight: 700; }
-      .login-status { display: inline-flex; align-items: center; gap: 7px; }
+      body::before { width: 1px; height: 62vh; top: 19vh; left: 12vw; background: rgba(136, 224, 194, .16); }
+      body::after { width: 31vw; height: 1px; top: 18vh; right: 0; background: var(--coral); opacity: .55; }
+      .login-shell { position: relative; width: min(100%, 500px); padding: 48px; border: 1px solid rgba(154, 166, 179, .28); border-radius: 8px; background: rgba(16, 22, 30, .97); box-shadow: 0 28px 80px rgba(0, 0, 0, .38); }
+      .login-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 64px; color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+      .login-mark { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--mint); border-radius: 50%; color: var(--mint); font-size: 10px; font-weight: 700; letter-spacing: .04em; }
+      .login-status { display: inline-flex; align-items: center; gap: 8px; }
       .login-status::before { width: 6px; height: 6px; content: ""; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 4px rgba(136, 224, 194, .12); }
-      .login-eyebrow { margin: 0 0 17px; color: var(--mint); font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
-      h1 { margin: 0 0 17px; font-family: Georgia, serif; font-size: clamp(42px, 9vw, 70px); font-weight: 400; letter-spacing: -.055em; line-height: .98; }
+      .login-eyebrow { margin: 0 0 16px; color: var(--mint); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+      h1 { max-width: 410px; margin: 0 0 18px; font-family: Georgia, serif; font-size: 3.8rem; font-weight: 400; letter-spacing: 0; line-height: 1.02; }
       h1 em { color: var(--mint); font-style: normal; }
-      .login-copy { max-width: 350px; margin: 0 0 32px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+      .login-copy { max-width: 370px; margin: 0 0 32px; color: var(--muted); font-size: 14px; line-height: 1.6; }
       label { display: block; margin-bottom: 9px; color: #cbd4da; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-      .password-row { display: flex; gap: 9px; }
-      input { min-width: 0; flex: 1; height: 49px; padding: 0 14px; border: 1px solid var(--line); border-radius: 3px; outline: none; background: #0a0e14; color: var(--ink); font-size: 16px; transition: border-color .18s ease, box-shadow .18s ease; }
+      .password-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+      input { min-width: 0; width: 100%; height: 52px; padding: 0 15px; border: 1px solid var(--line); border-radius: 5px; outline: none; background: #0a0e14; color: var(--ink); font-size: 16px; transition: border-color .18s ease, box-shadow .18s ease; }
+      input::placeholder { color: #64717e; }
       input:focus { border-color: var(--mint); box-shadow: 0 0 0 3px rgba(136, 224, 194, .12); }
-      button { height: 49px; padding: 0 17px; border: 1px solid var(--mint); border-radius: 3px; background: var(--mint); color: #07130f; cursor: pointer; font-size: 12px; font-weight: 700; white-space: nowrap; }
-      button:hover { background: #b2f0d9; }
-      .login-message { margin: 0 0 14px; color: var(--coral); font-size: 13px; }
-      .login-foot { margin: 29px 0 0; padding-top: 17px; border-top: 1px solid var(--line); color: #667381; font-size: 11px; }
-      @media (max-width: 520px) { .login-shell { padding: 28px; } .login-top { margin-bottom: 62px; } .password-row { display: grid; grid-template-columns: 1fr; } button { width: 100%; } }
+      button { height: 52px; padding: 0 19px; border: 1px solid var(--mint); border-radius: 5px; background: var(--mint); color: #07130f; cursor: pointer; font-family: "DM Sans", "Segoe UI", Arial, sans-serif; font-size: 12px; font-weight: 700; white-space: nowrap; transition: background .18s ease, border-color .18s ease, transform .18s ease; }
+      button span { margin-left: 7px; }
+      button:hover { border-color: var(--mint-bright); background: var(--mint-bright); transform: translateY(-1px); }
+      .login-message { margin: 0 0 15px; padding: 10px 12px; border-left: 2px solid var(--coral); background: rgba(255, 157, 120, .08); color: #ffc0a8; font-size: 13px; line-height: 1.45; }
+      .login-foot { margin: 30px 0 0; padding-top: 17px; border-top: 1px solid var(--line); color: #667381; font-size: 11px; }
+      @media (max-width: 540px) { body { padding: 16px; } .login-shell { padding: 30px 24px; } .login-top { margin-bottom: 58px; } h1 { font-size: 3rem; } .password-row { grid-template-columns: 1fr; } button { width: 100%; } }
       @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
     </style>
   </head>
   <body>
     <main class="login-shell">
       <div class="login-top"><span class="login-mark" aria-hidden="true">AM</span><span class="login-status">Private portfolio</span></div>
-      <p class="login-eyebrow">Arnav Mana / Clinical AI Researcher</p>
-      <h1>Enter the <em>signal.</em></h1>
-      <p class="login-copy">This research portfolio is private. Use the access password to continue.</p>
+      <p class="login-eyebrow">Arnav Mana / Private research portfolio</p>
+      <h1>Private research <em>archive.</em></h1>
+      <p class="login-copy" id="login-copy">Enter the password to view current projects, methods, and community work.</p>
       ${messageMarkup}
       <form action="${AUTH_PATH}" method="post">
         <label for="site-password">Password</label>
         <div class="password-row">
-          <input id="site-password" name="password" type="password" autocomplete="current-password" required autofocus>
-          <button type="submit">Unlock portfolio</button>
+          <input id="site-password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" aria-describedby="login-copy" required autofocus>
+          <button type="submit">Continue <span aria-hidden="true">&#8594;</span></button>
         </div>
       </form>
-      <p class="login-foot">Clinical AI / Computational biology / Cardiac critical care</p>
+      <p class="login-foot">Clinical AI, cardiac critical care, and translational biology</p>
     </main>
   </body>
 </html>`, { status, headers: commonHeaders() });

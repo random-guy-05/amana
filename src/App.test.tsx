@@ -7,8 +7,8 @@ describe("App", () => {
     render(<App />);
 
     expect(screen.getByRole("heading", { name: /arnav mana/i, level: 1 })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /focused questions/i, level: 2 })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /rigorous from question/i, level: 2 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /questions i am working on/i, level: 2 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /how i work/i, level: 2 })).toBeInTheDocument();
   });
 
   it("copies the contact address", async () => {
@@ -27,7 +27,7 @@ describe("App", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole("button", { name: /toggle navigation/i }));
+    await user.click(screen.getByRole("button", { name: /open navigation/i }));
     expect(screen.getByRole("navigation", { name: /mobile navigation/i })).toBeInTheDocument();
   });
 });
