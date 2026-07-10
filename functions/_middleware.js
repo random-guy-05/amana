@@ -107,7 +107,7 @@ function loginPage(message = "", status = 401) {
     <main class="login-shell">
       <div class="login-top"><span class="login-mark" aria-hidden="true">AM</span><span class="login-status">Private portfolio</span></div>
       <p class="login-eyebrow">Arnav Mana / Private research portfolio</p>
-      <h1>Private research <em>archive.</em></h1>
+      <h1>Research <em>archive.</em></h1>
       <p class="login-copy" id="login-copy">Enter the password to view current projects, methods, and community work.</p>
       ${messageMarkup}
       <form action="${AUTH_PATH}" method="post">
