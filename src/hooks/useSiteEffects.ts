@@ -90,30 +90,38 @@ export function useSiteEffects({ cursor, progress, nav }: SiteRefs) {
       cleanups.push(() => window.removeEventListener("scroll", refreshRect));
       cleanups.push(() => window.removeEventListener("resize", refreshRect));
 
-      let px = 0;
-      let py = 0;
+      let targetX = window.innerWidth / 2;
+      let targetY = window.innerHeight / 2;
+      let currentX = targetX;
+      let currentY = targetY;
       let frame = 0;
       const apply = () => {
-        frame = 0;
+        currentX += (targetX - currentX) * 0.14;
+        currentY += (targetY - currentY) * 0.14;
         if (glow) {
-          glow.style.transform = `translate3d(${px}px, ${py}px, 0)`;
+          glow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
           glow.classList.add("is-active");
         }
-        root.style.setProperty("--px", (px / window.innerWidth - 0.5).toFixed(3));
-        root.style.setProperty("--py", (py / window.innerHeight - 0.5).toFixed(3));
+        root.style.setProperty("--px", (currentX / window.innerWidth - 0.5).toFixed(3));
+        root.style.setProperty("--py", (currentY / window.innerHeight - 0.5).toFixed(3));
         if (tilt && heroRect) {
-          if (py <= heroRect.bottom) {
-            const mx = (px - (heroRect.left + heroRect.width / 2)) / heroRect.width;
-            const my = (py - (heroRect.top + heroRect.height / 2)) / heroRect.height;
-            tilt.style.transform = `perspective(1000px) rotateY(${(mx * 7).toFixed(2)}deg) rotateX(${(-my * 7).toFixed(2)}deg)`;
+          if (currentY <= heroRect.bottom) {
+            const mx = (currentX - (heroRect.left + heroRect.width / 2)) / heroRect.width;
+            const my = (currentY - (heroRect.top + heroRect.height / 2)) / heroRect.height;
+            tilt.style.transform = `perspective(1100px) rotateY(${(mx * 4.5).toFixed(2)}deg) rotateX(${(-my * 4.5).toFixed(2)}deg) translateZ(0)`;
           } else {
             tilt.style.transform = "";
           }
         }
+        if (Math.abs(targetX - currentX) > 0.1 || Math.abs(targetY - currentY) > 0.1) {
+          frame = requestAnimationFrame(apply);
+        } else {
+          frame = 0;
+        }
       };
       const onPointerMove = (event: PointerEvent) => {
-        px = event.clientX;
-        py = event.clientY;
+        targetX = event.clientX;
+        targetY = event.clientY;
         if (!frame) frame = requestAnimationFrame(apply);
       };
       window.addEventListener("pointermove", onPointerMove, { passive: true });

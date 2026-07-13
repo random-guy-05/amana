@@ -29,6 +29,8 @@
   --max: 1200px;
   --gutter: clamp(20px, 5vw, 68px);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --radius: 14px;
 }
 
@@ -194,7 +196,9 @@ h1, h2, h3, h4, p { margin-top: 0; }
   font-family: var(--font-mono);
   font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
   box-shadow: 0 4px 18px rgba(230, 193, 104, 0.22);
+  transition: transform 0.55s var(--ease-out), box-shadow 0.4s ease;
 }
+.brand:hover .brand__mark { transform: rotate(-4deg) scale(1.05); box-shadow: 0 8px 26px rgba(230, 193, 104, 0.3); }
 .brand__name { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
 .brand__name b { font-weight: 600; }
 .brand__name span { color: var(--faint); font-weight: 400; }
@@ -260,13 +264,14 @@ h1, h2, h3, h4, p { margin-top: 0; }
   color: #1a1305;
   box-shadow: 0 8px 30px rgba(230, 193, 104, 0.18);
 }
-.btn--primary:hover { box-shadow: 0 12px 40px rgba(230, 193, 104, 0.3); }
+.btn--primary:hover { box-shadow: 0 12px 40px rgba(230, 193, 104, 0.3); transform: translateY(-2px); }
 .btn--primary span.arrow { color: #1a1305; }
 .btn--ghost {
   border: 1px solid var(--line-2);
   color: var(--ink);
 }
-.btn--ghost:hover { border-color: var(--gold); color: var(--gold-soft); background: rgba(230, 193, 104, 0.05); }
+.btn--ghost:hover { border-color: var(--gold); color: var(--gold-soft); background: rgba(230, 193, 104, 0.05); transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(0.98); transition-duration: 0.12s; }
 
 .textlink {
   display: inline-flex; align-items: center; gap: 10px;
@@ -333,7 +338,7 @@ h1, h2, h3, h4, p { margin-top: 0; }
   transform: translateX(-130%);
   opacity: 0;
 }
-.is-loaded .hero__name::after { animation: sheen 6s ease-in-out 1.7s infinite; }
+.is-loaded .hero__name::after { animation: sheen 8s ease-in-out 1.7s infinite; }
 
 .hero__tag {
   max-width: 560px;
@@ -384,7 +389,7 @@ h1, h2, h3, h4, p { margin-top: 0; }
   box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   overflow: hidden;
 }
-.monitor__inner { transform-style: preserve-3d; transition: transform 0.4s var(--ease); will-change: transform; }
+.monitor__inner { transform-style: preserve-3d; will-change: transform; }
 .monitor::after {
   content: "";
   position: absolute; inset: 0;
@@ -462,12 +467,13 @@ h1, h2, h3, h4, p { margin-top: 0; }
 .reveal { opacity: 1; }
 html.js .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  transform: translateY(28px) scale(0.985);
+  filter: blur(5px);
+  transition: opacity 0.85s var(--ease-out), transform 0.9s var(--ease-out), filter 0.7s ease;
   transition-delay: var(--rd, 0ms);
   will-change: opacity, transform;
 }
-html.js .reveal.is-in { opacity: 1; transform: none; will-change: auto; }
+html.js .reveal.is-in { opacity: 1; transform: none; filter: none; will-change: auto; }
 
 /* ---------- work / research list ---------- */
 
@@ -520,7 +526,8 @@ html.js .reveal.is-in { opacity: 1; transform: none; will-change: auto; }
   letter-spacing: -0.01em;
   transition: color 0.3s ease;
 }
-.work__item:hover h3 { color: var(--gold-soft); }
+.work__item:hover h3 { color: var(--gold-soft); transform: translateX(4px); }
+.work__item h3 { transition: color 0.3s ease, transform 0.5s var(--ease-out); }
 .work__q { max-width: 60ch; margin: 0 0 26px; color: var(--ink-soft); font-family: var(--font-serif); font-size: clamp(1.05rem, 1.7vw, 1.4rem); line-height: 1.4; }
 .work__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; max-width: 720px; margin-bottom: 24px; }
 .work__grid dt { margin-bottom: 8px; color: var(--gold); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
@@ -559,7 +566,7 @@ html.js .reveal.is-in { opacity: 1; transform: none; will-change: auto; }
   opacity: 0; transition: opacity 0.4s ease;
   pointer-events: none;
 }
-.card:hover { transform: translateY(-6px); border-color: var(--line-2); }
+.card:hover { transform: translateY(-7px) scale(1.008); border-color: var(--line-2); }
 .card:hover::before { opacity: 1; }
 .card__top { display: flex; align-items: center; justify-content: space-between; }
 .card__num { color: var(--gold); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; }
@@ -646,6 +653,8 @@ html.js .reveal.is-in { opacity: 1; transform: none; will-change: auto; }
 @keyframes ping { 0% { box-shadow: 0 0 0 0 var(--gold-glow); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
 @keyframes drift-a { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-6vw, 5vh); } }
 @keyframes drift-b { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(7vw, -4vh); } }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+@keyframes menu-link-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 
 /* ============================================================
    Responsive
@@ -679,6 +688,7 @@ html.js .reveal.is-in { opacity: 1; transform: none; will-change: auto; }
     margin-inline: auto;
     padding: 8px 0 22px;
     gap: 2px;
+    animation: menu-in 0.45s var(--ease-out) both;
   }
   .mobile-nav a {
     padding: 14px 4px;
@@ -686,7 +696,14 @@ html.js .reveal.is-in { opacity: 1; transform: none; will-change: auto; }
     color: var(--ink-soft);
     font-family: var(--font-serif);
     font-size: 1.5rem;
+    opacity: 0;
+    animation: menu-link-in 0.5s var(--ease-out) forwards;
   }
+  .mobile-nav a:nth-child(1) { animation-delay: 0.04s; }
+  .mobile-nav a:nth-child(2) { animation-delay: 0.08s; }
+  .mobile-nav a:nth-child(3) { animation-delay: 0.12s; }
+  .mobile-nav a:nth-child(4) { animation-delay: 0.16s; }
+  .mobile-nav a:nth-child(5) { animation-delay: 0.2s; }
   .mobile-nav a span { float: right; color: var(--gold); font-family: var(--font-mono); font-size: 11px; }
 
   .hero { min-height: auto; padding: 128px 0 30px; }
@@ -717,6 +734,6 @@ html.js .reveal.is-in { opacity: 1; transform: none; will-change: auto; }
   .ecg__trace { stroke-dashoffset: 0; }
   .char > span { transform: none; }
   .hero__name::after { display: none; }
-  html.js .reveal { opacity: 1; transform: none; }
+  html.js .reveal { opacity: 1; transform: none; filter: none; }
   .cursor-glow { display: none; }
 }
