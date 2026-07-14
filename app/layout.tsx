@@ -1,58 +1,48 @@
 import type { Metadata } from "next";
-import { DM_Mono, Manrope } from "next/font/google";
-import { headers } from "next/headers";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const geist = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const dmMono = DM_Mono({
-  variable: "--font-dm-mono",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
-  const origin = `${protocol}://${host}`;
-
-  return {
-    title: "Arnav Mana — AI × Health Researcher",
+export const metadata: Metadata = {
+  title: "Arnav Mana — AI & Health Research",
+  description:
+    "Arnav Mana is a student researcher working across cardiac critical care, computational biology, and translational medicine.",
+  keywords: [
+    "Arnav Mana",
+    "AI health research",
+    "computational biology",
+    "cardiac critical care",
+    "machine learning",
+  ],
+  authors: [{ name: "Arnav Mana" }],
+  icons: { icon: "/favicon.ico" },
+  openGraph: {
+    title: "Arnav Mana — AI & Health Research",
     description:
-      "Arnav Mana is a student researcher working across cardiac critical care, computational biology, and translational medicine.",
-    keywords: [
-      "Arnav Mana",
-      "AI health researcher",
-      "computational biology",
-      "cardiac critical care",
-      "machine learning",
-    ],
-    authors: [{ name: "Arnav Mana" }],
-    icons: { icon: "/favicon.ico" },
-    openGraph: {
-      title: "Arnav Mana — AI × Health Researcher",
-      description: "Building AI for the moments medicine can't miss.",
-      type: "website",
-      url: origin,
-      images: [{ url: `${origin}/og.png`, width: 1536, height: 1024, alt: "Arnav Mana — AI × Health Researcher" }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "Arnav Mana — AI × Health Researcher",
-      description: "Building AI for the moments medicine can't miss.",
-      images: [`${origin}/og.png`],
-    },
-  };
-}
+      "Research at the intersection of machine intelligence and cardiovascular medicine.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Arnav Mana — AI & Health Research",
+    description:
+      "Research at the intersection of machine intelligence and cardiovascular medicine.",
+  },
+};
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${dmMono.variable}`}>
+      <body className={`${geist.variable} ${geistMono.variable}`}>
         {children}
       </body>
     </html>
