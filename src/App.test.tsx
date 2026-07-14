@@ -7,8 +7,8 @@ describe("App", () => {
     render(<App />);
 
     expect(screen.getByRole("heading", { name: /arnav mana/i, level: 1 })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /questions i am working on/i, level: 2 })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /how i work/i, level: 2 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /research built around clinical decisions/i, level: 2 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /across the bedside, bench, and model/i, level: 2 })).toBeInTheDocument();
   });
 
   it("copies the contact address", async () => {
