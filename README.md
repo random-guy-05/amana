@@ -26,15 +26,18 @@ npm run preview
 ```bash
 npx wrangler login
 npm run deploy
-npx wrangler pages secret put BASIC_PASS --project-name arnav-mana
+npx wrangler pages secret put BASIC_PASS --project-name amana
 # optional:
-npx wrangler pages secret put BASIC_USER --project-name arnav-mana
+npx wrangler pages secret put BASIC_USER --project-name amana
 ```
 
 Password gate uses HTTP Basic Auth via `functions/_middleware.js`.  
 Default username: `arnav`. Set `BASIC_PASS` (required) and optional `BASIC_USER`.
 
+Live: https://arnavmana.me · https://amana-1t4.pages.dev
+
 ## Content
 
 Edit `src/data/content.ts` for copy, research items, and contact details.  
 Résumé PDF lives at `public/Arnav-Mana-Resume-Summer-2026.pdf`.
+
