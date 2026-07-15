@@ -225,19 +225,28 @@ export default function App() {
         </section>
 
         <section className="contact" id="contact">
-          <Reveal>
+          <Reveal className="contact-eyebrow">
             <p className="mono accent">Contact</p>
+            <p className="mono dim">Open to collaboration</p>
           </Reveal>
           <Reveal delay={0.06}>
-            <a className="mailto" href={`mailto:${site.email}`}>
-              {site.email}
-            </a>
+            <h2>
+              Let&apos;s build better
+              <br />
+              <em>healthcare.</em>
+            </h2>
           </Reveal>
-          <Reveal className="contact-meta" delay={0.12}>
-            <a href={site.phoneHref}>{site.phone}</a>
-            <a href={site.resume} target="_blank" rel="noreferrer">
-              Résumé ↗
+          <Reveal className="contact-actions" delay={0.12}>
+            <a className="mailto" href={`mailto:${site.email}`}>
+              <span>{site.email}</span>
+              <span aria-hidden="true">↗</span>
             </a>
+            <div className="contact-meta">
+              <a href={site.phoneHref}>{site.phone}</a>
+              <a href={site.resume} target="_blank" rel="noreferrer">
+                View résumé ↗
+              </a>
+            </div>
           </Reveal>
         </section>
 

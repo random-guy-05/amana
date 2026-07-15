@@ -7,7 +7,7 @@
   --mint: #70c7a6;
   --mint-dim: rgba(112, 199, 166, 0.09);
   --ecg: #79efbd;
-  --metric: #c3b5ff;
+  --metric: #86b9a8;
   --panel: #0d1210;
   --hack: #70c7a6;
   --hack-strong: #79efbd;
@@ -625,7 +625,7 @@ button:focus-visible {
   letter-spacing: -0.05em;
   color: var(--metric);
   line-height: 1;
-  text-shadow: 0 0 24px rgba(195, 181, 255, 0.16);
+  text-shadow: 0 0 24px rgba(112, 199, 166, 0.1);
 }
 
 .hack-stat .s {
@@ -634,7 +634,7 @@ button:focus-visible {
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(195, 181, 255, 0.72);
+  color: rgba(134, 185, 168, 0.72);
   max-width: 22ch;
 }
 
@@ -643,36 +643,88 @@ button:focus-visible {
   width: var(--page);
   margin: 0 auto;
   padding: clamp(90px, 12vw, 140px) 0;
-  border-top: 1px solid var(--line);
+  border-top: 0;
   position: relative;
   z-index: 5;
   isolation: isolate;
-  background: var(--bg);
+  background: transparent;
 }
 
-.contact > .mono {
-  margin: 0 0 18px;
+.contact::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 calc(50% - 50vw);
+  border-top: 1px solid var(--line);
+  background:
+    radial-gradient(760px 420px at 82% 42%, rgba(112, 199, 166, 0.075), transparent 64%),
+    linear-gradient(180deg, #080b09 0%, var(--bg) 100%);
+}
+
+.contact-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 34px;
+}
+
+.contact-eyebrow p {
+  margin: 0;
+}
+
+.contact h2 {
+  margin: 0;
+  max-width: 15ch;
+  font-family: var(--headline);
+  font-size: clamp(2.9rem, 7.4vw, 6.25rem);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+.contact h2 em {
+  color: var(--mint);
+  font-style: normal;
+}
+
+.contact-actions {
+  margin-top: clamp(48px, 8vw, 88px);
 }
 
 .mailto {
-  display: inline-block;
-  font-size: clamp(1.8rem, 5.2vw, 3.8rem);
-  font-weight: 700;
-  letter-spacing: -0.05em;
+  width: 100%;
+  padding: 22px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-block: 1px solid var(--line);
+  font-size: clamp(1.25rem, 3vw, 2.35rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
   line-height: 1.1;
   color: var(--fg);
-  border-bottom: 2px solid transparent;
+  transition: color 180ms ease, border-color 180ms ease;
 }
 
 .mailto:hover {
   color: var(--mint);
-  border-color: var(--mint);
+  border-color: rgba(112, 199, 166, 0.48);
+}
+
+.mailto span:last-child {
+  font-family: var(--mono);
+  font-size: 0.7em;
+  font-weight: 500;
 }
 
 .contact-meta {
   display: flex;
   gap: 28px;
-  margin-top: 28px;
+  margin-top: 20px;
 }
 
 .contact-meta a {
