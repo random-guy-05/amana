@@ -186,8 +186,10 @@ button:focus-visible {
 }
 
 .hero-main {
-  margin: auto 0;
-  padding: clamp(34px, 4vw, 52px) 0;
+  flex: 1;
+  min-height: clamp(460px, 54vw, 680px);
+  margin: 0;
+  padding: clamp(14px, 2vw, 24px) 0;
   position: relative;
   isolation: isolate;
 }
@@ -196,7 +198,7 @@ button:focus-visible {
   content: "";
   position: absolute;
   z-index: -2;
-  inset: 52% 0 auto;
+  inset: 50% 0 auto;
   height: clamp(150px, 22vw, 270px);
   transform: translateY(-50%);
   background-image:
@@ -230,11 +232,9 @@ button:focus-visible {
   letter-spacing: -0.075em;
   text-transform: uppercase;
   color: var(--fg);
-  position: relative;
+  position: absolute;
   z-index: 2;
-  display: grid;
-  grid-template-columns: auto minmax(clamp(72px, 10vw, 150px), 1fr) auto;
-  align-items: center;
+  inset: 0;
   white-space: nowrap;
 }
 
@@ -244,13 +244,15 @@ button:focus-visible {
 }
 
 .hero h1 > .clip:first-child {
-  grid-column: 1;
-  justify-self: start;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .hero h1 > .name-b {
-  grid-column: 3;
-  justify-self: end;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .hero h1 > .clip:first-child .clip-i {
@@ -274,7 +276,7 @@ button:focus-visible {
 .hero-scope {
   position: absolute;
   z-index: 3;
-  inset: 52% 34% auto;
+  inset: 50% 34% auto;
   height: clamp(150px, 22vw, 270px);
   transform: translateY(-50%);
   color: var(--ecg);
@@ -795,6 +797,10 @@ button:focus-visible {
 
   .hero h1 {
     font-size: clamp(2.75rem, 12vw, 4.2rem);
+  }
+
+  .hero-main {
+    min-height: clamp(340px, 78vw, 470px);
   }
 
   .hero-scope {
