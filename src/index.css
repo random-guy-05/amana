@@ -8,9 +8,9 @@
   --mint-dim: rgba(112, 199, 166, 0.09);
   --ecg: #79efbd;
   --panel: #0d1210;
-  --hack: #f1a078;
-  --hack-strong: #ff7866;
-  --hack-dim: rgba(241, 160, 120, 0.1);
+  --hack: #8fb4ff;
+  --hack-strong: #72d8ce;
+  --hack-dim: rgba(143, 180, 255, 0.1);
   --page: min(1280px, calc(100% - 48px));
   --display: "Manrope", system-ui, sans-serif;
   --headline: "Syne", system-ui, sans-serif;
@@ -503,19 +503,27 @@ button:focus-visible {
   position: absolute;
   z-index: -1;
   inset: 0 calc(50% - 50vw);
-  border-block: 1px solid rgba(241, 160, 120, 0.18);
+  border-block: 1px solid rgba(143, 180, 255, 0.16);
   background:
-    radial-gradient(700px 360px at 10% 8%, rgba(255, 120, 102, 0.11), transparent 60%),
-    radial-gradient(680px 420px at 92% 100%, rgba(241, 160, 120, 0.08), transparent 62%),
-    linear-gradient(145deg, #110d0c 0%, #0d0c0b 48%, #0c0f0d 100%);
+    radial-gradient(720px 380px at 8% 4%, rgba(93, 130, 255, 0.12), transparent 62%),
+    radial-gradient(680px 420px at 92% 100%, rgba(75, 203, 190, 0.08), transparent 62%),
+    linear-gradient(145deg, #0b0f18 0%, #0a0e14 48%, #091110 100%);
 }
 
 .hack .accent {
   color: var(--hack);
 }
 
-.hack > .mono {
-  margin: 0 0 16px;
+.hack-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.hack-eyebrow p {
+  margin: 0;
 }
 
 .hack h2 {
@@ -531,20 +539,19 @@ button:focus-visible {
 .hack h2 em {
   font-style: normal;
   color: var(--hack);
-  text-shadow: 0 0 32px rgba(255, 120, 102, 0.2);
+  text-shadow: 0 0 32px rgba(143, 180, 255, 0.2);
 }
 
 .hack-when {
-  margin: 16px 0 0;
   color: rgba(238, 243, 239, 0.62);
 }
 
 .hack-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 44px;
-  margin-top: 44px;
-  max-width: 920px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(32px, 6vw, 80px);
+  margin-top: 40px;
+  max-width: 1080px;
 }
 
 .hack-line {
@@ -562,23 +569,29 @@ button:focus-visible {
   color: var(--soft);
   font-size: 1.02rem;
   line-height: 1.65;
-  align-self: end;
+  align-self: start;
   font-weight: 400;
   text-wrap: pretty;
+  max-width: 50ch;
 }
 
 .hack-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 64px;
+  gap: 0;
+  margin-top: 72px;
   padding-top: 28px;
-  border-top: 1px solid rgba(241, 160, 120, 0.2);
+  border-top: 1px solid rgba(143, 180, 255, 0.18);
 }
 
 .hack-stat {
-  padding-left: 20px;
-  border-left: 1px solid rgba(241, 160, 120, 0.18);
+  padding: 4px 24px 0;
+  border-left: 1px solid rgba(143, 180, 255, 0.16);
+}
+
+.hack-stat:first-child {
+  padding-left: 0;
+  border-left: 0;
 }
 
 .hack-stat .n {
@@ -597,6 +610,7 @@ button:focus-visible {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--mute);
+  max-width: 22ch;
 }
 
 /* contact */
@@ -673,6 +687,21 @@ button:focus-visible {
   .cases-hint {
     grid-column: 1;
     grid-row: auto;
+  }
+
+  .hack-grid {
+    gap: 24px;
+  }
+
+  .hack-stats {
+    gap: 20px;
+  }
+
+  .hack-stat,
+  .hack-stat:first-child {
+    padding: 20px 0 0;
+    border-left: 0;
+    border-top: 1px solid rgba(143, 180, 255, 0.14);
   }
 
   .hero h1 {

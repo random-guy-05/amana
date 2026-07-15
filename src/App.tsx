@@ -192,7 +192,7 @@ export default function App() {
         </a>
         <nav aria-label="Primary navigation">
           <a href="#work">Research</a>
-          <a href="#hack">Hack4Health</a>
+          <a href="#hack">Leadership</a>
           <a href="#contact">Contact</a>
         </nav>
       </header>
@@ -203,15 +203,15 @@ export default function App() {
         <CaseRail motionEnabled={motionEnabled} />
 
         <section className="hack" id="hack">
-          <Reveal>
+          <Reveal className="hack-eyebrow">
             <p className="mono accent">Leadership</p>
+            <p className="mono hack-when">{hack.when}</p>
           </Reveal>
           <Reveal delay={0.05}>
             <h2>
               Hack<em>4</em>Health
             </h2>
           </Reveal>
-          <p className="mono dim hack-when">{hack.when}</p>
           <Reveal className="hack-grid" delay={0.1}>
             <p className="hack-line">{hack.line}</p>
             <p className="hack-detail">{hack.detail}</p>
