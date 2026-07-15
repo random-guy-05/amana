@@ -222,24 +222,33 @@ button:focus-visible {
 
 .hero h1 {
   margin: 0;
+  width: min(100%, 1150px);
   font-family: var(--headline);
-  font-size: clamp(3.25rem, 9.5vw, 7.6rem);
+  font-size: clamp(4.2rem, 10.4vw, 8.3rem);
   font-weight: 800;
-  line-height: 0.94;
+  line-height: 0.82;
   letter-spacing: -0.055em;
   text-transform: uppercase;
   color: var(--fg);
   position: relative;
   z-index: 2;
-  display: flex;
-  align-items: baseline;
-  gap: clamp(10px, 1.4vw, 22px);
+  display: grid;
+  grid-template-columns: 1fr;
   white-space: nowrap;
 }
 
 .hero h1 > .clip {
   padding: 0.12em 0.09em 0.16em;
   margin: -0.12em -0.09em -0.16em;
+}
+
+.hero h1 > .clip:first-child {
+  justify-self: start;
+}
+
+.hero h1 > .name-b {
+  justify-self: end;
+  margin-top: -0.08em;
 }
 
 .hero h1 > .clip:first-child .clip-i {
@@ -255,7 +264,7 @@ button:focus-visible {
   color: rgba(121, 239, 189, 0.08);
   -webkit-text-stroke: 2px rgba(121, 239, 189, 0.78);
   text-shadow: 0 0 28px rgba(121, 239, 189, 0.1);
-  transform: translateY(0.055em);
+  transform: none;
   padding-right: 0.035em;
 }
 
@@ -782,7 +791,7 @@ button:focus-visible {
   }
 
   .hero h1 {
-    font-size: clamp(3rem, 11.5vw, 4.5rem);
+    font-size: clamp(3.2rem, 14vw, 5rem);
   }
 
   .cases-intro h2 {

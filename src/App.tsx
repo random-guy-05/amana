@@ -226,7 +226,7 @@ export default function App() {
 
         <section className="contact" id="contact">
           <Reveal className="contact-eyebrow">
-            <p className="mono accent">Contact</p>
+            <p className="mono accent">Contact me</p>
             <p className="mono dim">Open to collaboration</p>
           </Reveal>
           <Reveal delay={0.06}>
