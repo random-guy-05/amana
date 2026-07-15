@@ -8,9 +8,9 @@
   --mint-dim: rgba(112, 199, 166, 0.09);
   --ecg: #79efbd;
   --panel: #0d1210;
-  --hack: #8fb4ff;
-  --hack-strong: #72d8ce;
-  --hack-dim: rgba(143, 180, 255, 0.1);
+  --hack: #70c7a6;
+  --hack-strong: #79efbd;
+  --hack-dim: rgba(112, 199, 166, 0.1);
   --page: min(1280px, calc(100% - 48px));
   --display: "Manrope", system-ui, sans-serif;
   --headline: "Syne", system-ui, sans-serif;
@@ -222,7 +222,7 @@ button:focus-visible {
 .hero h1 {
   margin: 0;
   font-family: var(--headline);
-  font-size: clamp(4.25rem, 12.4vw, 9.75rem);
+  font-size: clamp(4rem, 11.4vw, 9rem);
   font-weight: 800;
   line-height: 0.94;
   letter-spacing: -0.055em;
@@ -352,11 +352,12 @@ button:focus-visible {
 .cases-intro h2 {
   grid-column: 1;
   margin: 0;
-  font-size: clamp(2.6rem, 6vw, 4.8rem);
+  font-size: clamp(2.2rem, 4.8vw, 4.2rem);
   font-weight: 800;
   letter-spacing: -0.055em;
   line-height: 0.95;
   color: var(--fg);
+  white-space: nowrap;
 }
 
 .cases-hint {
@@ -503,11 +504,11 @@ button:focus-visible {
   position: absolute;
   z-index: -1;
   inset: 0 calc(50% - 50vw);
-  border-block: 1px solid rgba(143, 180, 255, 0.16);
+  border-block: 1px solid rgba(112, 199, 166, 0.16);
   background:
-    radial-gradient(720px 380px at 8% 4%, rgba(93, 130, 255, 0.12), transparent 62%),
-    radial-gradient(680px 420px at 92% 100%, rgba(75, 203, 190, 0.08), transparent 62%),
-    linear-gradient(145deg, #0b0f18 0%, #0a0e14 48%, #091110 100%);
+    radial-gradient(720px 380px at 8% 4%, rgba(121, 239, 189, 0.1), transparent 62%),
+    radial-gradient(680px 420px at 92% 100%, rgba(112, 199, 166, 0.08), transparent 62%),
+    linear-gradient(145deg, #091411 0%, #0a1210 48%, #09100e 100%);
 }
 
 .hack .accent {
@@ -529,9 +530,9 @@ button:focus-visible {
 .hack h2 {
   margin: 0;
   font-family: var(--headline);
-  font-size: clamp(3.2rem, 10vw, 7.5rem);
+  font-size: clamp(3rem, 8.5vw, 6.5rem);
   font-weight: 800;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.05em;
   line-height: 0.92;
   color: var(--fg);
 }
@@ -539,7 +540,7 @@ button:focus-visible {
 .hack h2 em {
   font-style: normal;
   color: var(--hack);
-  text-shadow: 0 0 32px rgba(143, 180, 255, 0.2);
+  text-shadow: 0 0 32px rgba(121, 239, 189, 0.18);
 }
 
 .hack-when {
@@ -581,12 +582,12 @@ button:focus-visible {
   gap: 0;
   margin-top: 72px;
   padding-top: 28px;
-  border-top: 1px solid rgba(143, 180, 255, 0.18);
+  border-top: 1px solid rgba(112, 199, 166, 0.18);
 }
 
 .hack-stat {
   padding: 4px 24px 0;
-  border-left: 1px solid rgba(143, 180, 255, 0.16);
+  border-left: 1px solid rgba(112, 199, 166, 0.16);
 }
 
 .hack-stat:first-child {
@@ -701,11 +702,15 @@ button:focus-visible {
   .hack-stat:first-child {
     padding: 20px 0 0;
     border-left: 0;
-    border-top: 1px solid rgba(143, 180, 255, 0.14);
+    border-top: 1px solid rgba(112, 199, 166, 0.14);
   }
 
   .hero h1 {
-    font-size: clamp(3.25rem, 15.5vw, 5.7rem);
+    font-size: clamp(3rem, 14.2vw, 5.3rem);
+  }
+
+  .cases-intro h2 {
+    font-size: clamp(1.6rem, 6.5vw, 2.4rem);
   }
 
   .name-b {

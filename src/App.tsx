@@ -91,11 +91,7 @@ function CaseRail({ motionEnabled }: { motionEnabled: boolean }) {
       <div className="cases-sticky">
         <div className="cases-intro">
           <p className="mono accent">Research</p>
-          <h2>
-            Selected research
-            <br />
-            projects.
-          </h2>
+          <h2>Selected research projects.</h2>
           <p className="mono dim cases-hint">Scroll to explore →</p>
         </div>
 
