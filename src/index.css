@@ -7,6 +7,7 @@
   --mint: #70c7a6;
   --mint-dim: rgba(112, 199, 166, 0.09);
   --ecg: #79efbd;
+  --cyan: #65d9ea;
   --panel: #0d1210;
   --hack: #70c7a6;
   --hack-strong: #79efbd;
@@ -222,7 +223,7 @@ button:focus-visible {
 .hero h1 {
   margin: 0;
   font-family: var(--headline);
-  font-size: clamp(4rem, 11.4vw, 9rem);
+  font-size: clamp(3.25rem, 9.5vw, 7.6rem);
   font-weight: 800;
   line-height: 0.94;
   letter-spacing: -0.055em;
@@ -230,6 +231,10 @@ button:focus-visible {
   color: var(--fg);
   position: relative;
   z-index: 2;
+  display: flex;
+  align-items: baseline;
+  gap: clamp(10px, 1.4vw, 22px);
+  white-space: nowrap;
 }
 
 .name-b {
@@ -530,7 +535,7 @@ button:focus-visible {
 .hack h2 {
   margin: 0;
   font-family: var(--headline);
-  font-size: clamp(3rem, 8.5vw, 6.5rem);
+  font-size: clamp(2.7rem, 7.2vw, 5.7rem);
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 0.92;
@@ -600,8 +605,9 @@ button:focus-visible {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.05em;
-  color: var(--hack-strong);
+  color: var(--cyan);
   line-height: 1;
+  text-shadow: 0 0 24px rgba(101, 217, 234, 0.14);
 }
 
 .hack-stat .s {
@@ -610,7 +616,7 @@ button:focus-visible {
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--mute);
+  color: rgba(101, 217, 234, 0.72);
   max-width: 22ch;
 }
 
@@ -706,7 +712,7 @@ button:focus-visible {
   }
 
   .hero h1 {
-    font-size: clamp(3rem, 14.2vw, 5.3rem);
+    font-size: clamp(3rem, 11.5vw, 4.5rem);
   }
 
   .cases-intro h2 {
