@@ -94,18 +94,21 @@ export function useHeroScroll(ref: RefObject<HTMLElement | null>) {
   return { y, opacity };
 }
 
-/** SVG line that draws like a scope trace */
+/** Full-width P-QRS-T rhythm that draws into the hero */
 export function ScopeTrace() {
   return (
-    <svg className="scope" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+    <svg className="scope" viewBox="0 0 1200 240" preserveAspectRatio="none" aria-hidden="true">
       <motion.path
-        d="M0 60 C80 60 100 20 160 20 C220 20 240 100 300 100 C360 100 380 40 440 40 C500 40 520 80 580 80 C640 80 660 15 720 15 C780 15 800 95 860 95 C920 95 940 50 1000 50 C1060 50 1080 70 1140 70 C1170 70 1185 60 1200 60"
+        d="M0 120 L70 120 C82 120 88 105 100 105 C112 105 120 120 136 120 L168 120 L180 130 L192 42 L205 188 L222 120 L270 120 C288 120 298 84 324 84 C350 84 360 120 386 120 L470 120 C482 120 488 105 500 105 C512 105 520 120 536 120 L568 120 L580 130 L592 42 L605 188 L622 120 L670 120 C688 120 698 84 724 84 C750 84 760 120 786 120 L870 120 C882 120 888 105 900 105 C912 105 920 120 936 120 L968 120 L980 130 L992 42 L1005 188 L1022 120 L1070 120 C1088 120 1098 84 1124 84 C1150 84 1160 120 1186 120 L1200 120"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
         initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 0.9 }}
-        transition={{ duration: 2.2, delay: 0.5, ease }}
+        animate={{ pathLength: 1, opacity: 1 }}
+        transition={{ duration: 2.8, delay: 0.45, ease }}
       />
     </svg>
   );

@@ -7,7 +7,9 @@
   --mint: #70c7a6;
   --mint-dim: rgba(112, 199, 166, 0.09);
   --panel: #0d1210;
-  --hack: #a8bc7a;
+  --hack: #f1a078;
+  --hack-strong: #ff7866;
+  --hack-dim: rgba(241, 160, 120, 0.1);
   --page: min(1280px, calc(100% - 48px));
   --display: "Manrope", system-ui, sans-serif;
   --headline: "Syne", system-ui, sans-serif;
@@ -184,6 +186,25 @@ button:focus-visible {
 .hero-main {
   margin: auto 0;
   padding: 12px 0 8px;
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-main::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 50% 0 auto;
+  height: clamp(190px, 27vw, 350px);
+  transform: translateY(-50%);
+  background-image:
+    linear-gradient(rgba(112, 199, 166, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(112, 199, 166, 0.055) 1px, transparent 1px),
+    linear-gradient(rgba(112, 199, 166, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(112, 199, 166, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
 }
 
 .hero h1 {
@@ -195,6 +216,8 @@ button:focus-visible {
   letter-spacing: -0.065em;
   text-transform: uppercase;
   color: var(--fg);
+  position: relative;
+  z-index: 2;
 }
 
 .name-b {
@@ -203,9 +226,17 @@ button:focus-visible {
 }
 
 .hero-scope {
-  margin-top: 18px;
-  height: clamp(48px, 7vw, 88px);
+  position: absolute;
+  z-index: -1;
+  inset: 50% 0 auto;
+  height: clamp(190px, 27vw, 350px);
+  transform: translateY(-50%);
   color: var(--mint);
+  opacity: 0.72;
+  filter: drop-shadow(0 0 10px rgba(112, 199, 166, 0.22));
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
 }
 
 .hero-scope .scope {
@@ -441,11 +472,27 @@ button:focus-visible {
   width: var(--page);
   margin: 0 auto;
   padding: clamp(100px, 14vw, 150px) 0;
-  border-top: 1px solid var(--line);
+  border-top: 0;
   position: relative;
   z-index: 5;
   isolation: isolate;
-  background: var(--bg);
+  background: transparent;
+}
+
+.hack::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 calc(50% - 50vw);
+  border-block: 1px solid rgba(241, 160, 120, 0.18);
+  background:
+    radial-gradient(700px 360px at 10% 8%, rgba(255, 120, 102, 0.11), transparent 60%),
+    radial-gradient(680px 420px at 92% 100%, rgba(241, 160, 120, 0.08), transparent 62%),
+    linear-gradient(145deg, #110d0c 0%, #0d0c0b 48%, #0c0f0d 100%);
+}
+
+.hack .accent {
+  color: var(--hack);
 }
 
 .hack > .mono {
@@ -465,10 +512,12 @@ button:focus-visible {
 .hack h2 em {
   font-style: normal;
   color: var(--hack);
+  text-shadow: 0 0 32px rgba(255, 120, 102, 0.2);
 }
 
 .hack-when {
   margin: 16px 0 0;
+  color: rgba(238, 243, 239, 0.62);
 }
 
 .hack-grid {
@@ -505,7 +554,12 @@ button:focus-visible {
   gap: 24px;
   margin-top: 64px;
   padding-top: 28px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid rgba(241, 160, 120, 0.2);
+}
+
+.hack-stat {
+  padding-left: 20px;
+  border-left: 1px solid rgba(241, 160, 120, 0.18);
 }
 
 .hack-stat .n {
@@ -513,7 +567,7 @@ button:focus-visible {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.05em;
-  color: var(--hack);
+  color: var(--hack-strong);
   line-height: 1;
 }
 
