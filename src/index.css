@@ -7,7 +7,7 @@
   --mint: #70c7a6;
   --mint-dim: rgba(112, 199, 166, 0.09);
   --ecg: #79efbd;
-  --cyan: #65d9ea;
+  --metric: #c3b5ff;
   --panel: #0d1210;
   --hack: #70c7a6;
   --hack-strong: #79efbd;
@@ -237,19 +237,32 @@ button:focus-visible {
   white-space: nowrap;
 }
 
+.hero h1 > .clip:first-child .clip-i {
+  color: transparent;
+  background: linear-gradient(105deg, #ffffff 8%, #e7f5ee 58%, #8ee6c3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 24px rgba(121, 239, 189, 0.08));
+}
+
 .name-b {
-  color: rgba(238, 243, 239, 0.18);
-  -webkit-text-stroke: 2px rgba(238, 243, 239, 0.9);
+  color: rgba(121, 239, 189, 0.08);
+  -webkit-text-stroke: 2px rgba(121, 239, 189, 0.78);
+  text-shadow: 0 0 28px rgba(121, 239, 189, 0.1);
+  transform: translateY(0.055em);
+  padding-right: 0.035em;
 }
 
 .hero-scope {
   position: absolute;
-  z-index: -1;
+  z-index: 3;
   inset: 52% -2% auto;
   height: clamp(150px, 22vw, 270px);
   transform: translateY(-50%);
   color: var(--ecg);
-  opacity: 0.9;
+  opacity: 0.74;
+  mix-blend-mode: screen;
   pointer-events: none;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
@@ -262,7 +275,7 @@ button:focus-visible {
 }
 
 .scope-ghost {
-  opacity: 0.2;
+  opacity: 0.1;
 }
 
 .scope-live {
@@ -605,9 +618,9 @@ button:focus-visible {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.05em;
-  color: var(--cyan);
+  color: var(--metric);
   line-height: 1;
-  text-shadow: 0 0 24px rgba(101, 217, 234, 0.14);
+  text-shadow: 0 0 24px rgba(195, 181, 255, 0.16);
 }
 
 .hack-stat .s {
@@ -616,7 +629,7 @@ button:focus-visible {
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(101, 217, 234, 0.72);
+  color: rgba(195, 181, 255, 0.72);
   max-width: 22ch;
 }
 
