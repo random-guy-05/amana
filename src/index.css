@@ -237,6 +237,11 @@ button:focus-visible {
   white-space: nowrap;
 }
 
+.hero h1 > .clip {
+  padding: 0.12em 0.09em 0.16em;
+  margin: -0.12em -0.09em -0.16em;
+}
+
 .hero h1 > .clip:first-child .clip-i {
   color: transparent;
   background: linear-gradient(105deg, #ffffff 8%, #e7f5ee 58%, #8ee6c3 100%);
