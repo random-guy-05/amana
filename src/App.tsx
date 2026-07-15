@@ -155,12 +155,6 @@ function Hero() {
         </div>
 
         <div className="hero-main">
-          <div className="hero-signal-meta mono" aria-hidden="true">
-            <span className="signal-live"><i />Live ECG</span>
-            <span>Lead II</span>
-            <span>72 BPM</span>
-            <span>25 mm/s</span>
-          </div>
           <h1 id="name">
             <ClipUp delay={0.12}>Arnav</ClipUp>
             <ClipUp delay={0.28} className="name-b">

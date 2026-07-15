@@ -120,13 +120,13 @@ export function ScopeTrace() {
         strokeLinecap="round"
         strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: [0, 1, 1], opacity: [0.35, 1, 0] }}
+        pathLength={1}
+        strokeDasharray="0.22 0.78"
+        initial={{ strokeDashoffset: 0 }}
+        animate={{ strokeDashoffset: -1 }}
         transition={{
-          duration: 4.6,
-          times: [0, 0.8, 1],
+          duration: 3.8,
           repeat: Infinity,
-          repeatDelay: 0.2,
           ease: "linear",
         }}
       />
