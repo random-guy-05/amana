@@ -222,18 +222,19 @@ button:focus-visible {
 
 .hero h1 {
   margin: 0;
-  width: min(100%, 1150px);
+  width: 100%;
   font-family: var(--headline);
-  font-size: clamp(4.2rem, 10.4vw, 8.3rem);
+  font-size: clamp(4.5rem, 11.2vw, 9rem);
   font-weight: 800;
-  line-height: 0.82;
-  letter-spacing: -0.055em;
+  line-height: 0.9;
+  letter-spacing: -0.075em;
   text-transform: uppercase;
   color: var(--fg);
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: auto minmax(clamp(72px, 10vw, 150px), 1fr) auto;
+  align-items: center;
   white-space: nowrap;
 }
 
@@ -243,12 +244,13 @@ button:focus-visible {
 }
 
 .hero h1 > .clip:first-child {
+  grid-column: 1;
   justify-self: start;
 }
 
 .hero h1 > .name-b {
+  grid-column: 3;
   justify-self: end;
-  margin-top: -0.08em;
 }
 
 .hero h1 > .clip:first-child .clip-i {
@@ -260,18 +262,19 @@ button:focus-visible {
   filter: drop-shadow(0 0 24px rgba(121, 239, 189, 0.08));
 }
 
-.name-b {
-  color: rgba(121, 239, 189, 0.08);
-  -webkit-text-stroke: 2px rgba(121, 239, 189, 0.78);
-  text-shadow: 0 0 28px rgba(121, 239, 189, 0.1);
-  transform: none;
-  padding-right: 0.035em;
+.name-b .clip-i {
+  color: transparent;
+  background: linear-gradient(105deg, #79efbd 0%, #70c7a6 58%, #b8f3dc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 24px rgba(121, 239, 189, 0.1));
 }
 
 .hero-scope {
   position: absolute;
   z-index: 3;
-  inset: 52% -2% auto;
+  inset: 52% 34% auto;
   height: clamp(150px, 22vw, 270px);
   transform: translateY(-50%);
   color: var(--ecg);
@@ -562,7 +565,7 @@ button:focus-visible {
 .hack h2 {
   margin: 0;
   font-family: var(--headline);
-  font-size: clamp(2.7rem, 7.2vw, 5.7rem);
+  font-size: clamp(2.55rem, 6.3vw, 5rem);
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 0.92;
@@ -684,12 +687,12 @@ button:focus-visible {
 
 .contact h2 {
   margin: 0;
-  max-width: 15ch;
+  max-width: 13ch;
   font-family: var(--headline);
-  font-size: clamp(2.9rem, 7.4vw, 6.25rem);
+  font-size: clamp(2.5rem, 6.2vw, 5.2rem);
   font-weight: 800;
   line-height: 0.94;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.045em;
   color: var(--fg);
   text-wrap: balance;
 }
@@ -711,7 +714,7 @@ button:focus-visible {
   justify-content: space-between;
   gap: 24px;
   border-block: 1px solid var(--line);
-  font-size: clamp(1.25rem, 3vw, 2.35rem);
+  font-size: clamp(1.1rem, 2.4vw, 1.9rem);
   font-weight: 600;
   letter-spacing: -0.035em;
   line-height: 1.1;
@@ -791,15 +794,15 @@ button:focus-visible {
   }
 
   .hero h1 {
-    font-size: clamp(3.2rem, 14vw, 5rem);
+    font-size: clamp(2.75rem, 12vw, 4.2rem);
+  }
+
+  .hero-scope {
+    inset-inline: 40%;
   }
 
   .cases-intro h2 {
     font-size: clamp(1.6rem, 6.5vw, 2.4rem);
-  }
-
-  .name-b {
-    -webkit-text-stroke-width: 1.15px;
   }
 
   .hero-inner {
