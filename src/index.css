@@ -162,7 +162,7 @@ button:focus-visible {
 
 /* hero */
 .hero {
-  width: var(--page);
+  width: min(calc(100% - clamp(32px, 10vw, 176px)), 1600px);
   margin: 0 auto;
   padding: 36px 0 56px;
   position: relative;
@@ -234,7 +234,7 @@ button:focus-visible {
   color: var(--fg);
   position: absolute;
   z-index: 2;
-  inset: 0;
+  inset: clamp(16px, 2.2vh, 28px) 0;
   white-space: nowrap;
 }
 
@@ -276,7 +276,7 @@ button:focus-visible {
 .hero-scope {
   position: absolute;
   z-index: 3;
-  inset: 50% 34% auto;
+  inset: 50% 12% auto;
   height: clamp(150px, 22vw, 270px);
   transform: translateY(-50%);
   color: var(--ecg);
@@ -555,8 +555,8 @@ button:focus-visible {
 .hack-eyebrow {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  justify-content: flex-start;
+  gap: 14px;
   margin-bottom: 20px;
 }
 
@@ -584,12 +584,18 @@ button:focus-visible {
   color: rgba(238, 243, 239, 0.62);
 }
 
+.hack-when::before {
+  content: "·";
+  margin-right: 14px;
+  color: rgba(112, 199, 166, 0.5);
+}
+
 .hack-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(32px, 6vw, 80px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   margin-top: 40px;
-  max-width: 1080px;
+  max-width: 780px;
 }
 
 .hack-line {
@@ -654,7 +660,7 @@ button:focus-visible {
 
 /* contact */
 .contact {
-  width: var(--page);
+  width: min(calc(100% - 36px), 900px);
   margin: 0 auto;
   padding: clamp(90px, 12vw, 140px) 0;
   border-top: 0;
@@ -804,7 +810,7 @@ button:focus-visible {
   }
 
   .hero-scope {
-    inset-inline: 40%;
+    inset-inline: 7%;
   }
 
   .cases-intro h2 {
@@ -812,7 +818,7 @@ button:focus-visible {
   }
 
   .hero-inner {
-    min-height: auto;
+    min-height: calc(100svh - 94px);
   }
 
   .cases {
