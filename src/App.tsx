@@ -210,7 +210,6 @@ export default function App() {
           </Reveal>
           <Reveal className="hack-grid" delay={0.1}>
             <p className="hack-line">{hack.line}</p>
-            <p className="hack-detail">{hack.detail}</p>
           </Reveal>
           <div className="hack-stats">
             {hack.stats.map((s, i) => (
@@ -226,14 +225,11 @@ export default function App() {
 
         <section className="contact" id="contact">
           <Reveal className="contact-eyebrow">
-            <p className="mono accent">Contact me</p>
-            <p className="mono dim">Open to collaboration</p>
+            <p className="mono accent">Contact</p>
           </Reveal>
           <Reveal delay={0.06}>
             <h2>
-              Let&apos;s build better
-              <br />
-              <em>healthcare.</em>
+              Contact <em>me.</em>
             </h2>
           </Reveal>
           <Reveal className="contact-actions" delay={0.12}>

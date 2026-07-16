@@ -87,9 +87,7 @@ export const cases = [
 export const hack = {
   name: "Hack4Health",
   when: "Aug 2025 — Present",
-  line: "A student-led healthcare machine-learning community focused on applied research with real-world clinical data.",
-  detail:
-    "We organize multi-month research hackathons centered on reproducible methods, clinically grounded questions, and rigorous evaluation.",
+  line: "A student-led community running clinical machine-learning hackathons with real-world health data.",
   stats: [
     { n: "3,000+", s: "Hackathon participants" },
     { n: "2,000+", s: "Community members" },
