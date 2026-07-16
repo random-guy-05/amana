@@ -246,12 +246,12 @@ button:focus-visible {
 .hero h1 > .clip:first-child {
   position: absolute;
   top: 0;
-  left: 0;
+  left: clamp(18px, 2vw, 34px);
 }
 
 .hero h1 > .name-b {
   position: absolute;
-  right: 0;
+  right: clamp(18px, 2vw, 34px);
   bottom: 0;
 }
 
